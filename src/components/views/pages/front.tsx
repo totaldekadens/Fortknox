@@ -3,7 +3,9 @@ import { products } from "../../../data/products"
 import NavigationProduct from "../navigationProduct"
 import { colors } from "./../../../data/color"
 import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import { ThreeLines, TwoLines } from "../lines";
+import { display } from "@mui/system";
+
 
 interface Props {}
 
@@ -12,15 +14,11 @@ const FrontPage: FC<Props> = (props) => {
   console.log(products)
 
     return (
-        <>
+      <>
         <div style={container}>
           <img style={bannerStyle} src= '/src/assets/banners/happy_restaurant_owners.png' alt="" /> {/* Försök inportera denna istället */}
           <div style={overlay}>
-            <div style={lineContainer}>
-              <div style={{...lines, backgroundColor: colors.primary }}></div>
-              <div style={{...lines, backgroundColor: colors.third }}></div> 
-              <div style={{...lines, backgroundColor: colors.secondary }}></div>
-            </div>
+            <ThreeLines/>
             <h1 style={sloganStyle}>Lev din <span style={{color: colors.third}}>företagsdröm</span></h1>
             <div style={textContainer}>
               <p>Oavsett vad framgång är för dig som företagare, hjälper vi dig att nå dit du vill. Vi har samlat allt du behöver för att starta, växa och utvecklas – på ett ställe.</p>
@@ -28,10 +26,18 @@ const FrontPage: FC<Props> = (props) => {
             <Button sx={{color: "white", borderColor: "white", padding: "20px 30px 20px 30px", marginTop: "40px"}} variant="outlined">Beställ paket</Button>
           </div>
         </div>
-        <div style={container2}>
-        {products.map((product) => <NavigationProduct key={product.id} product={product} />)}
+
+        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+          <div style={{display: "flex", flexDirection: "column", alignItems: "center"}} >
+            <TwoLines/>
+            <h1 style={{fontSize: "60px", color: colors.primary}}>Våra paket</h1>
+          </div>
+          <div style={container2}>
+            {products.map((product) => <NavigationProduct key={product.id} product={product} />)}
+          </div>
+          
         </div>
-        </>
+      </>
     )
   }
   
@@ -41,7 +47,7 @@ const FrontPage: FC<Props> = (props) => {
     justifyContent: "flex-start",
     alignContent: "flex-start",
     flexWrap: "wrap",
-    height: '100vh',
+    height: '100%',
 }
 
 const container2: CSSProperties = {
@@ -54,7 +60,8 @@ const container2: CSSProperties = {
   alignItems: 'stretch',
   gap: "1em",
   padding: "1em",
-  backgroundColor: colors.primary
+  width: "90%"
+
 }
 
 const bannerStyle: CSSProperties = {
@@ -70,19 +77,6 @@ const overlay: CSSProperties = {
   margin: "100px 0px 0px 100px",
   position: 'absolute',
 }
-
-const lineContainer: CSSProperties = {
-  display: "flex"
-
-}
-
-const lines : CSSProperties = {
-  width: "150px", 
-  height: "10px", 
-  margin: "2px", 
-  borderRadius: "10px"
-}
-
 
 const sloganStyle : CSSProperties = {
     fontSize: "75px"
