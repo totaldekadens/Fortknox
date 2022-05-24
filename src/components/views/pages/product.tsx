@@ -22,8 +22,8 @@ const ProductPage: FC<Props> = (props) => {
             <img style={{width: "500px"}} src={foundProduct!.image} alt="" />
         </div>
     )
-  }
-  
-  
-  
-  export default ProductPage
+}
+
+
+
+export default ProductPage
