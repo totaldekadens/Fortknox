@@ -1,7 +1,7 @@
 import { FC } from "react"
-import Navbar from "./navbar"
-import ContentContainer from "./views/contentContainer"
-import Footer from "./footer"
+import Navbar from "./common/navbar"
+import ContentContainer from "./contentContainer"
+import Footer from "./common/footer"
 
  
 const Layout: FC = () => {

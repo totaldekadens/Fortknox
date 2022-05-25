@@ -1,6 +1,6 @@
 import { CSSProperties, FC } from "react"
 import { Product } from "../../data/products"
-import { colors } from "./../../data/color"
+import { colors } from "../../data/color"
 import Button from '@mui/material/Button';
 
 
