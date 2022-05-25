@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
-import { FC } from "react"
+import { FC, CSSProperties } from "react"
 import { Product } from '../../data/products'
 import Button from '@mui/material/Button';
-import { CSSProperties } from 'react';
 import { colors } from "../../data/color";
 import CartButton, { buttonStyle } from '../interaction/cartButton';
 
@@ -13,8 +12,6 @@ interface Props {
 }
 
 const ProductCard: FC<Props> = (props) => {
-
-    /* console.log(props.product.including) */
 
     return (
 
@@ -30,7 +27,9 @@ const ProductCard: FC<Props> = (props) => {
                 </div>
             </div>
             <div>
-                <CartButton /* product={props.product} *//>
+                <Link style={{textDecoration: "none"}} to={`/checkout/${props.product.id}`} >
+                    <CartButton /* product={props.product} *//>
+                </Link>
                 <Link style={{textDecoration: "none"}} to={`/${props.product.id}`}>
                     <Button sx={buttonStyle} variant="outlined">Mer info</Button>
                 </Link>
