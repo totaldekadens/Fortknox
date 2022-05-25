@@ -3,6 +3,7 @@ Inlämningsuppgift 2
 
 
 # How to install repo
+
 npm i
 npx vite || npm run dev
 
