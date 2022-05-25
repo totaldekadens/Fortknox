@@ -78,6 +78,7 @@ const ProductPage: FC<Props> = (props) => {
     )
 }
 
+
 const container: CSSProperties = {
     display: "flex",
     width: "100%",
@@ -96,5 +97,7 @@ const dasd: CSSProperties = {
     height: "100%",
     backgroundColor: "blue"
 }
+
+
 
 export default ProductPage
