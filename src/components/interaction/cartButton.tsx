@@ -26,7 +26,6 @@ export const buttonStyle: CSSProperties = {
     margin: "5px",
     color: colors.fourth,
     borderColor: colors.fourth,
-    
 }
 
 export default CartButton

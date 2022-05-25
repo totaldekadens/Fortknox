@@ -16,12 +16,13 @@ const ContentContainer: FC<Props> = (props) => {
                 <Route path="/" element={ <FrontPage /> } />
                 <Route path="/:productId" element={ <ProductPage /> } />
                 <Route path="/checkout" element={ <CheckOut /> } />
+                <Route path="/checkout/:productId" element={ <CheckOut /> } />  {/* När du trycker på beställ-knappen */}
             </Routes>
         </>
     )
 
-  }
-  
-  
-  
-  export default ContentContainer
+}
+
+
+
+export default ContentContainer
