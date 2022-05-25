@@ -1,7 +1,8 @@
 import { CSSProperties, FC } from "react"
 import { useParams, Navigate } from "react-router-dom";
-import { colors } from "../../../data/color";
-import { products } from "../../../data/products";
+import { colors } from "../../data/color";
+import { products } from "../../data/products";
+import { OneLine, ThreeLines, TwoLines } from "../common/lines";
 
 interface Props { }
 
@@ -18,11 +19,14 @@ const ProductPage: FC<Props> = (props) => {
         return <Navigate to="/" />
     }
 
+    console.log(foundProduct.including.length)
     return (
         <>
             <div style={{ ...container, color: colors.textWhite }}>
                 <div style={{ ...row, backgroundColor: colors.primary }}>
-                    <div>sträck</div>
+                    
+  
+                    
                     <div style={{}}>
                         <h1>{foundProduct.name}</h1>
                         <h2>{foundProduct.desc}</h2>
@@ -48,7 +52,7 @@ const ProductPage: FC<Props> = (props) => {
                             </div>
                         </div>
                         <div>Knapp</div>
-
+                      
                     </div>
 
                 </div>
@@ -60,15 +64,16 @@ const ProductPage: FC<Props> = (props) => {
             {/*  change to a own component */}
             <div>
                 <div>
+                   
                     {foundProduct.including.map((include) => {
-                        if(include?.name == "Bokföring"){
+                        if (include?.name == "Bokföring") {
 
                             return (
-                                <div key={include!.id} style={{ display: "flex"}}>
+                                <div key={include!.id} style={{ display: "flex" }}>
                                     <h2>{include?.name}</h2>
                                     <h3>{include?.desc}</h3>
                                 </div>
-    
+
                             )
                         }
                     })}
@@ -78,7 +83,19 @@ const ProductPage: FC<Props> = (props) => {
     )
 }
 
+/* function test(){
+    if(){
+        <OneLine firstColor={colors.}></OneLine>
+         
+    }
+    if(foundProduct.id == 2){
+        <TwoLines></TwoLines>
+    }
+    if(foundProduct.id == 3){
+        <ThreeLines></ThreeLines>
 
+    }
+}   */
 const container: CSSProperties = {
     display: "flex",
     width: "100%",

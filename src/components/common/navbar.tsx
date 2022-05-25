@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FC } from 'react';
-import { colors } from '../data/color'
+import { colors } from '../../data/color'
 
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';

@@ -1,9 +1,9 @@
 import { CSSProperties, FC } from "react"
-import { products } from "../../../data/products"
-import NavigationProduct from "../navigationProduct"
-import { colors } from "./../../../data/color"
+import { products } from "../../data/products"
+import ProductCard from "../product/productCard"
+import { colors } from "../../data/color"
 import Button from '@mui/material/Button';
-import { ThreeLines, TwoLines } from "../lines";
+import { ThreeLines, TwoLines } from "../common/lines";
 import { display } from "@mui/system";
 
 
@@ -32,7 +32,7 @@ const FrontPage: FC<Props> = (props) => {
           <h1 style={{fontSize: "60px", color: colors.primary}}>Våra paket</h1>
         </div>
         <div style={container2}>
-          {products.map((product) => <NavigationProduct key={product.id} product={product} />)}
+          {products.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
         
       </div>

@@ -1,7 +1,7 @@
-import { colors } from "../../../data/color"
+import { colors } from "../../data/color"
 import { CSSProperties, FC } from "react"
-import { products } from "../../../data/products";
-import { flexColumn } from '../../../style/common'
+import { products } from "../../data/products";
+import { flexColumn } from '../../style/common'
 
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -52,7 +52,7 @@ const CheckOut: FC<Props> = (props) => {
                                             <p key={includes!.name} style={{...cartItemProperties, marginLeft:"24px"}}>{includes!.name}</p>
                                         </div>
                                         <div style={cartItemInfoContainer}>
-                                            <p style={cartItemProperties}>{includes.price} kr/mån</p>
+                                            <p style={cartItemProperties}>{includes!.price} kr/mån</p>
                                         </div>
                                         <div style={priceQuantityContainer}>
                                             <RemoveIcon />

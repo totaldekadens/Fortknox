@@ -1,5 +1,5 @@
-import { colors } from "../data/color"
-import { flexColumn } from '../style/common'
+import { colors } from "../../data/color"
+import { flexColumn } from '../../style/common'
 import { CSSProperties, FC } from "react"
 
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';

@@ -2,9 +2,9 @@ import { Link } from 'react-router-dom';
 import { FC } from "react"
 import { Product } from '../../data/products'
 import Button from '@mui/material/Button';
-import { CSSProperties } from '@mui/styled-engine';
-import { colors } from "./../../data/color";
-import CartButton, { buttonStyle } from './cartButton';
+import { CSSProperties } from 'react';
+import { colors } from "../../data/color";
+import CartButton, { buttonStyle } from '../interaction/cartButton';
 
 
 
@@ -12,7 +12,7 @@ interface Props {
     product: Product
 }
 
-const NavigationProduct: FC<Props> = (props) => {
+const ProductCard: FC<Props> = (props) => {
 
     /* console.log(props.product.including) */
 
@@ -56,4 +56,4 @@ const includeStyle: CSSProperties = {
 
 
 
-export default NavigationProduct
+export default ProductCard
