@@ -1,16 +1,19 @@
 import { CSSProperties, FC } from "react"
-import { colors } from "./../../data/color"
 
-interface Props {}
+interface Props {
+    firstColor: string
+    secondColor?: string
+    thirdColor?: string
+}
 
 
 export const ThreeLines: FC<Props> = (props) => {
     
     return (
     <div style={lineContainer}>
-        <div style={{...lines, backgroundColor: colors.primary }}></div>
-        <div style={{...lines, backgroundColor: colors.third }}></div> 
-        <div style={{...lines, backgroundColor: colors.secondary }}></div>
+        <div style={{...lines, backgroundColor: props.firstColor }}></div>
+        <div style={{...lines, backgroundColor: props.secondColor }}></div> 
+        <div style={{...lines, backgroundColor: props.thirdColor }}></div>
     </div>
     )
 }
@@ -18,8 +21,8 @@ export const ThreeLines: FC<Props> = (props) => {
 export const TwoLines: FC<Props> = (props) => {
     return (
     <div style={lineContainer}>
-        <div style={{...lines, backgroundColor: colors.third }}></div> 
-        <div style={{...lines, backgroundColor: colors.secondary }}></div>
+        <div style={{...lines, backgroundColor: props.firstColor }}></div>
+        <div style={{...lines, backgroundColor: props.secondColor }}></div> 
     </div>
     )
 }
@@ -27,11 +30,10 @@ export const TwoLines: FC<Props> = (props) => {
 export const OneLine: FC<Props> = (props) => {
     return (
     <div style={lineContainer}>
-        <div style={{...lines, backgroundColor: colors.third }}></div> 
+        <div style={{...lines, backgroundColor: props.firstColor }}></div>
     </div>
     )
 }
-
 
 const lineContainer: CSSProperties = {
     display: "flex",
