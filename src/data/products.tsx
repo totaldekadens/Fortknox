@@ -1,4 +1,4 @@
-import bild1 from '/src/assets/bild1.png'
+import bild1 from '/src/assets/banners/happy_shop_owner.png'
 import bild2 from '/src/assets/bild2.png'
 import bild3 from '/src/assets/bild3.png'
 
@@ -40,6 +40,7 @@ interface Integration {
     id: number
     name: string
     desc: string
+    price?: number
     integrera_med_externa_system : {name: string, bool: boolean}
     fri_support: {name: string, desc: string}
     molnbaserat: {name: string, bool: boolean}
@@ -127,7 +128,7 @@ const integration : Integration = {
     id: 2,
     name: "Integration",
     desc: "Med en Integrationslicens får du en hel värld av möjligheter eftersom du kan koppla ihop ditt Fortknox med över 400 olika tredjepartsprogram. Genom att integrera Fortknox med dina för- och eftersystem – exempelvis kassasystem, webbshopar eller arbetsordersystem – effektiviserar du din administration och undviker dubbelarbete.",
-
+    price: 109,
     integrera_med_externa_system : { 
         name: "Integrera med externa system", 
         bool: true},
