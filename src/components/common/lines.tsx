@@ -7,33 +7,38 @@ interface Props {
 }
 
 
-export const ThreeLines: FC<Props> = (props) => {
-    
-    return (
-    <div style={lineContainer}>
-        <div style={{...lines, backgroundColor: props.firstColor }}></div>
-        <div style={{...lines, backgroundColor: props.secondColor }}></div> 
-        <div style={{...lines, backgroundColor: props.thirdColor }}></div>
-    </div>
-    )
+
+export const Lines: FC<Props> = (props: Props) => {
+
+    if(props.firstColor && !props.secondColor && !props?.thirdColor ) {
+        return (
+            <div style={lineContainer}>
+                <div style={{...lines, backgroundColor: props.firstColor }}></div>
+            </div>
+        )
+    } else if(props.firstColor && props.secondColor && !props.thirdColor) {
+        return (
+            <div style={lineContainer}>
+                <div style={{...lines, backgroundColor: props.firstColor }}></div>
+                <div style={{...lines, backgroundColor: props.secondColor }}></div> 
+            </div>
+        )
+    } else if(props.firstColor && props.secondColor && props.thirdColor) {
+        return (
+            <div style={lineContainer}>
+                <div style={{...lines, backgroundColor: props.firstColor }}></div>
+                <div style={{...lines, backgroundColor: props.secondColor }}></div> 
+                <div style={{...lines, backgroundColor: props.thirdColor }}></div>
+            </div>
+        )
+    } else {
+        return (
+            <h1>Något gick fel..</h1>
+        )
+    }
+
 }
 
-export const TwoLines: FC<Props> = (props) => {
-    return (
-    <div style={lineContainer}>
-        <div style={{...lines, backgroundColor: props.firstColor }}></div>
-        <div style={{...lines, backgroundColor: props.secondColor }}></div> 
-    </div>
-    )
-}
-
-export const OneLine: FC<Props> = (props) => {
-    return (
-    <div style={lineContainer}>
-        <div style={{...lines, backgroundColor: props.firstColor }}></div>
-    </div>
-    )
-}
 
 const lineContainer: CSSProperties = {
     display: "flex",
@@ -47,4 +52,4 @@ const lines : CSSProperties = {
     borderRadius: "10px"
 }
 
-
+export default Lines

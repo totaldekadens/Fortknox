@@ -1,9 +1,9 @@
-import { CSSProperties, FC } from "react"
+import React, { CSSProperties, FC, useRef } from "react"
 import { products } from "../../data/products"
 import ProductCard from "../product/productCard"
 import { colors } from "../../data/color"
 import Button from '@mui/material/Button';
-import { ThreeLines, TwoLines } from "../common/lines";
+import Lines from "../common/lines";
 import { display } from "@mui/system";
 
 
@@ -12,23 +12,29 @@ interface Props {}
 
 const FrontPage: FC<Props> = (props) => {
 
+  const myRef = useRef<HTMLInputElement>(null);
+
+  const executeScroll = () => myRef!.current!.scrollIntoView({
+    behavior: "smooth",
+  }) 
+
   return (
     <>
       <div style={container}>
-        <img style={bannerStyle} src= '/src/assets/banners/happy_restaurant_owners.png' alt="" /> {/* Försök inportera denna istället */}
+        <img style={bannerStyle} src= '/src/assets/banners/happy_restaurant_owners.png' alt="" /> {/* Försök importera denna istället */}
         <div style={overlay}>
-          <ThreeLines firstColor= {colors.primary} secondColor={colors.third} thirdColor={colors.secondary}/>
+          <Lines firstColor= {colors.primary} secondColor={colors.third} thirdColor={colors.secondary}/>
           <h1 style={sloganStyle}>Lev din <span style={{color: colors.third}}>företagsdröm</span></h1>
           <div style={textContainer}>
             <p>Oavsett vad framgång är för dig som företagare, hjälper vi dig att nå dit du vill. Vi har samlat allt du behöver för att starta, växa och utvecklas – på ett ställe.</p>
           </div>
-          <Button sx={{color: "white", borderColor: "white", padding: "20px 30px 20px 30px", marginTop: "40px"}} variant="outlined">Beställ paket</Button>
+          <Button onClick={executeScroll} sx={{color: "white", borderColor: "white", padding: "20px 30px 20px 30px", marginTop: "40px"}} variant="outlined">Beställ paket</Button>
         </div>
       </div>
 
-      <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+      <div ref={myRef}  style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}} >
-          <TwoLines firstColor= {colors.third} secondColor={colors.secondary}/>
+          <Lines firstColor= {colors.third} secondColor={colors.secondary}/>
           <h1 style={{fontSize: "60px", color: colors.primary}}>Våra paket</h1>
         </div>
         <div style={container2}>
