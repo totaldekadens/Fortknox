@@ -4,6 +4,7 @@ interface Props {
     firstColor: string
     secondColor?: string
     thirdColor?: string
+    margin?: string
 }
 
 
@@ -12,20 +13,20 @@ export const Lines: FC<Props> = (props: Props) => {
 
     if(props.firstColor && !props.secondColor && !props?.thirdColor ) {
         return (
-            <div style={lineContainer}>
+            <div style={{...lineContainer, margin: props.margin}}>
                 <div style={{...lines, backgroundColor: props.firstColor }}></div>
             </div>
         )
     } else if(props.firstColor && props.secondColor && !props.thirdColor) {
         return (
-            <div style={lineContainer}>
+            <div style={{...lineContainer, margin: props.margin}}>
                 <div style={{...lines, backgroundColor: props.firstColor }}></div>
                 <div style={{...lines, backgroundColor: props.secondColor }}></div> 
             </div>
         )
     } else if(props.firstColor && props.secondColor && props.thirdColor) {
         return (
-            <div style={lineContainer}>
+            <div style={{...lineContainer, margin: props.margin}}>
                 <div style={{...lines, backgroundColor: props.firstColor }}></div>
                 <div style={{...lines, backgroundColor: props.secondColor }}></div> 
                 <div style={{...lines, backgroundColor: props.thirdColor }}></div>
@@ -42,7 +43,6 @@ export const Lines: FC<Props> = (props: Props) => {
 
 const lineContainer: CSSProperties = {
     display: "flex",
-    marginTop: "100px"
 }
 
 const lines : CSSProperties = {

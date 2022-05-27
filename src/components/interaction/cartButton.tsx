@@ -1,11 +1,12 @@
-import { CSSProperties, FC } from "react"
+import { FC } from "react"
 import { Product } from "../../data/products"
-import { colors } from "../../data/color"
 import Button from '@mui/material/Button';
+import { Link } from 'react-router-dom';
+import { buttonStyle } from "../../style/common";
 
 
 interface Props {
-    /* product: Product */
+    product: Product
     /* addToCart: (product: Product) => void */ 
 }
 
@@ -13,19 +14,10 @@ interface Props {
 const CartButton: FC<Props> = (props) => {
     
     return (
-        <>
+        <Link style={{textDecoration: "none"}} to={`/checkout/${props.product.id}`} >
             <Button sx={buttonStyle} variant="outlined">Beställ</Button>
-        </>
-        
+        </Link>
     )
-}
-
-export const buttonStyle: CSSProperties = {
-    width: "120px",
-    height: "45px",
-    margin: "5px",
-    color: colors.fourth,
-    borderColor: colors.fourth,
 }
 
 export default CartButton
