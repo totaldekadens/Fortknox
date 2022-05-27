@@ -18,6 +18,9 @@ const Navbar: FC<Props> = (props) => {
                 <Link style={{color: "white", textDecoration: "none", fontSize: "30px"}} to={"/"} >Fortknox</Link>
             </div>
             <div style={{display: "flex", gap: "20px"}}>
+                <Link style={{textDecoration: "none", display: "flex", alignItems: "center", color: "white" }} to={`/admin`} >
+                    Admin
+                </Link>
                 <Link to={"/checkout"}>
                 <IconButton aria-label="cart">
                     <StyledBadge badgeContent={4} style={{color: "white"}} > {/* Denna blir dynamisk sedan */}
