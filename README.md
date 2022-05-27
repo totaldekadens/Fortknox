@@ -13,13 +13,21 @@ Small (smaller than 640px)
 Medium (641px to 1007px)
 Large (1008px and larger)
 
+# Idea 
+1. cartButton.tsx -> CartButton:
+Add Links to cartpage 
 
+
+
+
+
+# File structure
 components
     pages
         product.tsx
         front.tsx
         checkOut.tsx
-    interaktion <-------------------- real stavning
+    interaction
         buttons.tsx
         input.tsx
     common

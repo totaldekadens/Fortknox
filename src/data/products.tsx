@@ -1,6 +1,6 @@
 import bild1 from '/src/assets/banners/happy_shop_owner.png'
-import bild2 from '/src/assets/bild2.png'
-import bild3 from '/src/assets/bild3.png'
+import bild2 from '/src/assets/banners/happy_chef.png'
+import bild3 from '/src/assets/banners/meeting.png'
 
 // Package
 export interface Product {
@@ -11,8 +11,8 @@ export interface Product {
     price3mth: number
     price12mth: number
     including: [
-        Accounting,
         Integration,
+        Accounting,
         Invoice?,
         Salary?
     ] 
@@ -41,7 +41,7 @@ interface Integration {
     name: string
     desc: string
     price?: number
-    integrera_med_externa_system : {name: string, bool: boolean}
+    integrera_med_externa_system: {name: string, bool: boolean}
     fri_support: {name: string, desc: string}
     molnbaserat: {name: string, bool: boolean}
     Fortknox_app: {name: string, bool: boolean}
@@ -235,8 +235,8 @@ export const products: Product[] = [
         price3mth: 159,
         price12mth: 139,
         including: [
-            accounting, 
-            integration
+            integration,
+            accounting 
         ]
     }, {
         id: 2,
@@ -246,8 +246,8 @@ export const products: Product[] = [
         price3mth: 229,
         price12mth: 199,
         including: [
-            accounting, 
             integration,
+            accounting, 
             invoice
         ]
     }, {
@@ -258,8 +258,8 @@ export const products: Product[] = [
         price3mth: 329,
         price12mth: 299,
         including: [
-            accounting, 
             integration,
+            accounting, 
             invoice,
             salary
         ]
