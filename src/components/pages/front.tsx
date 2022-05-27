@@ -5,6 +5,7 @@ import { colors } from "../../data/color"
 import Button from '@mui/material/Button';
 import Lines from "../common/lines";
 import { display } from "@mui/system";
+import ContentTitle from "../common/contentTitle";
 
 
 
@@ -33,14 +34,10 @@ const FrontPage: FC<Props> = (props) => {
       </div>
 
       <div ref={myRef}  style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}} >
-          <Lines firstColor= {colors.third} secondColor={colors.secondary}/>
-          <h1 style={{fontSize: "60px", color: colors.primary}}>Våra paket</h1>
-        </div>
+        <ContentTitle title="Våra paket" textAlign= "center" alignItems="center" firstColor= {colors.third} secondColor= {colors.secondary}/>
         <div style={container2}>
           {products.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
-        
       </div>
     </>
   )

@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import { FC, CSSProperties } from "react"
 import { Product } from '../../data/products'
-import Button from '@mui/material/Button';
 import { colors } from "../../data/color";
-import CartButton, { buttonStyle } from '../interaction/cartButton';
+import CartButton from '../interaction/cartButton';
+import ProductButton from '../interaction/toProductButton';
 
 
 
@@ -14,35 +13,44 @@ interface Props {
 const ProductCard: FC<Props> = (props) => {
 
     return (
-
-        <div style={cardCont}>
+        <div style={container}>
             <div>
-                {props.product.including.map((include) => { return (<span key={include!.id} style={includeStyle}>{include?.name}, </span>) })}
+                <img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
             </div>
-            <div style={{ display: "flex", height: "100%" }}>
+            <div style={cardCont}>
                 <div>
-                    <h1>{props.product.name}</h1>
-                    <span>Från</span><br />
-                    <span style={{ fontSize: "25px" }}>{props.product.price12mth}</span><span> kr/mån</span>
+                    {props.product.including.map((include) => { return (<span key={include!.id} style={includeStyle}>{include?.name}, </span>) })}
                 </div>
-            </div>
-            <div>
-                <Link style={{textDecoration: "none"}} to={`/checkout/${props.product.id}`} >
-                    <CartButton /* product={props.product} *//>
-                </Link>
-                <Link style={{textDecoration: "none"}} to={`/${props.product.id}`}>
-                    <Button sx={buttonStyle} variant="outlined">Mer info</Button>
-                </Link>
+                <div style={{ display: "flex", height: "100%" }}>
+                    <div>
+                        <h1>{props.product.name}</h1>
+                        <span>Från</span><br />
+                        <span style={{ fontSize: "25px" }}>{props.product.price12mth}</span><span> kr/mån</span>
+                    </div>
+                </div>
+                <div>
+                    <CartButton product={props.product}/>
+                    <ProductButton product={props.product}/>  
+                </div>
             </div>
         </div>
     )
 }
 
 
-const cardCont: CSSProperties = {
+const container: CSSProperties = {
     display: "flex",
     flexDirection: "column",
     width: "29%",
+    height: "400px",
+    borderRadius: "10px",
+    padding: "20px"
+}
+
+const cardCont: CSSProperties = {
+    display: "flex",
+    flexDirection: "column",
+    width: "100%",
     backgroundColor: colors.secondary,
     height: "300px",
     borderRadius: "10px",
