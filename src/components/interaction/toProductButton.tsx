@@ -7,17 +7,16 @@ import { buttonStyle } from "../../style/common";
 
 interface Props {
     product: Product
-    /* addToCart: (product: Product) => void */ 
 }
 
 
-const CartButton: FC<Props> = (props) => {
+const ProductButton: FC<Props> = (props) => {
     
     return (
-        <Link style={{textDecoration: "none"}} to={`/checkout/${props.product.id}`} >
-            <Button sx={buttonStyle} variant="outlined">Beställ</Button>
+        <Link style={{textDecoration: "none"}} to={`/${props.product.id}`}>
+            <Button sx={buttonStyle} variant="outlined">Mer info</Button>
         </Link>
     )
 }
 
-export default CartButton
+export default ProductButton
