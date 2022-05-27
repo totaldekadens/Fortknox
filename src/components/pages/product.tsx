@@ -72,7 +72,7 @@ const ProductPage: FC<Props> = (props) => {
             <div style={{ ...container, flexDirection: "column" }}>
 
                 <div style={{ display: "flex", alignItems: "center", flexDirection: "column" }}>
-                    <Lines firstColor={colors.secondary} secondColor={colors.third} />
+                    <Lines firstColor={colors.secondary} secondColor={colors.third} margin= "100px 0px 0px 0px"/>
                     <h1 style={{ fontSize: "60px", color: colors.primary, textAlign: "center" }}>Vad som ingår</h1>
                 </div>
 
@@ -89,7 +89,7 @@ const ProductPage: FC<Props> = (props) => {
 
             </div>
             {/*  change to a own component */}
-            <div style={{ ...container, flexDirection: "column", color: "black" }}>
+            <div style={{ ...container, flexDirection: "column", justifyContent:"center" ,color: "black" }}>
 
                 {CustomizedTables()}
             </div>
@@ -105,11 +105,11 @@ const ProductPage: FC<Props> = (props) => {
 function amountOfLinesByLenght(foundProduct: Product) {
 
     if (foundProduct.including.length < 3) {
-        return <Lines firstColor={colors.secondary} />
+        return <Lines firstColor={colors.secondary} margin= "50px 0px 0px 0px" />
     } if (foundProduct.including.length < 4) {
-        return <Lines firstColor={colors.secondary} secondColor={colors.third} />
+        return <Lines firstColor={colors.secondary} secondColor={colors.third} margin= "50px 0px 0px 0px" />
     } if (foundProduct.including.length < 5) {
-        return <Lines firstColor={colors.secondary} secondColor={colors.third} thirdColor={colors.fourth} />
+        return <Lines firstColor={colors.secondary} secondColor={colors.third} thirdColor={colors.fourth} margin= "50px 0px 0px 0px" />
     } else {
         return <h1>Something went wrong..</h1>
     }
