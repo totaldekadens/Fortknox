@@ -1,13 +1,17 @@
 import bild1 from '/src/assets/banners/happy_shop_owner.png'
 import bild2 from '/src/assets/bild2.png'
 import bild3 from '/src/assets/bild3.png'
+import base from '/src/assets/base.png'
+import standard from '/src/assets/standard.png'
+import plus from '/src/assets/plus.png'
 
 // Package
 export interface Product {
     id: number,
     name: string,
     desc: string,
-    image: string
+    thumbnail: string
+    icon: string
     price3mth: number
     price12mth: number
     including: [
@@ -231,7 +235,8 @@ export const products: Product[] = [
         id: 1,
         name: "Fortknox Bas",
         desc: "Automatisk bokföring och helt digital hantering av kvitton och leverantörsfakturor. Integrera med över 400 olika för- och eftersystem för att undvika dubbelarbete",
-        image: bild1,
+        thumbnail: bild1,
+        icon: base,
         price3mth: 159,
         price12mth: 139,
         including: [
@@ -242,7 +247,8 @@ export const products: Product[] = [
         id: 2,
         name: "Fortknox Standard",
         desc: "För dig som vill ta betalt av dina kunder och få bokföringen med automatik. Skicka fakturor och påminnelser helt digitalt på webben eller i mobilen med Fortknox App.",
-        image: bild2,
+        thumbnail: bild2,
+        icon: standard,
         price3mth: 229,
         price12mth: 199,
         including: [
@@ -254,7 +260,8 @@ export const products: Product[] = [
         id: 3,
         name: "Fortknox Plus",
         desc: "När du även vill hantera löner i företaget. Alltid uppdaterat med aktuella skattetabeller, lagar och regler vilket gör både lönearbetet och rapporteringen enkel.",
-        image: bild3,
+        thumbnail: bild3,
+        icon: plus,
         price3mth: 329,
         price12mth: 299,
         including: [
