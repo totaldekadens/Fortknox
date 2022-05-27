@@ -230,6 +230,16 @@ const salary : Salary = {
 
 
 
+
+export const includings = [
+    integration,
+    accounting,
+    invoice,
+    salary
+]
+
+
+
 export const products: Product[] = [
     {
         id: 1,
