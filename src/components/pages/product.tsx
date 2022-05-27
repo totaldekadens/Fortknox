@@ -8,7 +8,7 @@ import CartButton from '../interaction/cartButton';
 import CustomizedTables from "../product/compareProduct";
 
 interface Props {
-
+    
 }
 
 
@@ -56,15 +56,15 @@ const ProductPage: FC<Props> = (props) => {
 
                                 </div>
                             </div>
-                            <Link style={{ textDecoration: "none" }} to={`/checkout/${foundProduct.id}`} >
-                                <CartButton /* product={props.product} */ />
-                            </Link>
+
+                            <CartButton product={foundProduct} />
+
 
                         </div>
                     </div>
                 </div>
                 <div style={row}>
-                    <img style={imgCover} src={foundProduct!.image} alt="" />
+                    <img style={imgCover} src={foundProduct!.thumbnail} alt="" />
                 </div>
 
             </div>
@@ -90,8 +90,8 @@ const ProductPage: FC<Props> = (props) => {
             </div>
             {/*  change to a own component */}
             <div style={{ ...container, flexDirection: "column", color: "black" }}>
-                
-            {CustomizedTables()}
+
+                {CustomizedTables()}
             </div>
         </>
     )
