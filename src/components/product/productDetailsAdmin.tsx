@@ -5,20 +5,23 @@ import Button from "@mui/material/Button";
 import { buttonStyle } from "../../style/common";
 
 
+
 interface Props {
     product: Product
+    deleteProductProp: (product: Product) => void;
 }
 
 const ProductDetailsAdmin: FC<Props> = (props) => {
 
     return (
         <div style={container}>
-            <div>
-                <img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
-            </div>
             <div style={cardCont}>
+            <strong>{"Id: " + props.product.id}</strong>
             <h1>{props.product.name}</h1>
-
+            <div style= {{marginBottom: "20px"}}>
+                <strong   >{"Ikon: "}</strong><img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
+                <strong style={{ marginLeft: "10px"}}>{"Bild: "}</strong><img style={{width: "90px", height: "50px", objectFit: "contain"}} src= {props.product.thumbnail} alt="" /> 
+            </div>
             <strong>Inkluderade produkter:</strong>
                 <div>
                     {props.product.including.map((include) => { return (<p style={{margin: "0px"}} key={include!.id} >{include?.name} {`(Ordinarie pris: ${include?.price} kr/mån)`} </p>) })}
@@ -33,10 +36,11 @@ const ProductDetailsAdmin: FC<Props> = (props) => {
                         <span>12 månader - </span>
                         <span style={{ fontSize: "25px" }}>{props.product.price12mth}</span><span> kr/mån</span>
                     </div>
-                    <div style={{display: "flex", alignItems:"flex-end"}}>
-                    <Button sx={{...buttonStyle, borderColor: "red", color: "red"}} variant="outlined">Ta bort</Button>
+                    
+                </div>
+                <div style={{display: "flex", alignItems:"flex-end", justifyContent: "flex-end" , width: "100%", marginTop: "10px"}}>
+                    <Button onClick={(e) => {props.deleteProductProp(props.product)} } sx={{...buttonStyle, borderColor: "red", color: "red"}} variant="outlined">Ta bort</Button>
                     <Button sx={buttonStyle} variant="outlined">Ändra</Button>
-                    </div>
                 </div>
             </div>
         </div>

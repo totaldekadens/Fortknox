@@ -1,65 +1,31 @@
-import  { FC } from "react"
+import  { FC, useContext, useState } from "react"
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { colors } from "../../data/color";
-import {products, includings} from "./../../data/products"
+import { includings } from "./../../data/products"
 import ProductDetailsAdmin from "../product/productDetailsAdmin";
-
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-interface Props {}
+import AddProduct from "../admin/addProduct";
+import { productContext } from "../context/provider";
+import { TabPanel, a11yProps } from "../admin/adminTemplatePart";
 
 
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
+const AdminPanel : FC = () => { 
+  
+  // Gets product context
+  const { deleteProduct, productList } = useContext(productContext)
 
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 5 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-
-
-function a11yProps(index: number) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
-
-
-
-export function VerticalTabs() {
-
+  // State of what panel to be seen
   const [value, setValue] = React.useState(0);
 
+  // Sets the state
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-
+  
   return (
-
     <div style={{height: "auto", padding: "0px 30px 0px 30px"}}>
         <h1 style={{color: colors.primary}} >Adminpanelen</h1>
         <Box
@@ -74,28 +40,28 @@ export function VerticalTabs() {
             sx={{ borderRight: 1, borderColor: 'divider', width: "214px"}}
         >
             <Tab label="Skapa paket" {...a11yProps(0)} />
-            <Tab label="Ändra paket" {...a11yProps(1)} />
-            <Tab label="Ta bort paket" {...a11yProps(2)} />
-            <Tab label="Paket" {...a11yProps(3)} />
-            <Tab label="Produkter" {...a11yProps(4)} />
-            </Tabs>
-            {/* Kan inte nesta h3 i en p-tag - Samma som Hugo fick */}
+            <Tab label="Paket" {...a11yProps(1)} />
+            <Tab label="Produkter" {...a11yProps(2)} />
+          </Tabs>
+
+            {/*WARNING! Cannot appear as a descendant of p-tag */}
+
+            {/* Content in "Skapa paket" */}
             <TabPanel value={value} index={0}>
                 <h2 style={{color: colors.primary}}>Skapa paket</h2>
+                <AddProduct/>
             </TabPanel>
+
+            {/* Content in "Paket" */}
             <TabPanel value={value} index={1}>
-                <h2 style={{color: colors.primary}}>Ändra paket</h2>
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                <h2 style={{color: colors.primary}}>Ta bort paket</h2>
-            </TabPanel>
-            <TabPanel value={value} index={3}>
                 <h2 style={{color: colors.primary}}>Paket</h2>
                 <div style={{width: "100%"}}>
-                    {products.map((product => { return < ProductDetailsAdmin key={product.id} product={product}/> })) }
+                    {productList.map((product => { return < ProductDetailsAdmin key={product.id} product={product} deleteProductProp={() => {deleteProduct(product) }}/> })) }
                 </div>
             </TabPanel>
-            <TabPanel value={value} index={4}>
+
+            {/* Content in "Produkter" */}
+            <TabPanel value={value} index={2}>
                 <h2 style={{color: colors.primary}}>Produkter</h2>
                 <div style={{width: "100%"}}>
                     {includings.map((include => { return (
@@ -104,8 +70,7 @@ export function VerticalTabs() {
             </TabPanel>
         </Box>
     </div>
-  );
+  )
 }
 
-
-
+export default AdminPanel

@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useRef } from "react"
+import React, { CSSProperties, FC, useContext, useRef } from "react"
 import { products } from "../../data/products"
 import ProductCard from "../product/productCard"
 import { colors } from "../../data/color"
@@ -6,12 +6,15 @@ import Button from '@mui/material/Button';
 import Lines from "../common/lines";
 import { display } from "@mui/system";
 import ContentTitle from "../common/contentTitle";
+import { productContext } from "../context/provider";
 
 
 
 interface Props {}
 
 const FrontPage: FC<Props> = (props) => {
+
+  const { productList } = useContext(productContext)
 
   const myRef = useRef<HTMLInputElement>(null);
 
@@ -36,7 +39,7 @@ const FrontPage: FC<Props> = (props) => {
       <div ref={myRef}  style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <ContentTitle title="Våra paket" textAlign= "center" alignItems="center" firstColor= {colors.third} secondColor= {colors.secondary}/>
         <div style={container2}>
-          {products.map((product) => <ProductCard key={product.id} product={product} />)}
+          {productList.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       </div>
     </>
@@ -49,14 +52,14 @@ const container: CSSProperties = {
   justifyContent: "flex-start",
   alignContent: "flex-start",
   flexWrap: "wrap",
-  height: '100%',
+  minHeight: '100vh',
 }
 
 const container2: CSSProperties = {
   display: 'flex',
   justifyContent: "space-around",
   flexWrap: "wrap",
-  height: '70vh',
+  minHeight: '70vh',
   margin: '0.5em',
   justifyItems: 'stretch',
   alignItems: 'stretch',
@@ -68,8 +71,9 @@ const container2: CSSProperties = {
 
 const bannerStyle: CSSProperties = {
   width: "100%",
+  height: "100vh",
   position: 'relative',
-  objectFit: "contain",
+  objectFit: "cover",
   filter: "brightness(70%)"
 }
 

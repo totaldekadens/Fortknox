@@ -1,9 +1,52 @@
 import bild1 from '/src/assets/banners/happy_shop_owner.png'
 import bild2 from '/src/assets/banners/happy_chef.png'
 import bild3 from '/src/assets/banners/meeting.png'
-import base from '/src/assets/base.png'
-import standard from '/src/assets/standard.png'
-import plus from '/src/assets/plus.png'
+import base from '/src/assets/icons/base.png'
+import standard from '/src/assets/icons/standard.png'
+import plus from '/src/assets/icons/plus.png'
+import accountingicon from '/src/assets/icons/accounting.png'
+import bank from '/src/assets/icons/bank.png'
+import cafe from '/src/assets/icons/cafe.png'
+import city from '/src/assets/icons/city.png'
+import hotel from '/src/assets/icons/hotel.png'
+import integrationicon from '/src/assets/icons/integration.png'
+import receipt from '/src/assets/icons/receipt.png'
+import invoiceicon from '/src/assets/icons/invoice.png'
+import salaryicon from '/src/assets/icons/salary.png'
+import success from '/src/assets/icons/success.png'
+import teamwork from '/src/assets/icons/teamwork.png'
+import skyscrapers from '/src/assets/icons/skyscrapers.png'
+
+
+
+interface Icon {
+    src: string
+    name: string
+}
+
+
+export const icons : Icon[] = [
+    {src: base, name: "Base"},
+    {src: standard, name: "Standard"},
+    {src: plus, name: "Plus"},
+    {src: skyscrapers, name: "Skyscrapers"},
+    {src: hotel, name: "Hotel"},
+    {src: city, name: "City"},
+    {src: cafe, name: "Cafe"},
+    {src: bank, name: "Bank"},
+    {src: teamwork, name: "Teamwork"},
+    {src: success, name: "Success"},
+    {src: receipt, name: "Receipt"},
+    {src: integrationicon, name: "Integration"},
+    {src: accountingicon, name: "Accounting"},
+    {src: invoiceicon, name: "Invoice"},
+    {src: salaryicon, name: "Salary"},
+]
+
+
+
+
+
 
 // Package
 export interface Product {
@@ -240,6 +283,9 @@ export const includings = [
 
 
 
+
+
+
 export const products: Product[] = [
     {
         id: 1,
@@ -282,3 +328,5 @@ export const products: Product[] = [
         ]
     }
 ]
+
+
