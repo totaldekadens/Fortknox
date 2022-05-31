@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { Route, Routes } from "react-router-dom";
-import {VerticalTabs} from "./pages/admin";
+import AdminPanel from "./pages/admin";
 import CheckOut from "./pages/checkOut";
 import FrontPage from "./pages/front";
 import ProductPage from "./pages/product";
@@ -18,7 +18,7 @@ const ContentContainer: FC<Props> = (props) => {
                 <Route path="/:productId" element={ <ProductPage /> } />
                 <Route path="/checkout" element={ <CheckOut /> } />
                 <Route path="/checkout/:productId" element={ <CheckOut /> } />  {/* När du trycker på beställ-knappen */}
-                <Route path="/admin" element={ <VerticalTabs /> } />
+                <Route path="/admin" element={ <AdminPanel /> } />
             </Routes>
         </>
     )

@@ -42,6 +42,7 @@ const container: CSSProperties = {
     display: "flex",
     flexDirection: "column",
     width: "29%",
+    minWidth: "320px",
     height: "400px",
     borderRadius: "10px",
     padding: "20px"
