@@ -6,8 +6,8 @@ import Box from '@mui/material/Box';
 import { colors } from "../../data/color";
 import { includings } from "./../../data/products"
 import ProductDetailsAdmin from "../product/productDetailsAdmin";
-import AddProduct from "../admin/addProduct";
-import { productContext } from "../context/provider";
+import AddProduct from "./../admin/addProduct";
+import { productContext } from "./../context/provider";
 import { TabPanel, a11yProps } from "../admin/adminTemplatePart";
 
 

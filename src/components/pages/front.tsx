@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Lines from "../common/lines";
 import { display } from "@mui/system";
 import ContentTitle from "../common/contentTitle";
-import { productContext } from "../context/provider";
+import { productContext } from "./../context/provider";
 
 
 
