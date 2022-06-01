@@ -3,6 +3,8 @@ import { Product } from '../../data/products'
 import { colors } from "../../data/color";
 import Button from "@mui/material/Button";
 import { buttonStyle } from "../../style/common";
+import AddProduct from "../admin/addProduct";
+import { TabPanel } from "../admin/adminTemplatePart";
 
 
 

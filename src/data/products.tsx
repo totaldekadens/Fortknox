@@ -275,7 +275,7 @@ const salary : Salary = {
 
 
 
-export const includings = [
+export const includings: [(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?] = [
     integration,
     accounting,
     invoice,

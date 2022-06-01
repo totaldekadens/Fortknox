@@ -1,4 +1,4 @@
-import { FC, CSSProperties, useState, FormEvent } from "react"
+import { FC, CSSProperties, useState, FormEvent, useContext } from "react"
 import { icons, includings, Product, Integration, Accounting, Invoice, Salary, integration, products } from '../../data/products'
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -12,12 +12,9 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Button from "@mui/material/Button";
 import { SecurityRounded } from "@mui/icons-material";
+import { productContext } from "../context/provider";
 
-
-
-interface Props {
-
-}
+interface Props {}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -30,9 +27,6 @@ const MenuProps = {
     },
 };
 
-
-
-
 const AddProduct: FC<Props> = (props) => {
 
     // States
@@ -41,9 +35,9 @@ const AddProduct: FC<Props> = (props) => {
     const [price3, setPrice3] = React.useState(0);
     const [price12, setPrice12] = React.useState(0);
     const [icon, setIcon] = React.useState('');
-    let [newInclude, setNewInclude] = React.useState<(Integration | Accounting | Invoice | Salary | null)[]>([null]);
+    let [newInclude, setNewInclude] = React.useState<[(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?]>([undefined]);
 
-    // Select includings
+    // Select includings - State
     const [includeInput, setIncludes] = React.useState<string[]>([]);
     const handleChange2 = (event: SelectChangeEvent<typeof includeInput>) => {
     const {
@@ -54,23 +48,23 @@ const AddProduct: FC<Props> = (props) => {
     );
     };
 
-
-    const [productList, setProductList] = useState<Product[]> (products)
+    // Gets productContext
+    const { productList, getProductList } = useContext(productContext)
     
-
-
+    // Sets new product - No validation applied at the moment
     const setNewProduct: () => void = () => {
 
+        // Creates an array of includes-objects from includeInput (string-array).
         for (let i = 0; i < includeInput.length; i++) {
             
-            const element = includeInput[i];
+            const includeStringArray = includeInput[i];
             
-            includings.map((hej) => { 
+            includings.map((includeObject) => { 
 
-                if(hej.name == element) {
+                if(includeObject!.name == includeStringArray) {
  
                     if(newInclude == undefined || newInclude[0] == null ) {
-                        newInclude = [hej]
+                        newInclude = [includeObject]   // Check type
                         setNewInclude(newInclude)
                     }   
                     else {
@@ -78,24 +72,22 @@ const AddProduct: FC<Props> = (props) => {
                         for (let i = 0; i < newInclude.length; i++) {
                             const newInc = newInclude[i];
                             
-                            if(newInc?.id == hej.id) {
+                            if(newInc?.id == includeObject!.id) {
                                 return
                             }
                         }
-
-                        newInclude.push(hej)
+                        newInclude.push(includeObject)
                         setNewInclude(newInclude)
                     }
                 }
             }) 
         }
-
         
-
+        // Creates new Id
         const descendProductList = productList.sort((first, second) => 0 - (first.id > second.id ? 1 : -1))
-
         const newId = descendProductList[0].id + 1
 
+        // Object of new product
         const newProduct: Product = {
             id: newId,
             name: nameInput,
@@ -106,21 +98,17 @@ const AddProduct: FC<Props> = (props) => {
             including: newInclude
         }
 
-        descendProductList.push(newProduct)
-
         const ascendProductList = descendProductList.sort((first, second) => 0 - (first.id > second.id ? -1 : 1))
 
-        setProductList(ascendProductList) 
+        ascendProductList.push(newProduct)
         localStorage.setItem('productList', JSON.stringify(ascendProductList));
-
-        console.log(ascendProductList)
-
+        getProductList();
 
     }
 
     return (
         <div>  
-            {/* paketnamn och beskrivning */}
+            {/* package name and description */}
             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '400px' },}} noValidate autoComplete="off">
                 <div>
                     <TextField required id="outlined-required" label="Paketnamn" onChange={(event) => {setName(event.target.value)}} value={nameInput}/><br />
@@ -142,24 +130,23 @@ const AddProduct: FC<Props> = (props) => {
                 MenuProps={MenuProps}
                 >
                 {includings.map((include) => (
-                    <MenuItem key={include.id} value={include.name}>
-                        <Checkbox checked={includeInput.indexOf(include.name) > -1} />
-                        <ListItemText primary={include.name} />
+                    <MenuItem key={include!.id} value={include!.name}>
+                        <Checkbox checked={includeInput.indexOf(include!.name) > -1} />
+                        <ListItemText primary={include!.name} />
                     </MenuItem>
                 ))}
                 </Select>
             </FormControl>
 
-            {/* Priser */}           
+            {/* Prices */}           
             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '200px' },}} noValidate autoComplete="off">
                 <div>
-                    <TextField required id="outlined-required" label="Pris 3 månader" onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {setPrice3(event.target.value)}} value={price3} type={"number"} />
-                    <TextField required id="outlined-required" label="Pris 12 månader" onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {setPrice12(event.target.value)}} value={price12} type={"number"} />
+                    <TextField required id="outlined-required" label="Pris 3 månader" onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {setPrice3(event.target.value)}} value={price3} type={"number"} /> {/* check error */}
+                    <TextField required id="outlined-required" label="Pris 12 månader" onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {setPrice12(event.target.value)}} value={price12} type={"number"} /> {/* check error */}
                 </div>
             </Box>
 
-
-            {/* Ikoner */} 
+            {/* Icons */} 
             <div style={{display: "flex", alignItems: "center"}}>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label">Ikon</InputLabel>
@@ -179,12 +166,16 @@ const AddProduct: FC<Props> = (props) => {
                 <img style={{width: "40px"}} src= {icon} alt="" />
             </div>
             <p style={{color: "black"}}>Lägg till bild-input här sedan</p>
+
+            {/* Button */}
             <div style={{display: "flex", alignItems: "center", width: "100%", justifyContent: "flex-end"}}>
                 <Button sx={{width: "180px", height: "60px"}} variant="outlined" onClick={() => {setNewProduct()}} >Skapa paket</Button>
             </div>
         </div>
     )
 }
+
+
 
 
 export default AddProduct

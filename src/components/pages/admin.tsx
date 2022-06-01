@@ -65,7 +65,7 @@ const AdminPanel : FC = () => {
                 <h2 style={{color: colors.primary}}>Produkter</h2>
                 <div style={{width: "100%"}}>
                     {includings.map((include => { return (
-                    <h3 style={{color: "black"}} key={include.id}>{include.name}</h3>) })) }
+                    <h3 style={{color: "black"}} key={include!.id}>{include!.name}</h3>) })) }
                 </div>
             </TabPanel>
         </Box>
