@@ -10,6 +10,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import InputFieldsCart from "../interaction/inputFieldsCart";
+import SummaryCard from "../payment/summaryCard";
 
 const steps = ['Varukorg', 'Faktureringsuppgifter', 'Integration', "Slutför köp"];
 
@@ -100,10 +101,11 @@ const CheckOut: FC<Props> = (props) => {
         ) : (
         <React.Fragment>
             <Typography sx={{ mt: 2, mb: 1 }}></Typography>
-                
-                <div style={{width: "100%", display:"flex", justifyContent:"center"}}>
-                { activeStep == 0 ? ( <ProductCardCart /> ) : ""}
-                { activeStep == 1 ? ( <InputFieldsCart /> ) : ""}
+               
+               {/*  container div for checkout  */}
+                <div style={{maxWidth: "100%", display:"flex", justifyContent: "center", padding:"4%"}}>
+                { activeStep == 0 ? ( <><ProductCardCart/> <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/> </>) : ""}
+                { activeStep == 1 ? ( <><InputFieldsCart  /> <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/> </> ) : ""}
                 { activeStep == 2 ? ( "Integration" ) : ""}
                 { activeStep == 3 ? ( "slutför köp" ) : ""}
                 </div>
@@ -122,14 +124,15 @@ const CheckOut: FC<Props> = (props) => {
                 </Button>
             )}
             <Button onClick={handleNext}>
-                {activeStep === steps.length - 1 ? 'Slutför köp' : 'Nästa'}
+                {activeStep ===  4 - 1 ? 'Slutför köp' : 'Nästa'}
+                
             </Button>
             </Box>
         </React.Fragment>
         )}
         </Box>
         );
-
+                
 
 
 }
