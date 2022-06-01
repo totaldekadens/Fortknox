@@ -6,8 +6,8 @@ import Box from '@mui/material/Box';
 import { colors } from "../../data/color";
 import { includings } from "./../../data/products"
 import ProductDetailsAdmin from "../product/productDetailsAdmin";
-import AddProduct from "../admin/addProduct";
-import { productContext } from "../context/provider";
+import AddProduct from "./../admin/addProduct";
+import { productContext } from "./../context/provider";
 import { TabPanel, a11yProps } from "../admin/adminTemplatePart";
 
 
@@ -65,7 +65,7 @@ const AdminPanel : FC = () => {
                 <h2 style={{color: colors.primary}}>Produkter</h2>
                 <div style={{width: "100%"}}>
                     {includings.map((include => { return (
-                    <h3 style={{color: "black"}} key={include.id}>{include.name}</h3>) })) }
+                    <h3 style={{color: "black"}} key={include!.id}>{include!.name}</h3>) })) }
                 </div>
             </TabPanel>
         </Box>

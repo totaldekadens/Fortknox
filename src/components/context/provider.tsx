@@ -7,11 +7,13 @@ interface Props {}
 interface productContextData {
     deleteProduct: (product: Product) => void
     productList: Product[]
+    getProductList: () => void
 }
 
 export const productContext = React.createContext<productContextData>({
     deleteProduct: (product: Product) => {},
-    productList: products
+    productList: products,
+    getProductList: () => {}
 })
 
 
@@ -22,7 +24,7 @@ const Provider:  FC<PropsWithChildren<Props>> = (props) => {
 
     const [productList, setProductList] = useState<Product[]> (products)
 
-
+    // Updates productList
     const getProductList: () => void = () => {
         
         const getCurrentProductList = localStorage.getItem('productList')
@@ -63,7 +65,7 @@ const Provider:  FC<PropsWithChildren<Props>> = (props) => {
 
 
     return (
-        <productContext.Provider value={{ productList, deleteProduct}}>
+        <productContext.Provider value={{ productList, deleteProduct, getProductList}}>
             {props.children}
         </productContext.Provider>
     )

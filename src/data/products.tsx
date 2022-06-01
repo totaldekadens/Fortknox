@@ -53,21 +53,22 @@ export interface Product {
     id: number,
     name: string,
     desc: string,
-    thumbnail: string
+    thumbnail?: string
     icon: string
     price3mth: number
     price12mth: number
     including: [
-        Integration,
-        Accounting,
+        Integration?,
+        Accounting?,
         Invoice?,
-        Salary?
+        Salary?,
+        null?
     ] 
 }
 
 
 // Includes
-interface Accounting {
+export interface Accounting {
     id: number
     name: string
     desc: string
@@ -83,7 +84,7 @@ interface Accounting {
     bokslut: {name: string, desc: string}
 }
 
-interface Integration {
+export interface Integration {
     id: number
     name: string
     desc: string
@@ -94,7 +95,7 @@ interface Integration {
     Fortknox_app: {name: string, bool: boolean}
 }
 
-interface Invoice {
+export interface Invoice {
     id: number
     name: string
     desc: string
@@ -112,7 +113,7 @@ interface Invoice {
 }
 
 
-interface Salary {
+export interface Salary {
     id: number
     name: string
     desc: string
@@ -171,7 +172,7 @@ const accounting : Accounting = {
         desc: "Via integration"}
 }
 
-const integration : Integration = {
+export const integration : Integration = {
     id: 2,
     name: "Integration",
     desc: "Med en Integrationslicens får du en hel värld av möjligheter eftersom du kan koppla ihop ditt Fortknox med över 400 olika tredjepartsprogram. Genom att integrera Fortknox med dina för- och eftersystem – exempelvis kassasystem, webbshopar eller arbetsordersystem – effektiviserar du din administration och undviker dubbelarbete.",
@@ -274,7 +275,7 @@ const salary : Salary = {
 
 
 
-export const includings = [
+export const includings: [(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?] = [
     integration,
     accounting,
     invoice,
