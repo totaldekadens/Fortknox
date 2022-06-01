@@ -126,6 +126,7 @@ const rows = [
 })  */
 
 const headerTableCell = products.map((product) => {
+ 
   return <StyledTableCell key={product.name} align="center" >{product.name}</StyledTableCell>
 })
 
