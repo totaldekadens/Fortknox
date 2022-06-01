@@ -9,6 +9,7 @@ import ProductDetailsAdmin from "../product/productDetailsAdmin";
 import AddProduct from "./../admin/addProduct";
 import { productContext } from "./../context/provider";
 import { TabPanel, a11yProps } from "../admin/adminTemplatePart";
+import ChangeProduct from "../admin/changeProduct";
 
 
 
@@ -40,8 +41,9 @@ const AdminPanel : FC = () => {
             sx={{ borderRight: 1, borderColor: 'divider', width: "214px"}}
         >
             <Tab label="Skapa paket" {...a11yProps(0)} />
-            <Tab label="Paket" {...a11yProps(1)} />
-            <Tab label="Produkter" {...a11yProps(2)} />
+            <Tab label="Ändra paket" {...a11yProps(1)} />
+            <Tab label="Paket" {...a11yProps(2)} />
+            <Tab label="Produkter" {...a11yProps(3)} />
           </Tabs>
 
             {/*WARNING! Cannot appear as a descendant of p-tag */}
@@ -52,8 +54,15 @@ const AdminPanel : FC = () => {
                 <AddProduct/>
             </TabPanel>
 
-            {/* Content in "Paket" */}
+            {/* Content in "Ändra paket" */}
             <TabPanel value={value} index={1}>
+                <h2 style={{color: colors.primary}}>Ändra paket</h2>
+                <ChangeProduct/>
+               {/*  <AddProduct/> */}
+            </TabPanel>
+
+            {/* Content in "Paket" */}
+            <TabPanel value={value} index={2}>
                 <h2 style={{color: colors.primary}}>Paket</h2>
                 <div style={{width: "100%"}}>
                     {productList.map((product => { return < ProductDetailsAdmin key={product.id} product={product} deleteProductProp={() => {deleteProduct(product) }}/> })) }
@@ -61,7 +70,7 @@ const AdminPanel : FC = () => {
             </TabPanel>
 
             {/* Content in "Produkter" */}
-            <TabPanel value={value} index={2}>
+            <TabPanel value={value} index={3}>
                 <h2 style={{color: colors.primary}}>Produkter</h2>
                 <div style={{width: "100%"}}>
                     {includings.map((include => { return (

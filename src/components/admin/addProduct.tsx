@@ -14,7 +14,10 @@ import Button from "@mui/material/Button";
 import { SecurityRounded } from "@mui/icons-material";
 import { productContext } from "../context/provider";
 
-interface Props {}
+interface Props {
+    product?: Product
+    action?: string
+}
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -29,12 +32,14 @@ const MenuProps = {
 
 const AddProduct: FC<Props> = (props) => {
 
+    console.log(props.product)
+
     // States
-    const [nameInput, setName] = React.useState('');
-    const [descInput, setDesc] = React.useState('');
-    const [price3, setPrice3] = React.useState(0);
-    const [price12, setPrice12] = React.useState(0);
-    const [icon, setIcon] = React.useState('');
+    const [nameInput, setName] = React.useState(props.product ? props.product.name : '');
+    const [descInput, setDesc] = React.useState(props.product ? props.product.desc : '');
+    const [price3, setPrice3] = React.useState(props.product ? props.product.price3mth : 0);
+    const [price12, setPrice12] = React.useState(props.product ? props.product.price12mth : 0);
+    const [icon, setIcon] = React.useState(props.product ? props.product.icon : '');
     let [newInclude, setNewInclude] = React.useState<[(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?]>([undefined]);
 
     // Select includings - State
@@ -111,7 +116,7 @@ const AddProduct: FC<Props> = (props) => {
             {/* package name and description */}
             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '400px' },}} noValidate autoComplete="off">
                 <div>
-                    <TextField required id="outlined-required" label="Paketnamn" onChange={(event) => {setName(event.target.value)}} value={nameInput}/><br />
+                    <TextField required id="outlined-required" label="Paketnamn" onChange={(event) => {setName(event.target.value)}} value={nameInput} defaultValue={props.product ? props.product.name : ""}/><br />
                     <TextField required id="outlined-textarea" label="Paketbeskrivning" rows={4} onChange={(event) => {setDesc(event.target.value)}} value={descInput}/>
                 </div>
             </Box>
@@ -169,7 +174,7 @@ const AddProduct: FC<Props> = (props) => {
 
             {/* Button */}
             <div style={{display: "flex", alignItems: "center", width: "100%", justifyContent: "flex-end"}}>
-                <Button sx={{width: "180px", height: "60px"}} variant="outlined" onClick={() => {setNewProduct()}} >Skapa paket</Button>
+                <Button sx={{width: "180px", height: "60px"}} variant="outlined" onClick={() => {setNewProduct()}} >{props.action == "change" ? "Ändra paket" : "Skapa paket"}</Button>
             </div>
         </div>
     )
