@@ -1,15 +1,10 @@
 import { FC, CSSProperties, useContext } from "react"
 import { Product } from '../../data/products'
 import { colors } from "../../data/color";
-import Button from "@mui/material/Button";
-import { buttonStyle } from "../../style/common";
 import { productContext } from "../context/provider";
 import * as React from 'react';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+import DialogWindow from "../interaction/dialogs";
+import DeleteButton from "../interaction/deleteButton";
 
 interface Props {
     product: Product
@@ -17,15 +12,11 @@ interface Props {
 
 const ProductDetailsAdmin: FC<Props> = (props) => {
 
-     // Gets product context
-  const { deleteProduct, productList } = useContext(productContext)
+    // Gets product context
+    const { deleteProduct, productList } = useContext(productContext)
 
     // AlertDialog
     const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
 
     const handleClose = (answer: boolean) => {
         setOpen(false);
@@ -35,13 +26,13 @@ const ProductDetailsAdmin: FC<Props> = (props) => {
     return (
         <div style={container}>
             <div style={cardCont}>
-            <strong>{"Id: " + props.product.id}</strong>
-            <h1>{props.product.name}</h1>
-            <div style= {{marginBottom: "20px"}}>
-                <strong   >{"Ikon: "}</strong><img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
-                <strong style={{ marginLeft: "10px"}}>{"Bild: "}</strong><img style={{width: "90px", height: "50px", objectFit: "contain"}} src= {props.product.thumbnail} alt="" /> 
-            </div>
-            <strong>Inkluderade produkter:</strong>
+                <strong>{"Id: " + props.product.id}</strong>
+                <h1>{props.product.name}</h1>
+                <div style= {{marginBottom: "20px"}}>
+                    <strong   >{"Ikon: "}</strong><img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
+                    <strong style={{ marginLeft: "10px"}}>{"Bild: "}</strong><img style={{width: "90px", height: "50px", objectFit: "contain"}} src= {props.product.thumbnail} alt="" /> 
+                </div>
+                <strong>Inkluderade produkter:</strong>
                 <div>
                     {props.product.including.map((include) => { return (<p style={{margin: "0px"}} key={include!.id} >{include?.name} {`(Ordinarie pris: ${include?.price} kr/mån)`} </p>) })}
                 </div><br />
@@ -57,37 +48,12 @@ const ProductDetailsAdmin: FC<Props> = (props) => {
                     </div>
                     
                 </div>
-                <div style={{display: "flex", alignItems:"flex-end", justifyContent: "flex-end" , width: "100%", marginTop: "10px"}}>
-                    <Button onClick={(e) => {handleClickOpen()} } sx={{...buttonStyle, borderColor: "red", color: "red"}} variant="outlined">Ta bort</Button>
-                    {/* <Button sx={buttonStyle} variant="outlined">Ändra</Button> */}
-                </div>
+                <DeleteButton setOpen={setOpen} />
             </div>
-            <Dialog
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                {"Ta bort produkt"}
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        Är du säker på att du vill radera {props.product.name} ?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => {handleClose(false)}}>Nej!</Button>
-                    <Button onClick={() => {handleClose(true)}} autoFocus>
-                        Ja
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            < DialogWindow  handleClose={handleClose} product={props.product} open={open}/>
         </div>
-        
     )
 }
-
 
 const container: CSSProperties = {
     display: "flex",
@@ -105,7 +71,6 @@ const cardCont: CSSProperties = {
     borderRadius: "10px",
     padding: "20px"
 }
-
 
 
 export default ProductDetailsAdmin
