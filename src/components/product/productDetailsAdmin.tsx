@@ -1,19 +1,36 @@
-import { FC, CSSProperties } from "react"
+import { FC, CSSProperties, useContext } from "react"
 import { Product } from '../../data/products'
 import { colors } from "../../data/color";
 import Button from "@mui/material/Button";
 import { buttonStyle } from "../../style/common";
-import AddProduct from "../admin/addProduct";
-import { TabPanel } from "../admin/adminTemplatePart";
-
-
+import { productContext } from "../context/provider";
+import * as React from 'react';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 interface Props {
     product: Product
-    deleteProductProp: (product: Product) => void;
 }
 
 const ProductDetailsAdmin: FC<Props> = (props) => {
+
+     // Gets product context
+  const { deleteProduct, productList } = useContext(productContext)
+
+    // AlertDialog
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (answer: boolean) => {
+        setOpen(false);
+        answer ? deleteProduct(props.product) : undefined
+    };
 
     return (
         <div style={container}>
@@ -41,11 +58,33 @@ const ProductDetailsAdmin: FC<Props> = (props) => {
                     
                 </div>
                 <div style={{display: "flex", alignItems:"flex-end", justifyContent: "flex-end" , width: "100%", marginTop: "10px"}}>
-                    <Button onClick={(e) => {props.deleteProductProp(props.product)} } sx={{...buttonStyle, borderColor: "red", color: "red"}} variant="outlined">Ta bort</Button>
-                    <Button sx={buttonStyle} variant="outlined">Ändra</Button>
+                    <Button onClick={(e) => {handleClickOpen()} } sx={{...buttonStyle, borderColor: "red", color: "red"}} variant="outlined">Ta bort</Button>
+                    {/* <Button sx={buttonStyle} variant="outlined">Ändra</Button> */}
                 </div>
             </div>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                {"Ta bort produkt"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Är du säker på att du vill radera {props.product.name} ?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => {handleClose(false)}}>Nej!</Button>
+                    <Button onClick={() => {handleClose(true)}} autoFocus>
+                        Ja
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
+        
     )
 }
 
