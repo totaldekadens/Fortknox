@@ -13,6 +13,9 @@ import Checkbox from '@mui/material/Checkbox';
 import Button from "@mui/material/Button";
 import { SecurityRounded } from "@mui/icons-material";
 import { productContext } from "../context/provider";
+import ProductPage from "../pages/product";
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 interface Props {
     product?: Product
@@ -32,15 +35,15 @@ const MenuProps = {
 
 const AddProduct: FC<Props> = (props) => {
 
-    console.log(props.product)
-
     // States
-    const [nameInput, setName] = React.useState(props.product ? props.product.name : '');
-    const [descInput, setDesc] = React.useState(props.product ? props.product.desc : '');
-    const [price3, setPrice3] = React.useState(props.product ? props.product.price3mth : 0);
-    const [price12, setPrice12] = React.useState(props.product ? props.product.price12mth : 0);
-    const [icon, setIcon] = React.useState(props.product ? props.product.icon : '');
+    const [nameInput, setName] = React.useState(props.product ? props.product!.name : '');
+    const [descInput, setDesc] = React.useState(props.product ? props.product!.desc : '');
+    const [price3, setPrice3] = React.useState(props.product ? props.product!.price3mth : 0);
+    const [price12, setPrice12] = React.useState(props.product ? props.product!.price12mth : 0);
+    const [icon, setIcon] = React.useState(props.product ? props.product!.icon : '');
+    const [imageInput, setImage] = React.useState( '');
     let [newInclude, setNewInclude] = React.useState<[(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?]>([undefined]);
+
 
     // Select includings - State
     const [includeInput, setIncludes] = React.useState<string[]>([]);
@@ -56,7 +59,7 @@ const AddProduct: FC<Props> = (props) => {
     // Gets productContext
     const { productList, getProductList } = useContext(productContext)
     
-    // Sets new product - No validation applied at the moment
+    // Sets new/updated product - No validation applied at the moment
     const setNewProduct: () => void = () => {
 
         // Creates an array of includes-objects from includeInput (string-array).
@@ -67,7 +70,7 @@ const AddProduct: FC<Props> = (props) => {
             includings.map((includeObject) => { 
 
                 if(includeObject!.name == includeStringArray) {
- 
+
                     if(newInclude == undefined || newInclude[0] == null ) {
                         newInclude = [includeObject]   // Check type
                         setNewInclude(newInclude)
@@ -88,15 +91,17 @@ const AddProduct: FC<Props> = (props) => {
             }) 
         }
         
-        // Creates new Id
+        // Creates new Id. Gets the latest created id to index 0
         const descendProductList = productList.sort((first, second) => 0 - (first.id > second.id ? 1 : -1))
         const newId = descendProductList[0].id + 1
 
-        // Object of new product
+        
+        // Object of new/updated product
         const newProduct: Product = {
-            id: newId,
+            id: props.product ? props.product.id : newId,
             name: nameInput,
             desc: descInput,
+            thumbnail: imageInput,
             icon: icon,
             price3mth: price3,
             price12mth: price12,
@@ -104,11 +109,35 @@ const AddProduct: FC<Props> = (props) => {
         }
 
         const ascendProductList = descendProductList.sort((first, second) => 0 - (first.id > second.id ? -1 : 1))
-
-        ascendProductList.push(newProduct)
-        localStorage.setItem('productList', JSON.stringify(ascendProductList));
+        
+        // Action if product exist - update, else - push
+        if(props.product) {
+            const updatedList = ascendProductList.map((updateProduct) => { 
+                if(updateProduct.id == props.product!.id){
+                    return newProduct
+                }   
+                else {
+                    return updateProduct
+                }
+            })
+            localStorage.setItem('productList', JSON.stringify(updatedList));
+        }
+        else {
+            ascendProductList.push(newProduct)
+            localStorage.setItem('productList', JSON.stringify(ascendProductList));
+        }
         getProductList();
+    }
 
+    const handleClickAddProduct = () => {
+        if(!nameInput || !descInput || !imageInput || !icon || !price3 || !price12 || !newInclude ) {
+            alert("Alla fält måste vara ifyllda")
+            return
+        }
+
+        setNewProduct(); 
+        // Standardalert sålänge
+        alert(props.action == "change" ? "Paketet " + '"' + nameInput + '"' + " med ID " + props.product!.id +" är nu uppdaterat" : "Paketet " + '"' + nameInput + '"' + " är skapat")
     }
 
     return (
@@ -116,30 +145,20 @@ const AddProduct: FC<Props> = (props) => {
             {/* package name and description */}
             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '400px' },}} noValidate autoComplete="off">
                 <div>
-                    <TextField required id="outlined-required" label="Paketnamn" onChange={(event) => {setName(event.target.value)}} value={nameInput} defaultValue={props.product ? props.product.name : ""}/><br />
+                    <TextField required id="outlined-required" label="Paketnamn" onChange={(event) => {setName(event.target.value)}} value={nameInput} /* defaultValue={props.product?.name} *//><br />
                     <TextField required id="outlined-textarea" label="Paketbeskrivning" rows={4} onChange={(event) => {setDesc(event.target.value)}} value={descInput}/>
                 </div>
             </Box>
-                
+                {/* Includings */}
             <FormControl sx={{ m: 1, width: 400 }}>
                 <InputLabel id="demo-multiple-checkbox-label">Komponenter</InputLabel>
-                <Select
-                required
-                labelId="demo-multiple-checkbox-label"
-                id="demo-multiple-checkbox"
-                multiple
-                value={includeInput}
-                onChange={handleChange2}
-                input={<OutlinedInput label="Tag" />}
-                renderValue={(selected) => selected.join(', ')}
-                MenuProps={MenuProps}
-                >
-                {includings.map((include) => (
-                    <MenuItem key={include!.id} value={include!.name}>
-                        <Checkbox checked={includeInput.indexOf(include!.name) > -1} />
-                        <ListItemText primary={include!.name} />
-                    </MenuItem>
-                ))}
+                <Select required labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={includeInput} onChange={handleChange2} input={<OutlinedInput label="Tag" />} renderValue={(selected) => selected.join(', ')} MenuProps={MenuProps}>
+                    {includings.map((include) => (
+                        <MenuItem key={include!.id} value={include!.name}>
+                            <Checkbox checked={includeInput.indexOf(include!.name) > -1} />
+                            <ListItemText primary={include!.name} />
+                        </MenuItem>
+                    ))}
                 </Select>
             </FormControl>
 
@@ -155,14 +174,7 @@ const AddProduct: FC<Props> = (props) => {
             <div style={{display: "flex", alignItems: "center"}}>
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="demo-simple-select-helper-label">Ikon</InputLabel>
-                    <Select
-                    required
-                    labelId="demo-simple-select-helper-label"
-                    id="demo-simple-select-helper"
-                    value={icon}
-                    label="Icon"
-                    onChange={(event: SelectChangeEvent) => {setIcon(event.target.value)}}
-                    >
+                    <Select required labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" value={icon} label="Icon" onChange={(event: SelectChangeEvent) => {setIcon(event.target.value)}}>
                         {icons.map((icon) => { return (
                             <MenuItem key={icon.src} value={icon.src}>{icon.name}</MenuItem> 
                         ) })}
@@ -170,17 +182,16 @@ const AddProduct: FC<Props> = (props) => {
                 </FormControl>
                 <img style={{width: "40px"}} src= {icon} alt="" />
             </div>
-            <p style={{color: "black"}}>Lägg till bild-input här sedan</p>
-
+            <div style={{display: "flex", alignItems: "center", marginTop: "7px", paddingLeft: "7px"}}>
+                <TextField required id="outlined-textarea" label="URL-bild"  onChange={(event) => {setImage(event.target.value)}} value={imageInput}/>
+                <img style={{width: "60px", marginLeft: "10px"}} src= {imageInput} alt="" />
+            </div>
             {/* Button */}
-            <div style={{display: "flex", alignItems: "center", width: "100%", justifyContent: "flex-end"}}>
-                <Button sx={{width: "180px", height: "60px"}} variant="outlined" onClick={() => {setNewProduct()}} >{props.action == "change" ? "Ändra paket" : "Skapa paket"}</Button>
+            <div style={{display: "flex", alignItems: "center", width: "100%", justifyContent: "flex-end", marginTop: "25px"}}>
+                <Button sx={{width: "180px", height: "60px"}} variant="outlined" onClick={() => { handleClickAddProduct() }} >{props.action == "change" ? "Ändra paket" : "Skapa paket"}</Button>
             </div>
         </div>
     )
 }
-
-
-
 
 export default AddProduct

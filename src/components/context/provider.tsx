@@ -20,11 +20,11 @@ export const productContext = React.createContext<productContextData>({
 
 
 
-const Provider:  FC<PropsWithChildren<Props>> = (props) => {
+const ProductListProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
     const [productList, setProductList] = useState<Product[]> (products)
 
-    // Updates productList
+    // Updates productList - Vara i useeffect?
     const getProductList: () => void = () => {
         
         const getCurrentProductList = localStorage.getItem('productList')
@@ -73,4 +73,4 @@ const Provider:  FC<PropsWithChildren<Props>> = (props) => {
 
 
 
-export default Provider
+export default ProductListProvider

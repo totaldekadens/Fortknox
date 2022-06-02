@@ -16,7 +16,7 @@ import ChangeProduct from "../admin/changeProduct";
 const AdminPanel : FC = () => { 
   
   // Gets product context
-  const { deleteProduct, productList } = useContext(productContext)
+  const { productList } = useContext(productContext)
 
   // State of what panel to be seen
   const [value, setValue] = React.useState(0);
@@ -65,7 +65,7 @@ const AdminPanel : FC = () => {
             <TabPanel value={value} index={2}>
                 <h2 style={{color: colors.primary}}>Paket</h2>
                 <div style={{width: "100%"}}>
-                    {productList.map((product => { return < ProductDetailsAdmin key={product.id} product={product} deleteProductProp={() => {deleteProduct(product) }}/> })) }
+                    {productList.map((product => { return < ProductDetailsAdmin key={product.id} product={product}/> })) }
                 </div>
             </TabPanel>
 

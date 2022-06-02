@@ -1,8 +1,9 @@
-import { CSSProperties, FC } from "react"
+import { CSSProperties, FC, useContext } from "react"
 import { Navigate, useParams } from "react-router-dom"
 import { colors } from "../../data/color"
 import { Product, products } from "../../data/products"
 import Lines from "../common/lines"
+import { productContext } from "../context/provider"
 import CartButton from "../interaction/cartButton"
 
 interface Props {
@@ -13,7 +14,10 @@ const ProductBanner: FC<Props> = (props) => {
 
     const { productId } = useParams()
 
-    const foundProduct = products.find((product) => Number(productId) == product.id)
+    // Gets productContext
+    const { productList } = useContext(productContext)
+
+    const foundProduct = productList.find((product) => Number(productId) == product.id)
 
 
     if (!foundProduct) {
