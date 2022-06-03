@@ -1,21 +1,40 @@
-import { FC } from "react"
-import { Product } from "../../data/products"
+import { FC, useContext, useState } from "react"
+import { Product, products } from "../../data/products"
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { buttonStyle } from "../../style/common";
+import { productContext } from "../context/provider";
+import { cartContext } from "../context/cartProvider";
 
 
 interface Props {
     product: Product
-    /* addToCart: (product: Product) => void */ 
+    /* addToCart: (product: Product) => void */
 }
 
 
 const CartButton: FC<Props> = (props) => {
+   
+    const { productList } = useContext(productContext)
+    const { cartItem, getCart } = useContext(cartContext)
     
+    
+    
+    
+    
+    const saveProductToLocalstorage = () => {
+
+        const foundProduct = productList.find((product) => Number(props.product.id) == product.id)
+        
+        const cartList = []
+        cartList.push(foundProduct)
+        
+        localStorage.setItem("cartItem", JSON.stringify(cartList))
+        getCart()    
+    }
     return (
-        <Link style={{textDecoration: "none"}} to={`/checkout/${props.product.id}`} >
-            <Button sx={buttonStyle} variant="outlined">Beställ</Button>
+        <Link style={{ textDecoration: "none" }} to={`/checkout/${props.product.id}`} >
+            <Button sx={buttonStyle} variant="outlined" onClick={() => { saveProductToLocalstorage() }}>Beställ</Button>
         </Link>
     )
 }

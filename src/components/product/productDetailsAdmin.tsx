@@ -1,30 +1,38 @@
-import { FC, CSSProperties } from "react"
+import { FC, CSSProperties, useContext } from "react"
 import { Product } from '../../data/products'
 import { colors } from "../../data/color";
-import Button from "@mui/material/Button";
-import { buttonStyle } from "../../style/common";
-import AddProduct from "../admin/addProduct";
-import { TabPanel } from "../admin/adminTemplatePart";
-
-
+import { productContext } from "../context/provider";
+import * as React from 'react';
+import DialogWindow from "../interaction/dialogs";
+import DeleteButton from "../interaction/deleteButton";
 
 interface Props {
     product: Product
-    deleteProductProp: (product: Product) => void;
 }
 
 const ProductDetailsAdmin: FC<Props> = (props) => {
 
+    // Gets product context
+    const { deleteProduct, productList } = useContext(productContext)
+
+    // AlertDialog
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = (answer: boolean) => {
+        setOpen(false);
+        answer ? deleteProduct(props.product) : undefined
+    };
+
     return (
         <div style={container}>
             <div style={cardCont}>
-            <strong>{"Id: " + props.product.id}</strong>
-            <h1>{props.product.name}</h1>
-            <div style= {{marginBottom: "20px"}}>
-                <strong   >{"Ikon: "}</strong><img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
-                <strong style={{ marginLeft: "10px"}}>{"Bild: "}</strong><img style={{width: "90px", height: "50px", objectFit: "contain"}} src= {props.product.thumbnail} alt="" /> 
-            </div>
-            <strong>Inkluderade produkter:</strong>
+                <strong>{"Id: " + props.product.id}</strong>
+                <h1>{props.product.name}</h1>
+                <div style= {{marginBottom: "20px"}}>
+                    <strong   >{"Ikon: "}</strong><img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
+                    <strong style={{ marginLeft: "10px"}}>{"Bild: "}</strong><img style={{width: "90px", height: "50px", objectFit: "contain"}} src= {props.product.thumbnail} alt="" /> 
+                </div>
+                <strong>Inkluderade produkter:</strong>
                 <div>
                     {props.product.including.map((include) => { return (<p style={{margin: "0px"}} key={include!.id} >{include?.name} {`(Ordinarie pris: ${include?.price} kr/mån)`} </p>) })}
                 </div><br />
@@ -40,15 +48,12 @@ const ProductDetailsAdmin: FC<Props> = (props) => {
                     </div>
                     
                 </div>
-                <div style={{display: "flex", alignItems:"flex-end", justifyContent: "flex-end" , width: "100%", marginTop: "10px"}}>
-                    <Button onClick={(e) => {props.deleteProductProp(props.product)} } sx={{...buttonStyle, borderColor: "red", color: "red"}} variant="outlined">Ta bort</Button>
-                    <Button sx={buttonStyle} variant="outlined">Ändra</Button>
-                </div>
+                <DeleteButton setOpen={setOpen} />
             </div>
+            < DialogWindow  handleClose={handleClose} product={props.product} open={open}/>
         </div>
     )
 }
-
 
 const container: CSSProperties = {
     display: "flex",
@@ -66,7 +71,6 @@ const cardCont: CSSProperties = {
     borderRadius: "10px",
     padding: "20px"
 }
-
 
 
 export default ProductDetailsAdmin

@@ -3,18 +3,21 @@ import Navbar from "./common/navbar"
 import ContentContainer from "./contentContainer"
 import Footer from "./common/footer"
 import ScrollToTop from "./common/scrollToTop"
-import Provider from "./context/provider"
+import ProductListProvider from "./context/provider"
+import CartProvider from "./context/cartProvider"
 
 
 const Layout: FC = () => {
   return (
       <div>
-        <Provider>
-          <ScrollToTop />
-          <Navbar />
-          <ContentContainer />
-          <Footer />
-        </Provider>
+        <ProductListProvider>
+          <CartProvider>
+            <ScrollToTop />
+            <Navbar />
+            <ContentContainer />
+            <Footer />
+          </CartProvider>
+        </ProductListProvider>
       </div>
   )
 }
