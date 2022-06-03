@@ -1,5 +1,5 @@
 import { colors } from "../../data/color"
-import { CSSProperties, FC } from "react"
+import { CSSProperties, FC, useContext, useState } from "react"
 import { products } from "../../data/products";
 import { flexColumn } from '../../style/common'
 
@@ -7,6 +7,8 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import CheckIcon from '@mui/icons-material/Check';
 import SectionCartContainer from "../common/sectionCartContainer";
+import { cartContext } from "../context/cartProvider";
+import { productContext } from "../context/provider";
 
 
 interface Props {
@@ -15,11 +17,15 @@ interface Props {
 
 
 const ProductCardCart: FC<Props> = (props) => {
+    const { cartItem, getCart } = useContext(cartContext)
+    // Gets productContext
+     const { productList, getProductList } = useContext(productContext)
     
+ 
     return (
         <SectionCartContainer>
             <div style={{ ...cartContainer, ...flexColumn }}>
-                {products.map((product) => {
+                {cartItem.map((product) => {
                    
                    return (
 
