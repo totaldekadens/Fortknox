@@ -1,4 +1,4 @@
-import { FC, CSSProperties, useState, FormEvent, useContext } from "react"
+import { FC, useContext } from "react"
 import { icons, includings, Product, Integration, Accounting, Invoice, Salary, integration, products } from '../../data/products'
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -11,11 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Button from "@mui/material/Button";
-import { SecurityRounded } from "@mui/icons-material";
 import { productContext } from "../context/provider";
-import ProductPage from "../pages/product";
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
 
 interface Props {
     product?: Product
@@ -33,7 +29,15 @@ const MenuProps = {
     },
 };
 
-const AddProduct: FC<Props> = (props) => {
+
+// Todo 
+
+// - Komprimera koden och lägg i moduler
+// - Kolla typ på rad 87
+
+
+
+const AddAndModifyProduct: FC<Props> = (props) => {
 
     // States
     const [nameInput, setName] = React.useState(props.product ? props.product!.name : '');
@@ -44,6 +48,17 @@ const AddProduct: FC<Props> = (props) => {
     const [imageInput, setImage] = React.useState( '');
     let [newInclude, setNewInclude] = React.useState<[(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?]>([undefined]);
 
+    React.useEffect(() => {
+        if(props.product) {
+            setName(props.product.name);
+            setDesc(props.product.desc);
+            setPrice3(props.product.price3mth);
+            setPrice12(props.product.price12mth);
+            setIcon(props.product.icon);
+            setImage(props.product.thumbnail!);
+            setNewInclude(props.product.including);
+        }
+    }, [props.product])
 
     // Select includings - State
     const [includeInput, setIncludes] = React.useState<string[]>([]);
@@ -61,7 +76,6 @@ const AddProduct: FC<Props> = (props) => {
     
     // Sets new/updated product - No validation applied at the moment
     const setNewProduct: () => void = () => {
-
         // Creates an array of includes-objects from includeInput (string-array).
         for (let i = 0; i < includeInput.length; i++) {
             
@@ -95,7 +109,6 @@ const AddProduct: FC<Props> = (props) => {
         const descendProductList = productList.sort((first, second) => 0 - (first.id > second.id ? 1 : -1))
         const newId = descendProductList[0].id + 1
 
-        
         // Object of new/updated product
         const newProduct: Product = {
             id: props.product ? props.product.id : newId,
@@ -135,18 +148,34 @@ const AddProduct: FC<Props> = (props) => {
             return
         }
 
+        if(price3 < 1 || price12 < 1 ) {
+            alert("Pris måste vara större än 0 kr")
+            return
+        }
+
         setNewProduct(); 
         // Standardalert sålänge
         alert(props.action == "change" ? "Paketet " + '"' + nameInput + '"' + " med ID " + props.product!.id +" är nu uppdaterat" : "Paketet " + '"' + nameInput + '"' + " är skapat")
+
+        // Clear fields
+        setName("");
+        setDesc("");
+        setPrice3(0);
+        setPrice12(0);
+        setIcon("");
+        setImage("");
+        setNewInclude([undefined]);
     }
 
     return (
         <div>  
-            {/* package name and description */}
+            {/* Package name, description prices */}
             <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '400px' },}} noValidate autoComplete="off">
                 <div>
-                    <TextField required id="outlined-required" label="Paketnamn" onChange={(event) => {setName(event.target.value)}} value={nameInput} /* defaultValue={props.product?.name} *//><br />
-                    <TextField required id="outlined-textarea" label="Paketbeskrivning" rows={4} onChange={(event) => {setDesc(event.target.value)}} value={descInput}/>
+                    <TextField required id="outlined-required" label="Paketnamn" onChange={(event) => {setName(event.target.value)}} value={nameInput} /><br />
+                    <TextField required id="outlined-textarea" label="Paketbeskrivning" rows={4} onChange={(event) => {setDesc(event.target.value)}} value={descInput}/><br />
+                    <TextField style={{width: "40%"}} required id="outlined-required" label="Pris 3 månader" onChange={(event) => {setPrice3(Number(event.target.value))}} value={price3} type={"number"} />
+                    <TextField style={{width: "40%"}} required id="outlined-required" label="Pris 12 månader" onChange={(event) => {setPrice12(Number(event.target.value))}} value={price12} type={"number"} />
                 </div>
             </Box>
                 {/* Includings */}
@@ -161,14 +190,6 @@ const AddProduct: FC<Props> = (props) => {
                     ))}
                 </Select>
             </FormControl>
-
-            {/* Prices */}           
-            <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '200px' },}} noValidate autoComplete="off">
-                <div>
-                    <TextField required id="outlined-required" label="Pris 3 månader" onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {setPrice3(event.target.value)}} value={price3} type={"number"} /> {/* check error */}
-                    <TextField required id="outlined-required" label="Pris 12 månader" onChange={(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {setPrice12(event.target.value)}} value={price12} type={"number"} /> {/* check error */}
-                </div>
-            </Box>
 
             {/* Icons */} 
             <div style={{display: "flex", alignItems: "center"}}>
@@ -194,4 +215,4 @@ const AddProduct: FC<Props> = (props) => {
     )
 }
 
-export default AddProduct
+export default AddAndModifyProduct

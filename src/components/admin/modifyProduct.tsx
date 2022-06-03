@@ -5,11 +5,11 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { productContext } from "../context/provider";
-import AddProduct from "./addProduct";
+import AddAndModifyProduct from "./addAndModifyProduct";
 
 interface Props {}
 
-const ChangeProduct: FC<Props> = (props) => {
+const ModifyProduct: FC<Props> = (props) => {
 
     // Gets productContext
     const { productList } = useContext(productContext)
@@ -36,9 +36,9 @@ const ChangeProduct: FC<Props> = (props) => {
                     {productList.map((product) => { return <MenuItem key={product.id} value={product.id}>{product.name}</MenuItem>})}
                 </Select>
             </FormControl>
-            <AddProduct action="change" product={getSelectedProductObj}/>
+            <AddAndModifyProduct action="change" product={getSelectedProductObj}/>
         </div>
     )
 }
 
-export default ChangeProduct
+export default ModifyProduct
