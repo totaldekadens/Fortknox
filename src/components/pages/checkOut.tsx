@@ -108,8 +108,8 @@ const CheckOut: FC<Props> = (props) => {
                     {/*  container div for checkout  */}
                     <div style={{ maxWidth: "100%", display: "flex", justifyContent: "center", padding: "4%" }}>
                         {activeStep == 0 ? (<><ProductCardCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 1 ? (<><InputFieldsCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 2 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
+                        {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
+                        {activeStep == 2 ? (<><InputFieldsCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                         {activeStep == 3 ? ("slutför köp") : ""}
                     </div>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
