@@ -25,7 +25,6 @@ const CartProvider:  FC<PropsWithChildren<Props>> = (props) => {
         
         const getCurrentCart = localStorage.getItem('cartItem')
         
-        console.log(getCurrentCart)
         if(!getCurrentCart) {
             localStorage.setItem("cartItem",JSON.stringify(cartItem))
         } 

@@ -4,6 +4,8 @@ import { Product, products } from "../../data/products"
 
 interface Props {}
 
+
+// ProductList
 interface productContextData {
     deleteProduct: (product: Product) => void
     productList: Product[]
@@ -15,9 +17,6 @@ export const productContext = React.createContext<productContextData>({
     productList: products,
     getProductList: () => {}
 })
-
-
-
 
 
 const ProductListProvider:  FC<PropsWithChildren<Props>> = (props) => {
@@ -37,7 +36,6 @@ const ProductListProvider:  FC<PropsWithChildren<Props>> = (props) => {
             setProductList(currentProcuctList)
         }
     }
-
 
 
     // Deletes product
@@ -62,14 +60,76 @@ const ProductListProvider:  FC<PropsWithChildren<Props>> = (props) => {
     }, [])
 
 
-
-
     return (
         <productContext.Provider value={{ productList, deleteProduct, getProductList}}>
             {props.children}
         </productContext.Provider>
     )
 }
+
+
+
+
+
+// Mediaquery
+
+export interface DeviceContextData {
+    devices: Device
+}
+
+export interface Device {
+    isDesktop: boolean,
+    isTablet: boolean,
+    isMobile: boolean
+}
+
+const DefaultContextData: Device = {
+    isDesktop: true,
+    isTablet: false,
+    isMobile: false
+}
+
+export const DeviceContext = React.createContext<DeviceContextData>({
+    devices: DefaultContextData, 
+})
+
+interface Props {}
+
+export const DeviceProvider: FC<PropsWithChildren<Props>> = (props) => {
+
+    const [devices, setDevices] = useState<Device>(DefaultContextData)
+
+    useEffect(() => {
+
+        const onWindowChange = () => {
+            if((window.innerWidth > 1150)) {
+                setDevices({ isDesktop: true, isTablet: false, isMobile: false })
+            } else if((window.innerWidth <= 1150 && window.innerWidth > 700)) {
+                setDevices({ isDesktop: false, isTablet: true, isMobile: false })
+            } else if((window.innerWidth <= 700)) {
+                setDevices({ isDesktop: false, isTablet: false, isMobile: true} )
+            }
+        }
+
+        onWindowChange()
+
+        window.addEventListener("resize", onWindowChange)
+
+    }, [])
+
+    useEffect(() => {
+    },[devices])
+
+    return (
+        <DeviceContext.Provider value={{devices}}>
+            {props.children}
+        </DeviceContext.Provider>
+    )
+}
+
+
+
+
 
 
 

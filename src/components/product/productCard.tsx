@@ -1,8 +1,9 @@
-import { FC, CSSProperties } from "react"
+import { FC, CSSProperties, useContext } from "react"
 import { Product } from '../../data/products'
 import { colors } from "../../data/color";
 import CartButton from '../interaction/cartButton';
 import ProductButton from '../interaction/toProductButton';
+import { DeviceContext, DeviceContextData } from "../context/provider";
 
 
 
@@ -12,8 +13,10 @@ interface Props {
 
 const ProductCard: FC<Props> = (props) => {
 
+    const { devices } = useContext(DeviceContext)
+
     return (
-        <div style={container}>
+        <div style={container({devices: devices})}>
             <div>
                 <img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
             </div>
@@ -38,24 +41,26 @@ const ProductCard: FC<Props> = (props) => {
 }
 
 
-const container: CSSProperties = {
-    display: "flex",
-    flexDirection: "column",
-    width: "29%",
-    minWidth: "320px",
-    height: "400px",
-    borderRadius: "10px",
-    padding: "20px"
+const container:(devices: DeviceContextData) => CSSProperties = (devices) =>  {
+
+    return {
+        display: "flex",
+        flexDirection: "column",
+        width: devices.devices.isDesktop ? "29%" : devices.devices.isTablet ? "40%" : devices.devices.isMobile ? "80%" : "",
+        minWidth: "290px",
+        height: "400px",
+        borderRadius: "10px",
+    }
 }
 
 const cardCont: CSSProperties = {
     display: "flex",
     flexDirection: "column",
-    width: "100%",
+    width: "90%",
     backgroundColor: colors.secondary,
     height: "300px",
     borderRadius: "10px",
-    padding: "20px"
+    padding: "7%"
 }
 
 const includeStyle: CSSProperties = {

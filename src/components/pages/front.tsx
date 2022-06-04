@@ -6,7 +6,9 @@ import Button from '@mui/material/Button';
 import Lines from "../common/lines";
 import { display } from "@mui/system";
 import ContentTitle from "../common/contentTitle";
-import { productContext } from "./../context/provider";
+import { Device, DeviceContext, DeviceContextData, productContext } from "./../context/provider";
+import { Devices } from "@mui/icons-material";
+
 
 
 
@@ -14,6 +16,7 @@ interface Props {}
 
 const FrontPage: FC<Props> = (props) => {
 
+  const { devices } = useContext(DeviceContext)
   const { productList } = useContext(productContext)
 
   const myRef = useRef<HTMLInputElement>(null);
@@ -26,10 +29,10 @@ const FrontPage: FC<Props> = (props) => {
     <>
       <div style={container}>
         <img style={bannerStyle} src= '/src/assets/banners/happy_restaurant_owners.png' alt="" /> {/* Försök importera denna istället */}
-        <div style={overlay}>
+        <div style={overlay({devices: devices})}>
           <Lines firstColor= {colors.primary} secondColor={colors.third} thirdColor={colors.secondary}/>
-          <h1 style={sloganStyle}>Lev din <span style={{color: colors.third}}>företagsdröm</span></h1>
-          <div style={textContainer}>
+          <h1 style={sloganStyle({devices: devices})}>Lev din <span style={{color: colors.third}}>företagsdröm</span></h1>
+          <div style={textContainer({devices: devices})}>
             <p>Oavsett vad framgång är för dig som företagare, hjälper vi dig att nå dit du vill. Vi har samlat allt du behöver för att starta, växa och utvecklas – på ett ställe.</p>
           </div>
           <Button onClick={executeScroll} sx={{color: "white", borderColor: "white", padding: "20px 30px 20px 30px", marginTop: "40px"}} variant="outlined">Beställ paket</Button>
@@ -38,7 +41,7 @@ const FrontPage: FC<Props> = (props) => {
 
       <div ref={myRef}  style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
         <ContentTitle title="Våra paket" textAlign= "center" alignItems="center" firstColor= {colors.third} secondColor= {colors.secondary}/>
-        <div style={container2}>
+        <div style={container2({devices: devices})}>
           {productList.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>
       </div>
@@ -55,40 +58,57 @@ const container: CSSProperties = {
   minHeight: '100vh',
 }
 
-const container2: CSSProperties = {
-  display: 'flex',
-  justifyContent: "space-around",
-  flexWrap: "wrap",
-  minHeight: '70vh',
-  margin: '0.5em',
-  justifyItems: 'stretch',
-  alignItems: 'stretch',
-  gap: "1em",
-  padding: "1em",
-  width: "90%"
+const container2:(devices: DeviceContextData) => CSSProperties = (devices) =>  {
 
+  return {
+    display: 'flex',
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+    minHeight: '70vh',
+    marginBottom: '30px',
+    justifyItems: 'stretch',
+    alignItems: 'stretch',
+    gap: "1em",
+    paddingTop: "16px",
+    width: "90%"
+  }
 }
 
 const bannerStyle: CSSProperties = {
-  width: "100%",
-  height: "100vh",
-  position: 'relative',
-  objectFit: "cover",
-  filter: "brightness(70%)"
+
+    width: "100%",
+    height: "100vh",
+    position: 'relative',
+    objectFit: "cover",
+    filter: "brightness(70%)"
 }
 
-const overlay: CSSProperties = {
-  padding: "100px 0px 0px 100px",
-  position: 'absolute',
+// ta bort propertyn om den inte används sen
+const overlay: (devices: DeviceContextData) => CSSProperties = (devices) =>   {
+  
+  return {
+    padding: "10% 10% 0px 10%",
+    position: 'absolute'
+  }
+
 }
 
-const sloganStyle : CSSProperties = {
-    fontSize: "75px"
+const sloganStyle: (devices: DeviceContextData) => CSSProperties = (devices) => {
+  
+return {
+  fontSize: devices.devices.isDesktop ? "75px" : devices.devices.isTablet ? "65px" : devices.devices.isMobile ? "35px" : "65px"
+}
+  
+    
 }
 
-const textContainer : CSSProperties = {
-  width: "50%",
-  fontSize: "22px"
+const textContainer : (devices: DeviceContextData) => CSSProperties = (devices) =>  {
+
+  return {
+    width: devices.devices.isDesktop ? "50%" : devices.devices.isTablet ? "60%" : devices.devices.isMobile ? "70%" : "60%",
+    fontSize: devices.devices.isDesktop ? "22px" : devices.devices.isTablet ? "22px" : devices.devices.isMobile ? "18px" : "22px"
+  }
+
 }
   
 export default FrontPage
