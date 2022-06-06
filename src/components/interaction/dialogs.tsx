@@ -13,6 +13,8 @@ interface Props {
     open: boolean
     message?: string
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+    color?: string
+    title?: string
 }
 
 // AlertDialog to delete button atm
@@ -53,8 +55,8 @@ export const DialogInfoWindow: FC<Props> = (props) => {
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         >
-            <DialogTitle id="alert-dialog-title">
-                Information
+            <DialogTitle sx={{color: props.color}} id="alert-dialog-title">
+                {props.title}
             </DialogTitle>
             <DialogContent>
                 <DialogContentText id="alert-dialog-description">

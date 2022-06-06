@@ -8,14 +8,11 @@ import { includings } from '../../data/products';
 import ModifyProduct from './modifyProduct';
 import ProductDetailsAdmin from '../product/productDetailsAdmin';
 import { CSSProperties, useContext } from 'react';
-import { DeviceContext, productContext } from '../context/provider';
-
-
+import { productContext } from '../context/provider';
 
 export default function SimpleAccordion() {
 
     const { productList } = useContext(productContext)
-    const { devices } = useContext(DeviceContext)
 
     return (
         <div style={{minHeight: "100vh", padding: "0px 3% 3% 3%", display: "flex", flexDirection: "column"}}>
