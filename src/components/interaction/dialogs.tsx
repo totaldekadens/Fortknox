@@ -8,9 +8,11 @@ import Button from "@mui/material/Button";
 import { Product } from "../../data/products";
 
 interface Props {
-    handleClose: (answer: boolean) => void
+    handleClose?: (answer: boolean) => void
     product: Product
     open: boolean
+    message?: string
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 // AlertDialog to delete button atm
@@ -32,8 +34,35 @@ const DialogWindow: FC<Props> = (props) => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => {props.handleClose(false)}}>Nej!</Button>
-                <Button onClick={() => {props.handleClose(true)}} autoFocus>Ja</Button>
+                <Button onClick={() => {props.handleClose!(false)}}>Nej!</Button>
+                <Button onClick={() => {props.handleClose!(true)}} autoFocus>Ja</Button>
+            </DialogActions>
+        </Dialog>
+    )
+}
+
+// InformationDialog 
+export const DialogInfoWindow: FC<Props> = (props) => {
+    const handleClose = (answer: boolean) => {
+        props.setOpen!(false);
+    };
+    return (
+        <Dialog
+        open={props.open}
+        onClose={props.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">
+                Information
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    {props.message!}
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => {handleClose(false)}} autoFocus>OK</Button>
             </DialogActions>
         </Dialog>
     )

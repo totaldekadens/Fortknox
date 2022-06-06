@@ -12,6 +12,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Button from "@mui/material/Button";
 import { DeviceContext, productContext } from "../context/provider";
+import { ErrorAlert } from "../interaction/alerts";
+import { DialogInfoWindow } from "../interaction/dialogs";
 
 interface Props {
     product?: Product
@@ -46,7 +48,10 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     const [price12, setPrice12] = React.useState(props.product ? props.product!.price12mth : 0);
     const [icon, setIcon] = React.useState(props.product ? props.product!.icon : '');
     const [imageInput, setImage] = React.useState( '');
+    const [message, setMessage] = React.useState('');
     let [newInclude, setNewInclude] = React.useState<[(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?]>([undefined]);
+
+    const [open, setOpen] = React.useState(false);
 
     React.useEffect(() => {
         if(props.product) {
@@ -155,9 +160,9 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         }
 
         setNewProduct(); 
-        // Standardalert sålänge
-        alert(props.action == "change" ? "Paketet " + '"' + nameInput + '"' + " med ID " + props.product!.id +" är nu uppdaterat" : "Paketet " + '"' + nameInput + '"' + " är skapat")
-
+        setOpen(true);
+        setMessage(props.action == "change" ? "Paket " + '"' + nameInput + '"' + " är nu uppdaterad" : "Paketet " + '"' + nameInput + '"' + " är nu skapat")
+        
         // Clear fields
         setName("");
         setDesc("");
@@ -167,7 +172,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         setImage("");
         setNewInclude([undefined]);
     }
-
+    
     return (
         <div>  
             {/* Package name, description prices */}
@@ -213,6 +218,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
             <div style={{display: "flex", alignItems: "center", width: "100%", justifyContent: "flex-end", marginTop: "25px"}}>
                 <Button sx={{width: "180px", height: "60px"}} variant="outlined" onClick={() => { handleClickAddProduct() }} >{props.action == "change" ? "Ändra paket" : "Skapa paket"}</Button>
             </div>
+            < DialogInfoWindow  setOpen={setOpen} product={props.product!} open={open} message={message}/>
         </div>
     )
 }
