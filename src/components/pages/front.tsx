@@ -1,16 +1,10 @@
 import React, { CSSProperties, FC, useContext, useRef } from "react"
-import { products } from "../../data/products"
 import ProductCard from "../product/productCard"
 import { colors } from "../../data/color"
 import Button from '@mui/material/Button';
 import Lines from "../common/lines";
-import { display } from "@mui/system";
 import ContentTitle from "../common/contentTitle";
-import { Device, DeviceContext, DeviceContextData, productContext } from "./../context/provider";
-import { Devices } from "@mui/icons-material";
-
-
-
+import { DeviceContext, DeviceContextData, productContext } from "./../context/provider";
 
 interface Props {}
 
@@ -83,7 +77,6 @@ const bannerStyle: CSSProperties = {
     filter: "brightness(70%)"
 }
 
-// ta bort propertyn om den inte används sen
 const overlay: CSSProperties =  {
     padding: "10% 10% 0px 10%",
     position: 'absolute'
@@ -91,11 +84,9 @@ const overlay: CSSProperties =  {
 
 const sloganStyle: (devices: DeviceContextData) => CSSProperties = (devices) => {
   
-return {
-  fontSize: devices.devices.isDesktop ? "75px" : devices.devices.isTablet ? "65px" : devices.devices.isMobile ? "38px" : "38px"
-}
-  
-    
+  return {
+    fontSize: devices.devices.isDesktop ? "75px" : devices.devices.isTablet ? "65px" : devices.devices.isMobile ? "38px" : "38px"
+  }
 }
 
 const textContainer : (devices: DeviceContextData) => CSSProperties = (devices) =>  {
@@ -104,7 +95,6 @@ const textContainer : (devices: DeviceContextData) => CSSProperties = (devices) 
     width: devices.devices.isDesktop ? "50%" : devices.devices.isTablet ? "60%" : devices.devices.isMobile ? "70%" : "60%",
     fontSize: devices.devices.isDesktop ? "22px" : devices.devices.isTablet ? "22px" : devices.devices.isMobile ? "18px" : "22px"
   }
-
 }
   
 export default FrontPage

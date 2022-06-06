@@ -7,17 +7,14 @@ import { colors } from "../../data/color";
 import { includings } from "./../../data/products"
 import ProductDetailsAdmin from "../product/productDetailsAdmin";
 import AddAndModifyProduct from "../admin/addAndModifyProduct";
-import { DeviceContext, productContext } from "./../context/provider";
+import { productContext } from "./../context/provider";
 import { TabPanel, a11yProps } from "../admin/adminTemplatePart";
 import ModifyProduct from "../admin/modifyProduct";
-
-
 
 const TabPanelAdmin : FC = () => { 
 
     // Gets product context
     const { productList } = useContext(productContext)
-    const { devices } = useContext(DeviceContext)
 
     // State of what panel to be seen
     const [value, setValue] = React.useState(0);
