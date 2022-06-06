@@ -18,7 +18,7 @@ interface InputData {
 }
 
 // inputData (fields) that will be rendered on the cart page.
-const inputData: InputData[] = [
+export const inputData: InputData[] = [
     {
         name: "foretagsnamn",
         label: "Företagsnamn",
