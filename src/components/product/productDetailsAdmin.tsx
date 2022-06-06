@@ -1,7 +1,7 @@
 import { FC, CSSProperties, useContext } from "react"
 import { Product } from '../../data/products'
 import { colors } from "../../data/color";
-import { productContext } from "../context/provider";
+import { DeviceContext, DeviceContextData, productContext } from "../context/provider";
 import * as React from 'react';
 import DialogWindow from "../interaction/dialogs";
 import DeleteButton from "../interaction/deleteButton";
@@ -14,6 +14,7 @@ const ProductDetailsAdmin: FC<Props> = (props) => {
 
     // Gets product context
     const { deleteProduct, productList } = useContext(productContext)
+    const { devices } = useContext(DeviceContext)
 
     // AlertDialog
     const [open, setOpen] = React.useState(false);
@@ -26,25 +27,25 @@ const ProductDetailsAdmin: FC<Props> = (props) => {
     return (
         <div style={container}>
             <div style={cardCont}>
-                <strong>{"Id: " + props.product.id}</strong>
+                <strong style={fontSizeMobileStrong({devices: devices})}>{"Id: " + props.product.id}</strong>
                 <h1>{props.product.name}</h1>
                 <div style= {{marginBottom: "20px"}}>
-                    <strong   >{"Ikon: "}</strong><img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
-                    <strong style={{ marginLeft: "10px"}}>{"Bild: "}</strong><img style={{width: "90px", height: "50px", objectFit: "contain"}} src= {props.product.thumbnail} alt="" /> 
+                    <strong style={fontSizeMobileStrong({devices: devices})}>{"Ikon: "}</strong><img style={{width: "50px", height: "50px", objectFit: "contain"}} src= {props.product.icon} alt="" /> 
+                    <strong style={{ ...fontSizeMobileStrong({devices: devices}), marginLeft: "10px"}}>{"Bild: "}</strong><img style={{width: "90px", height: "50px", objectFit: "contain"}} src= {props.product.thumbnail} alt="" /> 
                 </div>
-                <strong>Inkluderade produkter:</strong>
+                <strong style={fontSizeMobile({devices: devices})}>Inkluderade produkter:</strong>
                 <div>
-                    {props.product.including.map((include) => { return (<p style={{margin: "0px"}} key={include!.id} >{include?.name} {`(Ordinarie pris: ${include?.price} kr/mån)`} </p>) })}
+                    {props.product.including.map((include) => { return (<p style={{...fontSizeMobile({devices: devices}), margin: "0px"}} key={include!.id} >{include?.name} {`(Ordinarie pris: ${include?.price} kr/mån)`} </p>) })}
                 </div><br />
-                <strong>Beskrivning:</strong>
-                <span>{props.product.desc}</span><br />
+                <strong style={fontSizeMobile({devices: devices})}>Beskrivning:</strong>
+                <span style={fontSizeMobile({devices: devices})}>{props.product.desc}</span><br />
                 <div style={{ display: "flex", height: "100%", justifyContent: "space-between" }}>
                     <div>
-                        <strong>Priser:</strong><br />
-                        <span>3 månader - </span>
-                        <span style={{ fontSize: "25px" }}>{props.product.price3mth}</span><span> kr/mån</span><br />
-                        <span>12 månader - </span>
-                        <span style={{ fontSize: "25px" }}>{props.product.price12mth}</span><span> kr/mån</span>
+                        <strong style={fontSizeMobile({devices: devices})}>Priser:</strong><br />
+                        <span style={fontSizeMobile({devices: devices})}>3 månader - </span>
+                        <span style={{ fontSize: "25px" }}>{props.product.price3mth}</span><span style={fontSizeMobile({devices: devices})}> kr/mån</span><br />
+                        <span style={fontSizeMobile({devices: devices})}>12 månader - </span>
+                        <span style={{ fontSize: "25px" }}>{props.product.price12mth}</span><span style={fontSizeMobile({devices: devices})}> kr/mån</span>
                     </div>
                     
                 </div>
@@ -72,5 +73,18 @@ const cardCont: CSSProperties = {
     padding: "20px"
 }
 
+const fontSizeMobile: (devices: DeviceContextData) => CSSProperties = (devices) =>  {
+    
+    return {
+        fontSize: devices.devices.isMobile ? "11px" : ""
+    }
+}
+
+const fontSizeMobileStrong: (devices: DeviceContextData) => CSSProperties = (devices) =>  {
+    
+    return {
+        fontSize: devices.devices.isMobile ? "14px" : ""
+    }
+}
 
 export default ProductDetailsAdmin

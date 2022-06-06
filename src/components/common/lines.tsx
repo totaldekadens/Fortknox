@@ -1,4 +1,5 @@
-import { CSSProperties, FC } from "react"
+import { CSSProperties, FC, useContext } from "react"
+import { DeviceContext, DeviceContextData } from "../context/provider"
 
 interface Props {
     firstColor: string
@@ -11,25 +12,27 @@ interface Props {
 
 export const Lines: FC<Props> = (props: Props) => {
 
+    const { devices } = useContext(DeviceContext)
+
     if(props.firstColor && !props.secondColor && !props?.thirdColor ) {
         return (
             <div style={{...lineContainer, margin: props.margin}}>
-                <div style={{...lines, backgroundColor: props.firstColor }}></div>
+                <div style={{...lines({devices: devices}), backgroundColor: props.firstColor }}></div>
             </div>
         )
     } else if(props.firstColor && props.secondColor && !props.thirdColor) {
         return (
             <div style={{...lineContainer, margin: props.margin}}>
-                <div style={{...lines, backgroundColor: props.firstColor }}></div>
-                <div style={{...lines, backgroundColor: props.secondColor }}></div> 
+                <div style={{...lines({devices: devices}), backgroundColor: props.firstColor }}></div>
+                <div style={{...lines({devices: devices}), backgroundColor: props.secondColor }}></div> 
             </div>
         )
     } else if(props.firstColor && props.secondColor && props.thirdColor) {
         return (
             <div style={{...lineContainer, margin: props.margin}}>
-                <div style={{...lines, backgroundColor: props.firstColor }}></div>
-                <div style={{...lines, backgroundColor: props.secondColor }}></div> 
-                <div style={{...lines, backgroundColor: props.thirdColor }}></div>
+                <div style={{...lines({devices: devices}), backgroundColor: props.firstColor }}></div>
+                <div style={{...lines({devices: devices}), backgroundColor: props.secondColor }}></div> 
+                <div style={{...lines({devices: devices}), backgroundColor: props.thirdColor }}></div>
             </div>
         )
     } else {
@@ -45,11 +48,14 @@ const lineContainer: CSSProperties = {
     display: "flex",
 }
 
-const lines : CSSProperties = {
-    width: "150px", 
-    height: "10px", 
-    margin: "2px", 
-    borderRadius: "10px"
+const lines: (devices: DeviceContextData) => CSSProperties = (devices) => {
+    
+    return {
+        width: devices.devices.isDesktop ? "150px" : devices.devices.isTablet ? "120px" : devices.devices.isMobile ? "80px" : "120px",
+        height: "10px", 
+        margin: "2px", 
+        borderRadius: "10px"
+    }
 }
 
 export default Lines
