@@ -1,4 +1,4 @@
-import { FC, useContext } from "react"
+import { CSSProperties, FC, useContext } from "react"
 import { icons, includings, Product, Integration, Accounting, Invoice, Salary, integration, products } from '../../data/products'
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -11,7 +11,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Button from "@mui/material/Button";
-import { productContext } from "../context/provider";
+import { DeviceContext, productContext } from "../context/provider";
 
 interface Props {
     product?: Product
@@ -71,8 +71,9 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     );
     };
 
-    // Gets productContext
+    // Gets Context
     const { productList, getProductList } = useContext(productContext)
+    const { devices } = useContext(DeviceContext)
     
     // Sets new/updated product - No validation applied at the moment
     const setNewProduct: () => void = () => {
@@ -170,16 +171,16 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     return (
         <div>  
             {/* Package name, description prices */}
-            <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: '400px' },}} noValidate autoComplete="off">
+            <Box component="form" sx={{ '& .MuiTextField-root': { m: 1, width: devices.isDesktop ? "400px" : devices.isTablet ? "400px" : devices.isMobile ? "90%" : "90%" },}} noValidate autoComplete="off">
                 <div>
                     <TextField required id="outlined-required" label="Paketnamn" onChange={(event) => {setName(event.target.value)}} value={nameInput} /><br />
-                    <TextField required id="outlined-textarea" label="Paketbeskrivning" rows={4} onChange={(event) => {setDesc(event.target.value)}} value={descInput}/><br />
+                    <TextField required id="outlined-multiline-static" label="Paketbeskrivning" multiline rows={4} onChange={(event) => {setDesc(event.target.value)}} value={descInput}/><br />
                     <TextField style={{width: "40%"}} required id="outlined-required" label="Pris 3 månader" onChange={(event) => {setPrice3(Number(event.target.value))}} value={price3} type={"number"} />
                     <TextField style={{width: "40%"}} required id="outlined-required" label="Pris 12 månader" onChange={(event) => {setPrice12(Number(event.target.value))}} value={price12} type={"number"} />
                 </div>
             </Box>
                 {/* Includings */}
-            <FormControl sx={{ m: 1, width: 400 }}>
+            <FormControl sx={{ m: 1, width:  devices.isDesktop ? "400px" : devices.isTablet ? "400px" : devices.isMobile ? "90%" : "90%" }}>
                 <InputLabel id="demo-multiple-checkbox-label">Komponenter</InputLabel>
                 <Select required labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={includeInput} onChange={handleChange2} input={<OutlinedInput label="Tag" />} renderValue={(selected) => selected.join(', ')} MenuProps={MenuProps}>
                     {includings.map((include) => (
@@ -207,12 +208,20 @@ const AddAndModifyProduct: FC<Props> = (props) => {
                 <TextField required id="outlined-textarea" label="URL-bild"  onChange={(event) => {setImage(event.target.value)}} value={imageInput}/>
                 <img style={{width: "60px", marginLeft: "10px"}} src= {imageInput} alt="" />
             </div>
+            <p style={helperText}>En bild skall dyka upp till höger om fältet när du klistrat in din URL</p>
             {/* Button */}
             <div style={{display: "flex", alignItems: "center", width: "100%", justifyContent: "flex-end", marginTop: "25px"}}>
                 <Button sx={{width: "180px", height: "60px"}} variant="outlined" onClick={() => { handleClickAddProduct() }} >{props.action == "change" ? "Ändra paket" : "Skapa paket"}</Button>
             </div>
         </div>
     )
+}
+
+
+const helperText: CSSProperties = {
+    color: "black",
+    paddingLeft: "7px",
+    fontSize: "9px"
 }
 
 export default AddAndModifyProduct

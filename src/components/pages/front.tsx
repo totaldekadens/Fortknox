@@ -29,7 +29,7 @@ const FrontPage: FC<Props> = (props) => {
     <>
       <div style={container}>
         <img style={bannerStyle} src= '/src/assets/banners/happy_restaurant_owners.png' alt="" /> {/* Försök importera denna istället */}
-        <div style={overlay({devices: devices})}>
+        <div style={overlay}>
           <Lines firstColor= {colors.primary} secondColor={colors.third} thirdColor={colors.secondary}/>
           <h1 style={sloganStyle({devices: devices})}>Lev din <span style={{color: colors.third}}>företagsdröm</span></h1>
           <div style={textContainer({devices: devices})}>
@@ -84,19 +84,15 @@ const bannerStyle: CSSProperties = {
 }
 
 // ta bort propertyn om den inte används sen
-const overlay: (devices: DeviceContextData) => CSSProperties = (devices) =>   {
-  
-  return {
+const overlay: CSSProperties =  {
     padding: "10% 10% 0px 10%",
     position: 'absolute'
-  }
-
 }
 
 const sloganStyle: (devices: DeviceContextData) => CSSProperties = (devices) => {
   
 return {
-  fontSize: devices.devices.isDesktop ? "75px" : devices.devices.isTablet ? "65px" : devices.devices.isMobile ? "35px" : "65px"
+  fontSize: devices.devices.isDesktop ? "75px" : devices.devices.isTablet ? "65px" : devices.devices.isMobile ? "38px" : "38px"
 }
   
     
