@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import InputFieldsCart from "../interaction/inputFieldsCart";
 import SummaryCard from "../payment/summaryCard";
 import DeliveryPage from "../payment/delivery";
+import CartSummary from "../payment/cartSummary";
 
 const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp"];
 
@@ -110,7 +111,7 @@ const CheckOut: FC<Props> = (props) => {
                         {activeStep == 0 ? (<><ProductCardCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                         {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
                         {activeStep == 2 ? (<><InputFieldsCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 3 ? ("slutför köp") : ""}
+                        {activeStep == 3 ? (<><CartSummary /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                     </div>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                         <Button
