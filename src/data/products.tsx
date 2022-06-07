@@ -43,11 +43,6 @@ export const icons : Icon[] = [
     {src: salaryicon, name: "Salary"},
 ]
 
-
-
-
-
-
 // Package
 export interface Product {
     id: number,

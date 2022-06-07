@@ -1,7 +1,7 @@
 import  { FC, useContext } from "react"
 import { DeviceContext} from "./../context/provider";
-import TabPanelAdmin from "../admin/tabPanelAdmin";
-import SimpleAccordion from "../admin/accordionAdmin";
+import TabPanelAdmin from "../adminParts/tabPanelAdmin";
+import SimpleAccordion from "../adminParts/accordionAdmin";
 
 const AdminPanel : FC = () => { 
 

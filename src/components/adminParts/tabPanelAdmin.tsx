@@ -4,12 +4,12 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import { colors } from "../../data/color";
-import { includings } from "./../../data/products"
+import { includings } from "../../data/products"
 import ProductDetailsAdmin from "../product/productDetailsAdmin";
-import AddAndModifyProduct from "../admin/addAndModifyProduct";
-import { productContext } from "./../context/provider";
-import { TabPanel, a11yProps } from "../admin/adminTemplatePart";
-import ModifyProduct from "../admin/modifyProduct";
+import AddAndModifyProduct from "./addAndModifyProduct";
+import { productContext } from "../context/provider";
+import { TabPanel, a11yProps } from "./adminTemplatePart";
+import ModifyProduct from "./modifyProduct";
 
 const TabPanelAdmin : FC = () => { 
 
@@ -41,7 +41,7 @@ const TabPanelAdmin : FC = () => {
                 <Tab label="Skapa paket" {...a11yProps(0)} />
                 <Tab label="Ändra paket" {...a11yProps(1)} />
                 <Tab label="Paket" {...a11yProps(2)} />
-                <Tab label="Produkter" {...a11yProps(3)} />
+                <Tab label="Komponenter" {...a11yProps(3)} />
             </Tabs>
 
                 {/* Content in "Skapa paket" */}
@@ -64,7 +64,7 @@ const TabPanelAdmin : FC = () => {
                     </div>
                 </TabPanel>
 
-                {/* Content in "Produkter" */}
+                {/* Content in "Komponenter" */}
                 <TabPanel value={value} index={3}>
                     <h2 style={{color: colors.primary}}>Komponenter</h2>
                     <div style={{width: "100%"}}>
