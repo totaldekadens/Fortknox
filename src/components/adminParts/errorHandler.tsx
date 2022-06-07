@@ -24,7 +24,21 @@ const errorLoop = (errorList: Error[]) =>  {
             const result = checkImage(stringifiedItem)
             itemCopy.error = result
             return itemCopy;
-        }
+
+        } else if(itemCopy.name == "image") {
+            
+            const img = new Image();
+            const stringified = String(itemCopy.value)
+            img.src = stringified
+
+            if(!img.complete) {
+                itemCopy.error = true
+                return itemCopy;
+            } else {
+                itemCopy.error = false;
+                return itemCopy;
+            }
+        } 
         else {
             itemCopy.error = false;
             return itemCopy;
@@ -55,16 +69,23 @@ interface windowObject {
 
 export const checkState: (product: Product, includeInput : string[] ) => windowObject  = (product, includeInput) => {
 
-
     if(!product.name || !product.desc || !product.thumbnail || !product.icon || !product.price3mth || !product.price12mth || product.including[0] == undefined || includeInput.length < 1) {
             
         return {open: true, message: "Alla fält måste vara ifyllda", color: "red", title: "Ajajaj!"} 
     }
+
     const checkURL = checkImage(product.thumbnail)
 
     if(checkURL) {
-        return { open: true, message: "Kolla din URL till bilden. Formatet är inte godkänt", color: "red", title: "Fel på URL!!"}
+        return { open: true, message: "Kolla din URL till bilden. Filformatet är inte godkänt", color: "red", title: "Fel på URL"}
     } 
+
+    const img = new Image();
+    img.src = product.thumbnail;
+
+    if (!img.complete) {
+        return { open: true, message: "Kolla din URL till bilden. Hittar inte källa", color: "red", title: "Fel på URL"}
+    }
 
     if(product.price3mth < 1 || product.price12mth < 1 ) {
         return {open: true, message: "Priset måste vara större än 0 kr", color:"red" , title: "Ajajaj!"}
@@ -73,8 +94,6 @@ export const checkState: (product: Product, includeInput : string[] ) => windowO
     return {open: false, message: "", color:"" , title: "!"}
 
 }
-
-
 
 
 export default errorLoop
