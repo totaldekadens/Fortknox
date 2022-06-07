@@ -1,6 +1,6 @@
 import { colors } from "../../data/color"
 import { CSSProperties, FC, useContext, useState } from "react"
-import { products } from "../../data/products";
+import { Product, products } from "../../data/products";
 import { flexColumn } from '../../style/common'
 
 import AddIcon from '@mui/icons-material/Add';
@@ -9,29 +9,51 @@ import CheckIcon from '@mui/icons-material/Check';
 import SectionCartContainer from "../common/sectionCartContainer";
 import { cartContext } from "../context/cartProvider";
 import { productContext } from "../context/provider";
+import { borderRadius } from "@mui/system";
+import React from "react";
+import { render } from "react-dom";
 
 
 interface Props {
+    name:Product
+    value:number
+}
 
+interface cartId{
+    id:Product["id"]
 }
 
 
 const ProductCardCart: FC<Props> = (props) => {
     const { cartItem, getCart } = useContext(cartContext)
     // Gets productContext
-     const { productList, getProductList } = useContext(productContext)
+    const { productList, getProductList } = useContext(productContext)
+    const cartList = []
+  
+    
+    let cartId = cartItem[0].id
+    
+    cartList.push( cartItem[0])
+
+    
+    productList.forEach((product)=>{
+        if(cartId != product.id){
+            cartList.push(product)
+        }
+    })
     
  
     return (
         <SectionCartContainer>
             <div style={{ ...cartContainer, ...flexColumn }}>
-                {cartItem.map((product) => {
+                {cartList.map((product,index) => {
+                   
                    
                    return (
 
-                        <div key={product.id} style={cartProductContainer}>
+                        <div key={product.id}  style={{...cartProductContainer}}>
 
-                            <div style={{ ...cartItemInfo, ...flexColumn }}>
+                            <div style={ index === 0 ?{ ...cartItemInfo, ...flexColumn, backgroundColor: colors.third }: {...cartItemInfo}  }>
                                 <h2 style={{ color: colors.fourth }}>{product.name}</h2>
 
                                 <h4 style={cartItemPropertiesHeader}>Inkluderade moduler:</h4>
@@ -63,6 +85,7 @@ const ProductCardCart: FC<Props> = (props) => {
                                                     <p style={cartItemProperties}>{includes!.price} kr/mån</p>
                                                 </div>
                                                 <div style={priceQuantityContainer}>
+                                                    {/* <Quantity /> */}
                                                     <RemoveIcon />
                                                     <p style={cartItemProperties}>3</p>
                                                     <AddIcon />
@@ -80,6 +103,48 @@ const ProductCardCart: FC<Props> = (props) => {
     )
 }
 
+function quantity(){
+    
+}
+/* 
+class Quantity extends React.Component {
+    
+    constructor(props) {
+      super(props);
+      
+      this.state = {value: 1}
+      this.increment = this.increment.bind(this);
+      this.decrement = this.decrement.bind(this);
+    }
+    
+    increment() {
+      this.setState(prevState => {value: ++prevState});
+    }
+    
+    decrement() {
+      this.setState(prevState => {value: prevState > 0? --prevState : 0});
+    }
+    
+    render() {
+      
+      return (
+        
+        <div className="quantity-input">
+          <button className="quantity-input__modifier quantity-input__modifier--left" onClick={this.decrement}>
+            &mdash;
+          </button>
+          <input className="quantity-input__screen" type="text" value={this.state.value} readOnly />
+          <button className="quantity-input__modifier quantity-input__modifier--right" onClick={this.increment}>
+            &#xff0b;
+          </button>  
+        </div>  
+        
+      );
+    }
+  }
+  
+ */
+
 
 export default ProductCardCart
 
@@ -89,9 +154,7 @@ const cartContainer: CSSProperties = {
     width: "100%",
     alignItems: "center",
     gap: "20px",
-
-
-
+    
 }
 
 const cartProductContainer: CSSProperties = {
@@ -99,10 +162,13 @@ const cartProductContainer: CSSProperties = {
     color: "white",
     display: "flex",
     justifyContent: "space-between",
+    
 }
 
 const cartItemInfo: CSSProperties = {
     width: "100%",
+    padding: "20px",
+    borderRadius: "10px"
 }
 
 const cartItemInfoContainer: CSSProperties = {

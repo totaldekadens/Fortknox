@@ -68,6 +68,7 @@ export interface Accounting {
     name: string
     desc: string
     price: number
+    qty?: number
     verifikationer:  {name: string, desc: string}
     leverantorsfakturor: {name: string, desc: string}
     kvitton: {name: string, desc: string}
@@ -84,6 +85,7 @@ export interface Integration {
     name: string
     desc: string
     price?: number
+    qty?:number
     integrera_med_externa_system: {name: string, bool: boolean}
     fri_support: {name: string, desc: string}
     molnbaserat: {name: string, bool: boolean}
@@ -95,6 +97,7 @@ export interface Invoice {
     name: string
     desc: string
     price: number
+    qty?: number
     kundfakturor: {name: string, bool: boolean}
     inbetalning: {name: string, bool: boolean}
     paminnelsehantering: {name: string, bool: boolean}
@@ -113,6 +116,7 @@ export interface Salary {
     name: string
     desc: string
     price: number
+    qty?: number
     personalregister: {name: string, bool: boolean}
     digitala_lonebesked: {name: string, desc: string | undefined}
     kalendarium: {name: string, bool: boolean}
@@ -129,7 +133,7 @@ const accounting : Accounting = {
     name: "Bokföring",
     desc: "Med smarta och automatiserade lösningar gör vi bokföring både enklare och roligare. Kvitton och leverantörsfakturor hanteras helt digitalt och du får automatiskt förslag på hur de ska bokföras. Vi har kopplingar till samtliga Sveriges största banker, vilket gör att betalningar enkelt hanteras direkt från programmet.",
     price: 119,
-
+    qty: 1,
     verifikationer:  {
         name: "Verifikationer", 
         desc: "Obegränsat"},
@@ -172,6 +176,7 @@ export const integration : Integration = {
     name: "Integration",
     desc: "Med en Integrationslicens får du en hel värld av möjligheter eftersom du kan koppla ihop ditt Fortknox med över 400 olika tredjepartsprogram. Genom att integrera Fortknox med dina för- och eftersystem – exempelvis kassasystem, webbshopar eller arbetsordersystem – effektiviserar du din administration och undviker dubbelarbete.",
     price: 109,
+    qty: 1,
     integrera_med_externa_system : { 
         name: "Integrera med externa system", 
         bool: true},
@@ -194,6 +199,7 @@ const invoice : Invoice = {
     name: "Fakturering",
     desc: "Med FortKnox skapar och skickar du obegränsat antal fakturor helt digitalt med ett par klick, oavsett om du är på språng eller vid en dator. Vi har stöd för flera smarta funktioner såsom automatisk återrapportering av inbetalningar från din bank, och rapportering av rot-, rut- och grönt avdrag till Skatteverket.",
     price: 119,
+    qty: 1,
 
     kundfakturor: { 
         name: "Kundfakturor", 
@@ -237,6 +243,7 @@ const salary : Salary = {
     name: "Lön",
     desc: "Alltid uppdaterat med aktuella skattetabeller, lagar och regler – så att du enkelt kan ta hand om lönerna själv. Automatisk överföring till Skatteverket underlättar arbetsgivardeklarationer på individnivå (AGI), och de anställda kan själva rapportera när- och frånvaro och få sina lönebesked i Fortknox App. Och bokföringen får du med automatik.",
     price: 109,
+    qty: 1,
 
     personalregister: { 
         name: "Personalregister", 
@@ -324,5 +331,4 @@ export const products: Product[] = [
         ]
     }
 ]
-
 

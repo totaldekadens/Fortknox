@@ -71,7 +71,7 @@ const ProductListProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
 
 
-// Mediaquery
+// Mediaquery från Victors exempel
 
 export interface DeviceContextData {
     devices: Device
