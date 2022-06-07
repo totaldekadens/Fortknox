@@ -23,7 +23,7 @@ const CartButton: FC<Props> = (props) => {
     
     
     const saveProductToLocalstorage = () => {
-
+        
         const foundProduct = productList.find((product) => Number(props.product.id) == product.id)
         
         const cartList = []
