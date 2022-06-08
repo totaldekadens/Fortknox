@@ -77,19 +77,19 @@ const bannerStyle: CSSProperties = {
     filter: "brightness(70%)"
 }
 
-const overlay: CSSProperties =  {
+export const overlay: CSSProperties =  {
     padding: "10% 10% 0px 10%",
     position: 'absolute'
 }
 
-const sloganStyle: (devices: DeviceContextData) => CSSProperties = (devices) => {
+export const sloganStyle: (devices: DeviceContextData) => CSSProperties = (devices) => {
   
   return {
     fontSize: devices.devices.isDesktop ? "75px" : devices.devices.isTablet ? "65px" : devices.devices.isMobile ? "38px" : "38px"
   }
 }
 
-const textContainer : (devices: DeviceContextData) => CSSProperties = (devices) =>  {
+export const textContainer : (devices: DeviceContextData) => CSSProperties = (devices) =>  {
 
   return {
     width: devices.devices.isDesktop ? "50%" : devices.devices.isTablet ? "60%" : devices.devices.isMobile ? "70%" : "60%",

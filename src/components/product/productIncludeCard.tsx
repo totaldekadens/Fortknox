@@ -38,7 +38,7 @@ const ProductIncludeCard: FC<Props> = (props) => {
                         return (
                             <div key={include!.id} style={{ display: "flex", flexDirection: "column", minWidth: "300px", maxWidth: "380px", margin: "0 20px" }}>
                                 <h2 style={{ color: "black" }}>{include?.name}</h2>
-                                <h3 style={{ color: "black" }}>{include?.desc}</h3>
+                                <p style={{ color: "black" }}>{include?.desc}</p>
                             </div>
                         )
                     })}

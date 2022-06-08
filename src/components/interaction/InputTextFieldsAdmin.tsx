@@ -12,7 +12,7 @@ interface Props {
     descInputValue: string
     price3InputValue: number
     price12InputValue: number
-    updatedErrorList: any[]
+    updatedErrorList: any[] // Checka varför Error[] inte funkar
 }
 
 const InputTextFieldsAdmin: FC<Props> = (props: Props) => {
