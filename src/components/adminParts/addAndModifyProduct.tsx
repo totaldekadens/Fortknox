@@ -140,7 +140,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
             return
         }
 
-        // Action if product exists - update, else - push
+        // Action if product already exists - update, else - push
         if(props.product) {
             const updatedList = ascendProductList.map((updateProduct) => { 
                 if(updateProduct.id == props.product!.id){
@@ -150,14 +150,17 @@ const AddAndModifyProduct: FC<Props> = (props) => {
                     return updateProduct
                 }
             })
+            // Updates localstorage with the correct productlist
             localStorage.setItem('productList', JSON.stringify(updatedList));
         }
         else {
             ascendProductList.push(newProduct)
             localStorage.setItem('productList', JSON.stringify(ascendProductList));
         }
-
+        // Fetching the correct productlist from localstorage and sets the context
         getProductList();
+
+        // Sets the correct success message to window dialog
         wimdowDialog(true, props.action == "change" ? "Paket " + '"' + nameInput + '"' + " är nu uppdaterad" : "Paketet " + '"' + nameInput + '"' + " är nu skapat", "black", "Information!")
 
         // Clear fields

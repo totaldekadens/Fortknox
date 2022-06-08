@@ -1,7 +1,7 @@
 import { Product } from '../../data/products';
 import { Error } from './addAndModifyProduct'
 
-
+// Sets error on all fields thats not approved
 const errorLoop = (errorList: Error[]) =>  {
 
     const copy =  errorList.map((item) => {
@@ -13,6 +13,7 @@ const errorLoop = (errorList: Error[]) =>  {
 
             itemCopy.error = true;
             return itemCopy;
+
         // Checks if number is less than 1
         } else if(typeof(itemCopy.value) == "number" && itemCopy.value < 1 ) {
             itemCopy.error = true;
@@ -20,24 +21,28 @@ const errorLoop = (errorList: Error[]) =>  {
 
         } else if(itemCopy.name == "image") {
             
+            // Checks if the url has the right ending 
             const stringifiedItem = String(itemCopy.value)
             const result = checkImage(stringifiedItem)
             itemCopy.error = result
+
+            // Checks if the URL source is valid 
+            if(!result) {
+                const img = new Image();
+                const stringified = String(itemCopy.value)
+                img.src = stringified
+    
+                if(!img.complete) {
+                    itemCopy.error = true
+                    return itemCopy;
+                } else {
+                    itemCopy.error = false;
+                    return itemCopy;
+                }
+            }
+
             return itemCopy;
 
-        } else if(itemCopy.name == "image") {
-            
-            const img = new Image();
-            const stringified = String(itemCopy.value)
-            img.src = stringified
-
-            if(!img.complete) {
-                itemCopy.error = true
-                return itemCopy;
-            } else {
-                itemCopy.error = false;
-                return itemCopy;
-            }
         } 
         else {
             itemCopy.error = false;
@@ -67,6 +72,7 @@ interface windowObject {
     title: string
 }
 
+// Checks state, return right info to window dialog
 export const checkState: (product: Product, includeInput : string[] ) => windowObject  = (product, includeInput) => {
 
     if(!product.name || !product.desc || !product.thumbnail || !product.icon || !product.price3mth || !product.price12mth || product.including[0] == undefined || includeInput.length < 1) {

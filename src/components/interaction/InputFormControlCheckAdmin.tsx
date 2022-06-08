@@ -8,7 +8,7 @@ import { DeviceContext } from "../context/provider";
 interface Props {
     includeInput: string[]
     setIncludes: React.Dispatch<React.SetStateAction<string[]>>
-    updatedErrorList: any[]
+    updatedErrorList: any[] // Checka varför Error[] inte funkar
 }
 
 const ITEM_HEIGHT = 48;
