@@ -32,7 +32,7 @@ const ProductCard: FC<Props> = (props) => {
                     </div>
                 </div>
                 <div>
-                    <CartButton product={props.product}/>
+                    <CartButton product={props.product} paddingBtn={""}/>
                     <ProductButton product={props.product}/>  
                 </div>
             </div>

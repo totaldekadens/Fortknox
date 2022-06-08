@@ -8,20 +8,20 @@ import { icons} from "../../data/products";
 interface Props {
     icon: string
     setIcon: React.Dispatch<React.SetStateAction<string>>
-    updatedErrorList: any[]
+    updatedErrorList: any[] // Checka varför Error[] inte funkar
 }
 
 const InputFormControlAdmin: FC<Props> = (props: Props) => {
     
     return (
         <FormControl sx={{ m: 1, minWidth: 120 }}>
-        <InputLabel id="demo-simple-select-helper-label">Ikon</InputLabel>
-        <Select required labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" value={props.icon} error={props.updatedErrorList[3]!.error} label="Icon" onChange={(event: SelectChangeEvent) => {props.setIcon(event.target.value)}}>
-            {icons.map((icon) => { return (
-                <MenuItem key={icon.src} value={icon.src}>{icon.name}</MenuItem> 
-            ) })}
-        </Select>
-    </FormControl>
+            <InputLabel id="demo-simple-select-helper-label">Ikon</InputLabel>
+            <Select required labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" value={props.icon} error={props.updatedErrorList[3]!.error} label="Icon" onChange={(event: SelectChangeEvent) => {props.setIcon(event.target.value)}}>
+                {icons.map((icon) => { return (
+                    <MenuItem key={icon.src} value={icon.src}>{icon.name}</MenuItem> 
+                ) })}
+            </Select>
+        </FormControl>
     )
 }
 

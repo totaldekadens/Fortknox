@@ -9,7 +9,7 @@ import { cartContext } from "../context/cartProvider";
 
 interface Props {
     product: Product
-    /* addToCart: (product: Product) => void */
+    paddingBtn: string
 }
 
 
@@ -34,7 +34,7 @@ const CartButton: FC<Props> = (props) => {
     }
     return (
         <Link style={{ textDecoration: "none" }} to={`/checkout/${props.product.id}`} >
-            <Button sx={buttonStyle} variant="outlined" onClick={() => { saveProductToLocalstorage() }}>Beställ</Button>
+            <Button sx={{...buttonStyle, padding: props.paddingBtn }} variant="outlined" onClick={() => { saveProductToLocalstorage() }}>Beställ</Button>
         </Link>
     )
 }

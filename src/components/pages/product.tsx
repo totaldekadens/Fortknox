@@ -3,7 +3,7 @@ import { useParams, Navigate, Link } from "react-router-dom";
 import { colors } from "../../data/color";
 import { products } from "../../data/products";
 import ContentTitle from "../common/contentTitle";
-import { productContext } from "../context/provider";
+import { DeviceContext, productContext } from "../context/provider";
 import ProductsCompare from "../product/compareProduct";
 import ProductBanner from "../product/productBanner";
 import ProductIncludeCard from "../product/productIncludeCard";
@@ -14,6 +14,8 @@ interface Props {
 
 
 const ProductPage: FC<Props> = (props) => {
+    
+    const { devices } = useContext(DeviceContext)
 
     const { productId } = useParams()
 
@@ -32,16 +34,13 @@ const ProductPage: FC<Props> = (props) => {
             <ProductBanner />
             <ProductIncludeCard/>
             {/*  change to a own component */}
-            <ContentTitle title="Jämför funktioner" textAlign="center" alignItems="center" firstColor={colors.third} secondColor={colors.secondary} />
+            {devices.isMobile ? undefined : <ContentTitle title="Jämför funktioner" textAlign="center" alignItems="center" firstColor={colors.third} secondColor={colors.secondary} /> } 
             <div style={{ ...container, flexDirection: "column", justifyContent: "center", color: "black" }}>
-
-            <ProductsCompare/>
+                {devices.isMobile ? undefined : <ProductsCompare/> }                
             </div>
         </>
     )
 }
-
-
 
 const container: CSSProperties = {
     display: "flex",
