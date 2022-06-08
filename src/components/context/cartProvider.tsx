@@ -1,24 +1,24 @@
 import React, { useEffect } from "react"
 import { FC, PropsWithChildren, useState } from "react"
-import { Product, products } from "../../data/products"
+import { CartProduct, Product, products } from "../../data/products"
 
 interface Props {}
 
 interface cartContextData {
-    cartItem: Product[]
-    getCart: () => void
+    cartItem: CartProduct | undefined
+    setCartItem: React.Dispatch<React.SetStateAction<CartProduct | undefined>>
 }
 
 export const cartContext = React.createContext<cartContextData>({
     
-    cartItem: products,
-    getCart: () => {}
+    cartItem: undefined,
+    setCartItem: () => {}
 })
 
 
 const CartProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
-    const [cartItem, setCartItem] = useState<Product[]> ([])
+    const [cartItem, setCartItem] = useState<CartProduct | undefined> ()
 
     // Updates productList - Vara i useeffect?
     const getCart: () => void = () => {
@@ -46,7 +46,7 @@ const CartProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
 
     return (
-        <cartContext.Provider value={{ cartItem, getCart}}>
+        <cartContext.Provider value={{ cartItem, setCartItem}}>
             {props.children}
         </cartContext.Provider>
     )

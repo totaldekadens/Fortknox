@@ -1,5 +1,5 @@
 import { FC, useContext, useState } from "react"
-import { Product, products } from "../../data/products"
+import { CartProduct, Product, products } from "../../data/products"
 import Button from '@mui/material/Button';
 import { Link, useParams } from 'react-router-dom';
 import { buttonStyle } from "../../style/common";
@@ -16,7 +16,7 @@ interface Props {
 const CartButton: FC<Props> = (props) => {
    
     const { productList } = useContext(productContext)
-    const { cartItem, getCart } = useContext(cartContext)
+    const { cartItem, setCartItem } = useContext(cartContext)
     
     
     
@@ -26,11 +26,27 @@ const CartButton: FC<Props> = (props) => {
         
         const foundProduct = productList.find((product) => Number(props.product.id) == product.id)
         
-        const cartList = []
-        cartList.push(foundProduct)
-        
+        const cartList:CartProduct = {
+            id: foundProduct!.id,
+            name: foundProduct!.name,
+            desc: foundProduct!.desc,
+            icon: foundProduct!.icon,
+            price3mth: foundProduct!.price3mth,
+            price12mth: foundProduct!.price12mth,
+            including:[] 
+        }
+        foundProduct?.including.map((include) => {
+
+            const newIncludeObj = {
+                include: include,
+                qty: 1
+            }
+            cartList.including.push(newIncludeObj)
+        })
+        /* cartList.push(foundProduct) */
+        setCartItem(cartList)
         localStorage.setItem("cartItem", JSON.stringify(cartList))
-        getCart()    
+         
     }
     return (
         <Link style={{ textDecoration: "none" }} to={`/checkout/${props.product.id}`} >
