@@ -42,7 +42,6 @@ const ProductBanner: FC<Props> = (props) => {
                                     <h2 style={{ fontSize: devices.isMobile ? "20px" : "24px"}}>{include?.name}</h2>
                                     <h3 style={{ fontSize: devices.isMobile ? "13px" : "", marginTop: "20px"}}>(Ord.pris {include?.price} kr/mån)</h3>
                                 </div>
-
                             )
                         })}
                         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: devices.isTablet ? "20px" : devices.isMobile ? "20px" : "0px" }}>

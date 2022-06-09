@@ -20,24 +20,31 @@ const CartProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
     const [cartItem, setCartItem] = useState<CartProduct | undefined> ()
 
-    // Updates productList - Vara i useeffect?
-    const getCart: () => void = () => {
-        
-        const getCurrentCart = localStorage.getItem('cartItem')
-        
-        if(!getCurrentCart) {
-            localStorage.setItem("cartItem",JSON.stringify(cartItem))
-        } 
-        else {
-            const cart = JSON.parse(getCurrentCart)
-            setCartItem(cart)
+    const setCartListToLS: () => void = () => { 
+        if(cartItem) {
+            localStorage.setItem('cartItem', JSON.stringify(cartItem));
         }
     }
-   
+
+    useEffect(() => {
+        setCartListToLS();
+        
+    }, [cartItem])
 
 
     useEffect(() => {
 
+        const getCart: () => void = () => {
+        
+            const getCurrentCart = localStorage.getItem('cartItem')
+            
+            if(getCurrentCart) {
+                const CurrentCart = JSON.parse(getCurrentCart)
+                setCartItem(CurrentCart)
+            } 
+            
+        }
+    
         getCart()
 
     }, [])

@@ -2,7 +2,6 @@ import { Box, TextField } from "@mui/material";
 import { FC, useContext } from "react"
 import { DeviceContext } from "../context/provider";
 
-
 interface Props {
     setNameProp: React.Dispatch<React.SetStateAction<string>>
     setDescProp: React.Dispatch<React.SetStateAction<string>>
@@ -12,7 +11,13 @@ interface Props {
     descInputValue: string
     price3InputValue: number
     price12InputValue: number
-    updatedErrorList: any[] // Checka varför Error[] inte funkar
+    updatedErrorList: Error[]
+}
+
+export interface Error {
+    name: string
+    value: string | number| string[] | undefined
+    error: boolean
 }
 
 const InputTextFieldsAdmin: FC<Props> = (props: Props) => {

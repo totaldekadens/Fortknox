@@ -9,105 +9,91 @@ import { flexColumn } from "../../style/common";
 import { DepartureBoardSharp } from "@mui/icons-material";
 import { CartProduct } from "../../data/products";
 
-
-
-interface Props {
-
-}
+interface Props {}
 
 const CartSelectedItem: FC<Props> = (props) => {
+
     const { cartItem, setCartItem } = useContext(cartContext)
     
-   
- 
-    console.log(cartItem)
+    if(cartItem?.including) {
+
+        let item:CartProduct = {...cartItem}
+
+            function increment(id: number) {
+            
+                let foundInclude = item.including.find((ele) => Number(id) == ele.include!.id)
+
+                if(foundInclude) {
+                    foundInclude.qty = foundInclude.qty + 1
+                }
+                
+                setCartItem(item)
+            }
+        
+            function decrement(id: number) {
+                const foundInclude = item.including!.find((ele) => Number(id) == ele.include!.id)
+                foundInclude!.qty = foundInclude!.qty - 1
+                
+                setCartItem(item)
+            }
+
+            return (
     
-    let item:CartProduct = {...cartItem!}
-
-
-    function increment(id: number) {
-        
-        let foundInclude = item.including!.find((ele) => Number(id) == ele.include!.id)
-        foundInclude!.qty = foundInclude!.qty + 1
-        
-        setCartItem(item)
-       
-    }
-
-    function decrement(id: number) {
-        const foundInclude = item.including!.find((ele) => Number(id) == ele.include!.id)
-        foundInclude!.qty = foundInclude!.qty - 1
-        
-        setCartItem(item)
-
-    }
+                <div key={item.id} style={{ ...cartProductContainer }}>
     
-
-    if (item) {
-
-        return (
-
-            <div key={item.id} style={{ ...cartProductContainer }}>
-
-                <div style={{ ...cartItemInfo, ...flexColumn, backgroundColor: colors.primary }}>
-                    <h2 style={{ color: colors.fourth }}>{item.name}</h2>
-
-                    <h4 style={cartItemPropertiesHeader}>Inkluderade moduler:</h4>
-
-                    {
-
-                        item.including!.map((includes) => {
-                            if (includes.include) {
-
-                                if (includes.include.name == "Integration") {
-                                    return (
-                                        <div key={includes.include.id} style={cartItemPropertiesContainer}>
-                                            <div style={cartItemInfoContainer}>
-                                                <CheckIcon style={{ color: "lightgreen" }} />
-                                                <p key={includes.include.name} style={cartItemProperties}>{includes.include.name}</p>
+                    <div style={{ ...cartItemInfo, ...flexColumn, backgroundColor: colors.primary }}>
+                        <h2 style={{ color: colors.fourth }}>{item.name}</h2>
+    
+                        <h4 style={cartItemPropertiesHeader}>Inkluderade moduler:</h4>
+    
+                        {
+    
+                            item.including!.map((includes) => {
+                                if (includes.include) {
+    
+                                    if (includes.include.name == "Integration") {
+                                        return (
+                                            <div key={includes.include.id} style={cartItemPropertiesContainer}>
+                                                <div style={cartItemInfoContainer}>
+                                                    <CheckIcon style={{ color: "lightgreen" }} />
+                                                    <p key={includes.include.name} style={cartItemProperties}>{includes.include.name}</p>
+                                                </div>
+                                                <div style={cartItemInfoContainer}>
+                                                    <p style={cartItemProperties}>Inkluderat</p>
+                                                </div>
+                                                <div style={priceQuantityContainer}>
+                                                    <p style={{ ...cartItemProperties, marginRight: "27px" }}>1</p>
+                                                </div>
                                             </div>
-                                            <div style={cartItemInfoContainer}>
-                                                <p style={cartItemProperties}>Inkluderat</p>
+                                        )
+                                    }
+                                    else {
+                                        return (
+                                            <div key={includes.include.id} style={cartItemPropertiesContainer}>
+                                                <div style={cartItemInfoContainer}>
+                                                    <p key={includes.include.name} style={{ ...cartItemProperties, marginLeft: "24px" }}>{includes.include.name}</p>
+                                                </div>
+                                                <div style={cartItemInfoContainer}>
+                                                    <p style={cartItemProperties}>{includes.include.price} kr/mån</p>
+                                                </div>
+                                                {/*                                             <div style={{height: "100%", width:"100%", backgroundColor:"orange"}} onClick={() => increment(includes.include!.id )}></div>
+                                                    */}
+                                                <RemoveIcon onClick={() => decrement(includes.include!.id)} />
+                                                <h4 key={includes.qty}>{includes.qty}</h4>
+    
+                                                <AddIcon onClick={() => increment(includes.include!.id)} />
+
                                             </div>
-                                            <div style={priceQuantityContainer}>
-                                                <p style={{ ...cartItemProperties, marginRight: "27px" }}>1</p>
-                                            </div>
-                                        </div>
-                                    )
+                                        )
+                                    }
                                 }
-                                else {
-                                    return (
-                                        <div key={includes.include.id} style={cartItemPropertiesContainer}>
-                                            <div style={cartItemInfoContainer}>
-                                                <p key={includes.include.name} style={{ ...cartItemProperties, marginLeft: "24px" }}>{includes.include.name}</p>
-                                            </div>
-                                            <div style={cartItemInfoContainer}>
-                                                <p style={cartItemProperties}>{includes.include.price} kr/mån</p>
-                                            </div>
-                                            {/*                                             <div style={{height: "100%", width:"100%", backgroundColor:"orange"}} onClick={() => increment(includes.include!.id )}></div>
- */}
-                                            <RemoveIcon onClick={() => decrement(includes.include!.id)} />
-                                            <h4 key={includes.qty}>{includes.qty}</h4>
-
-                                            <AddIcon onClick={() => increment(includes.include!.id)} />
-
-
-
-
-                                        </div>
-                                    )
-                                }
-                            }
-                        })
-                    }
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
-
-
-
-        )
+            )
     } else {
-        return <h1>CartSelectedItem row 78</h1>
+        return <h1>CartItem existerer ej</h1>
     }
 }
 

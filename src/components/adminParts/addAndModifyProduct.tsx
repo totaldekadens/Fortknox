@@ -17,7 +17,7 @@ interface Props {
 
 export interface Error {
     name: string
-    value: (string|number|string[]),
+    value: string | number| string[] | undefined
     error: boolean
 }
 
@@ -47,7 +47,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     }
 
     // Gets Context
-    const { productList, getProductList } = useContext(productContext)
+    const { productList, setProductList } = useContext(productContext)
 
     // Updates fields when a package is selected
     React.useEffect(() => {
@@ -57,7 +57,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
             setPrice3(props.product.price3mth);
             setPrice12(props.product.price12mth);
             setIcon(props.product.icon);
-            setImage(props.product.thumbnail!);
+            setImage(props.product.thumbnail);
             setNewInclude(props.product.including);
         }
     }, [props.product])
@@ -73,7 +73,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         {name: "include", value: includeInput, error: false },
     ]
     // Error state
-    const [updatedErrorList, setErrorList] = React.useState<(Error | undefined)[]>(errorList);
+    const [updatedErrorList, setErrorList] = React.useState<Error[]>(errorList);
 
     // Handle the click "Skapa" and "Ändra"  
     const handleClickAddProduct = () => {
@@ -151,14 +151,12 @@ const AddAndModifyProduct: FC<Props> = (props) => {
                 }
             })
             // Updates localstorage with the correct productlist
-            localStorage.setItem('productList', JSON.stringify(updatedList));
+                setProductList(updatedList)
         }
         else {
             ascendProductList.push(newProduct)
-            localStorage.setItem('productList', JSON.stringify(ascendProductList));
+            setProductList(ascendProductList)
         }
-        // Fetching the correct productlist from localstorage and sets the context
-        getProductList();
 
         // Sets the correct success message to window dialog
         wimdowDialog(true, props.action == "change" ? "Paket " + '"' + nameInput + '"' + " är nu uppdaterad" : "Paketet " + '"' + nameInput + '"' + " är nu skapat", "black", "Information!")
