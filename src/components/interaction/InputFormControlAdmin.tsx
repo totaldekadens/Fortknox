@@ -1,14 +1,16 @@
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
 import React from "react";
 import { FC } from "react"
-import { icons} from "../../data/products";
+import { icons } from "../../data/products";
+import { Error } from "./../adminParts/addAndModifyProduct"
+
 
 
 
 interface Props {
     icon: string
     setIcon: React.Dispatch<React.SetStateAction<string>>
-    updatedErrorList: any[] // Checka varför Error[] inte funkar
+    updatedErrorList: Error[]
 }
 
 const InputFormControlAdmin: FC<Props> = (props: Props) => {

@@ -17,7 +17,7 @@ interface Props {
 
 export interface Error {
     name: string
-    value: (string|number|string[]),
+    value: string | number| string[] | undefined
     error: boolean
 }
 
@@ -73,7 +73,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         {name: "include", value: includeInput, error: false },
     ]
     // Error state
-    const [updatedErrorList, setErrorList] = React.useState<(Error | undefined)[]>(errorList);
+    const [updatedErrorList, setErrorList] = React.useState<Error[]>(errorList);
 
     // Handle the click "Skapa" and "Ändra"  
     const handleClickAddProduct = () => {

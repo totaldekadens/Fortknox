@@ -3,12 +3,12 @@ import React from "react";
 import { FC, useContext } from "react"
 import { includings } from "../../data/products";
 import { DeviceContext } from "../context/provider";
-
+import { Error } from "./../adminParts/addAndModifyProduct"
 
 interface Props {
     includeInput: string[]
     setIncludes: React.Dispatch<React.SetStateAction<string[]>>
-    updatedErrorList: any[] // Checka varför Error[] inte funkar
+    updatedErrorList: Error[]
 }
 
 const ITEM_HEIGHT = 48;

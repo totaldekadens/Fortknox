@@ -62,6 +62,7 @@ interface Includ {
 }
 
 
+
 // Package
 export interface Product {
     id: number,
@@ -76,6 +77,7 @@ export interface Product {
         Accounting?,
         Invoice?,
         Salary?,
+        null? /* kolla upp varför denna krävs i addAndmodify på line 128 */
     ] 
 }
 
@@ -291,7 +293,7 @@ export const includings: [(Integration | undefined)?, (Accounting | undefined)?,
     integration,
     accounting,
     invoice,
-    salary
+    salary,
 ]
 
 

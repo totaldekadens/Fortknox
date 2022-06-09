@@ -78,7 +78,7 @@ const bannerStyle: CSSProperties = {
 }
 
 export const overlay: CSSProperties =  {
-    padding: "10% 10% 0px 10%",
+    padding: "8% 10% 0px 10%",
     position: 'absolute'
 }
 
