@@ -1,5 +1,5 @@
-import { CSSProperties, FC, useEffect, useState } from "react"
-import { delivery } from "../../data/delivery"
+import { CSSProperties, FC, useContext, useEffect, useState } from "react"
+import { Delivery, delivery } from "../../data/delivery"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -7,27 +7,18 @@ import FormControl from '@mui/material/FormControl';
 import FormLabel from '@mui/material/FormLabel';
 import { colors } from "../../data/color";
 import SectionCartContainer from "../common/sectionCartContainer";
+import { deliveryContext } from "../context/deliveryProvider";
 
 interface Props {}
 
 
 const DeliveryPage: FC<Props> = (props) => {
 
-    const [deliveryMethod, setDeliveryMethod] = useState<number | undefined>()
+    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
 
-
-    const validateDeliveryMethod = (id: number) => {
-
-        if(deliveryMethod) {
-            return deliveryMethod;
-        }
-
-    }
-
-    validateDeliveryMethod;
 
     useEffect(() => {
-        setDeliveryMethod(delivery[0].id)
+        setDeliveryInput(delivery[0])
     }, [])
 
     return (
@@ -44,7 +35,7 @@ const DeliveryPage: FC<Props> = (props) => {
                 delivery.map((deliveryOption) => {
                     return (
                         <div key={"container" + deliveryOption.id}style={radioContainer}>
-                            <FormControlLabel style={{width: "100%"}} onChange={() => {setDeliveryMethod(deliveryOption.id)} } key={deliveryOption.id} value={deliveryOption.title} control={<Radio sx={{color: colors.textWhite}} />} label={deliveryOption.title} />
+                            <FormControlLabel style={{width: "100%"}} onChange={() => {setDeliveryInput(deliveryOption)} } key={deliveryOption.id} value={deliveryOption.title} control={<Radio sx={{color: colors.textWhite}} />} label={deliveryOption.title} />
                             <p key={deliveryOption.description}>{deliveryOption.description}</p>
                             <p key={deliveryOption.price}>Engångskostnad {deliveryOption.price} kr</p>
                         </div>

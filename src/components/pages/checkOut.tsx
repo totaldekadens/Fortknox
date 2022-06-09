@@ -86,7 +86,7 @@ const CheckOut: FC<Props> = (props) => {
                         }
                         return (
                             <Step key={label} {...stepProps}>
-                                <StepLabel {...labelProps} >{label}</StepLabel>
+                                <StepLabel style={{cursor: "pointer"}}{...labelProps} onClick={() => {index < activeStep ? setActiveStep(index) : undefined}}>{label}</StepLabel>
                             </Step>
                         );
                     })}
