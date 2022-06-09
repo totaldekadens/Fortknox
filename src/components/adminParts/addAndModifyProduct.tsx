@@ -57,7 +57,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
             setPrice3(props.product.price3mth);
             setPrice12(props.product.price12mth);
             setIcon(props.product.icon);
-            setImage(props.product.thumbnail!);
+            setImage(props.product.thumbnail);
             setNewInclude(props.product.including);
         }
     }, [props.product])

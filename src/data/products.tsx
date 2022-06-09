@@ -68,7 +68,7 @@ export interface Product {
     id: number,
     name: string,
     desc: string,
-    thumbnail?: string
+    thumbnail: string
     icon: string
     price3mth: number
     price12mth: number

@@ -22,7 +22,7 @@ const InputFormControlAdmin: FC<Props> = (props: Props) => {
     return (
         <FormControl sx={{ m: 1, minWidth: 120 }}>
             <InputLabel id="demo-simple-select-helper-label">Ikon</InputLabel>
-            <Select required labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" value={props.icon} error={props.updatedErrorList[3]!.error} label="Icon" onChange={(event: SelectChangeEvent) => {props.setIcon(event.target.value)}}>
+            <Select required labelId="demo-simple-select-helper-label" id="demo-simple-select-helper" value={props.icon} error={props.updatedErrorList ? props.updatedErrorList[3].error : false} label="Icon" onChange={(event: SelectChangeEvent) => {props.setIcon(event.target.value)}}>
                 {icons.map((icon) => { return (
                     <MenuItem key={icon.src} value={icon.src}>{icon.name}</MenuItem> 
                 ) })}

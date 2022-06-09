@@ -16,25 +16,25 @@ import CartOption from "./cartOptions";
 import CartSelectedItem from "./cartSelectedItem";
 
 
-interface Props {
-  
-}
-
-
+interface Props {}
 
 const ProductCardCart: FC<Props> = (props) => {
-    const { cartItem, setCartItem } = useContext(cartContext)
-    // Gets productContext
+    const { cartItem } = useContext(cartContext)
     
-   
+    if(cartItem){
         return (
             <SectionCartContainer>
                 <CartSelectedItem />
                 <CartOption cartSelected={cartItem!.id}/>
             </SectionCartContainer>
+        )          
+    } else {
+        return (
+            <SectionCartContainer>
+                <h1>Cartitem existerer ej</h1>
+            </SectionCartContainer>
         )
-    
-   
+    }
 }
 
 
