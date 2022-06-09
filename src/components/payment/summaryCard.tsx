@@ -2,9 +2,10 @@ import { Info } from "@mui/icons-material"
 import Button from "@mui/material/Button"
 
 import { color, height } from "@mui/system"
-import { CSSProperties, FC } from "react"
+import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
 import { products } from "../../data/products"
+import { deliveryContext } from "../context/deliveryProvider"
 
 
 interface Props {
@@ -15,6 +16,29 @@ interface Props {
 
 
 const SummaryCard: FC<Props> = (props) => {
+
+    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
+
+    //const { getInputData, setInputData } = useContext(inputContext)
+
+    const validateNextStep = () => {
+        
+        if(props.activeStep === 0) {
+            
+            props.nextFunc()
+        }
+        if(props.activeStep === 1) {
+            
+            deliveryInput ? props.nextFunc() : undefined;
+
+        }
+        if(props.activeStep === 2) {
+
+            // getInputData ? props.nextFunc() : undefined;
+
+        }
+
+    }
 
     return (
         <>
@@ -68,7 +92,7 @@ const SummaryCard: FC<Props> = (props) => {
                     </div>
                     <div style={{ display:"flex", justifyContent: "center" }}>
 
-                        <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={props.nextFunc}    >
+                        <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={validateNextStep}    >
                             {props.activeStep === props.steps.length - 1 ? 'Slutför köp' : 'Nästa'}
                         </div>
                     </div>
