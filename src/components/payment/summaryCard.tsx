@@ -68,7 +68,7 @@ const SummaryCard: FC<Props> = (props) => {
                     </div>
                     <div style={{ display:"flex", justifyContent: "center" }}>
 
-                        <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={props.nextFunc}    >
+                        <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={props.nextFunc}  >    
                             {props.activeStep === props.steps.length - 1 ? 'Slutför köp' : 'Nästa'}
                         </div>
                     </div>

@@ -1,11 +1,12 @@
 import { FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { CSSProperties, FC, useState } from "react";
+import { CSSProperties, FC, useContext, useState } from "react";
+import { invoiceContext } from "../context/provider";
 
 interface Props {}
 
 
-interface InputData {
+export interface InputData {
     name: string,
     label: string,
     required: boolean,
@@ -98,7 +99,9 @@ export const inputData: InputData[] = [
 
 const InputFieldsCart: FC<Props> = (props) => {
 
-    const [getInputData, setInputData] = useState(inputData);
+   /*  const [getInputData, setInputData] = useState(inputData); */
+
+    const { getInputData, setInputData } = useContext(invoiceContext)
     
 
     // Sets the input value to the state.
@@ -181,7 +184,12 @@ const InputFieldsCart: FC<Props> = (props) => {
         })
 
         // Updates the state for re-rendering the fields that have been updated.
-        setInputData(inputDataCopy)
+
+
+        const found = inputDataCopy.find(e => e.errorState == true)
+
+        !found ? setInputData(inputDataCopy) : undefined // Sätta knappen som disabled?
+        
 
     }
 
