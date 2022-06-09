@@ -24,6 +24,7 @@ const CheckOut: FC<Props> = (props) => {
 
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set<number>());
+    const [getStatusButton, setStatusButton ] = React.useState("")
 
     const isStepOptional = (step: number) => {
         return false;
@@ -108,10 +109,10 @@ const CheckOut: FC<Props> = (props) => {
 
                     {/*  container div for checkout  */}
                     <div style={{ maxWidth: "100%", display: "flex", justifyContent: "center", padding: "4%" }}>
-                        {activeStep == 0 ? (<><ProductCardCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
-                        {activeStep == 2 ? (<><InputFieldsCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 3 ? (<><CartSummary /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
+                        {activeStep == 0 ? (<><ProductCardCart /> <SummaryCard setStatusButton={setStatusButton} statusButton={getStatusButton} nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
+                        {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard setStatusButton={setStatusButton} statusButton={getStatusButton} nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
+                        {activeStep == 2 ? (<><InputFieldsCart setStatusButton={setStatusButton} /> <SummaryCard setStatusButton={setStatusButton} statusButton={getStatusButton} nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
+                        {activeStep == 3 ? (<><CartSummary /> <SummaryCard setStatusButton={setStatusButton} statusButton={getStatusButton} nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                     </div>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                         <Button

@@ -6,17 +6,21 @@ import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
 import { products } from "../../data/products"
 import { deliveryContext } from "../context/deliveryProvider"
+import { invoiceContext } from "../context/invoiceProvider"
+import errorLoop from "../interaction/inputFieldsCartErrorHandler"
 
 
 interface Props {
     nextFunc: () => void
     activeStep: number,
     steps: string[]
+    statusButton: string
+    setStatusButton: React.Dispatch<React.SetStateAction<string>>
 }
 
 
 const SummaryCard: FC<Props> = (props) => {
-
+    const { getInputData, setInputData } = useContext(invoiceContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
 
     //const { getInputData, setInputData } = useContext(inputContext)
@@ -29,13 +33,21 @@ const SummaryCard: FC<Props> = (props) => {
         }
         if(props.activeStep === 1) {
             
-            deliveryInput ? props.nextFunc() : undefined;
+            deliveryInput ? props.nextFunc() : undefined; 
 
         }
         if(props.activeStep === 2) {
 
-            // getInputData ? props.nextFunc() : undefined;
+            // Fick kalla på errorloopen här sålänge för att det skulle fungera
+            const result = errorLoop(getInputData)
+            setInputData(result); 
+            
+            // Kollar om något error state är true (dvs är fel)
+            const found = result.find(e => e.errorState == true || e.required == true && e.value == "")
 
+            // Om inga fel hittade sätt knapp till enable annars disable
+            !found ? props.setStatusButton("enable")  : props.setStatusButton("disable") // Får se om vi använder denna?
+            !found ? props.nextFunc() : undefined; 
         }
 
     }
@@ -139,6 +151,7 @@ const btnContainer: CSSProperties = {
     width: "100%",
     minHeight: "60px",
     borderRadius: "40px",
+    cursor: "pointer"
 
 }
 
