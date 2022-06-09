@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useState } from "react"
+import { CSSProperties, FC, useEffect, useState } from "react"
 import { delivery } from "../../data/delivery"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
@@ -8,9 +8,7 @@ import FormLabel from '@mui/material/FormLabel';
 import { colors } from "../../data/color";
 import SectionCartContainer from "../common/sectionCartContainer";
 
-interface Props {
-
-}
+interface Props {}
 
 
 const DeliveryPage: FC<Props> = (props) => {
@@ -28,6 +26,9 @@ const DeliveryPage: FC<Props> = (props) => {
 
     validateDeliveryMethod;
 
+    useEffect(() => {
+        setDeliveryMethod(delivery[0].id)
+    }, [])
 
     return (
         <SectionCartContainer>
@@ -55,10 +56,6 @@ const DeliveryPage: FC<Props> = (props) => {
         </SectionCartContainer>
     )
 }
-
-
-
-
 
 export default DeliveryPage
 
