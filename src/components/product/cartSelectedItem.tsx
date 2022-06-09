@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useContext } from "react"
+import { CSSProperties, FC, useContext, useEffect, useState } from "react"
 import { cartContext } from "../context/cartProvider"
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
@@ -6,6 +6,8 @@ import CheckIcon from '@mui/icons-material/Check';
 import React from "react";
 import { colors } from "../../data/color";
 import { flexColumn } from "../../style/common";
+import { DepartureBoardSharp } from "@mui/icons-material";
+import { CartProduct } from "../../data/products";
 
 
 
@@ -15,23 +17,48 @@ interface Props {
 
 const CartSelectedItem: FC<Props> = (props) => {
     const { cartItem, setCartItem } = useContext(cartContext)
-    let item = cartItem
-    if(item){
+    
+   
+ 
+    console.log(cartItem)
+    
+    let item:CartProduct = {...cartItem!}
+
+
+    function increment(id: number) {
+        
+        let foundInclude = item.including!.find((ele) => Number(id) == ele.include!.id)
+        foundInclude!.qty = foundInclude!.qty + 1
+        
+        setCartItem(item)
+       
+    }
+
+    function decrement(id: number) {
+        const foundInclude = item.including!.find((ele) => Number(id) == ele.include!.id)
+        foundInclude!.qty = foundInclude!.qty - 1
+        
+        setCartItem(item)
+
+    }
+    
+
+    if (item) {
 
         return (
-    
+
             <div key={item.id} style={{ ...cartProductContainer }}>
-    
+
                 <div style={{ ...cartItemInfo, ...flexColumn, backgroundColor: colors.primary }}>
                     <h2 style={{ color: colors.fourth }}>{item.name}</h2>
-    
+
                     <h4 style={cartItemPropertiesHeader}>Inkluderade moduler:</h4>
-                    
+
                     {
-                        
-                        item.including.map((includes) => {
-                            if(includes.include){
-                                
+
+                        item.including!.map((includes) => {
+                            if (includes.include) {
+
                                 if (includes.include.name == "Integration") {
                                     return (
                                         <div key={includes.include.id} style={cartItemPropertiesContainer}>
@@ -48,7 +75,7 @@ const CartSelectedItem: FC<Props> = (props) => {
                                         </div>
                                     )
                                 }
-                                else  {
+                                else {
                                     return (
                                         <div key={includes.include.id} style={cartItemPropertiesContainer}>
                                             <div style={cartItemInfoContainer}>
@@ -57,11 +84,16 @@ const CartSelectedItem: FC<Props> = (props) => {
                                             <div style={cartItemInfoContainer}>
                                                 <p style={cartItemProperties}>{includes.include.price} kr/mån</p>
                                             </div>
-        
-        
-                                            <Quantity />
-        
-        
+                                            {/*                                             <div style={{height: "100%", width:"100%", backgroundColor:"orange"}} onClick={() => increment(includes.include!.id )}></div>
+ */}
+                                            <RemoveIcon onClick={() => decrement(includes.include!.id)} />
+                                            <h4 key={includes.qty}>{includes.qty}</h4>
+
+                                            <AddIcon onClick={() => increment(includes.include!.id)} />
+
+
+
+
                                         </div>
                                     )
                                 }
@@ -70,23 +102,21 @@ const CartSelectedItem: FC<Props> = (props) => {
                     }
                 </div>
             </div>
-    
-    
-    
+
+
+
         )
-    }else{
+    } else {
         return <h1>CartSelectedItem row 78</h1>
     }
 }
 
 
 class Quantity extends React.Component<{}, { value: number, }>  {
-    
+
     constructor(props: Props) {
         super(props);
 
-       
-        
         this.state = {
             value: 1,
 
@@ -102,10 +132,10 @@ class Quantity extends React.Component<{}, { value: number, }>  {
     }
 
     decrement() {
-        
+
         this.setState({ value: this.state.value > 1 ? this.state.value - 1 : 1 });
 
-        
+
 
     }
 
