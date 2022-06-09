@@ -4,7 +4,7 @@ import { colors } from "../../data/color";
 import SectionCartContainer from "../common/sectionCartContainer";
 import { inputData } from "../interaction/inputFieldsCart";
 import ProductCardCart from "../product/productCardCart";
-import PaymentOptions from "./paymentOptions";
+import RenderPaymentOptions from "./paymentOptions";
 
 
 
@@ -59,7 +59,7 @@ const CartSummary: FC<Props> = (props) => {
             <div>
                 <h2 style={{color: colors.fourth}}>Betalning:</h2>
 
-                <PaymentOptions />
+                <RenderPaymentOptions />
 
             </div>
 

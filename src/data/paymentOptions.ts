@@ -4,12 +4,15 @@ export interface PaymentOptions {
     id: number,
     name: string,
     description: string,
-    input?: InputField[]
+    input: InputField[]
 }
 
 interface InputField {
     name: string,
     type: string,
+    value: string | number
+    error: string
+    errorState: boolean
 }
 
 
@@ -21,7 +24,10 @@ export const paymentOptions: PaymentOptions[] = [
         input: [
             {
                 name: "Mobilnummer",
-                type: "number"
+                type: "number",
+                value: 0,
+                error: "",
+                errorState: false,
             }
         ]
     }, {
@@ -31,19 +37,31 @@ export const paymentOptions: PaymentOptions[] = [
         input: [
             {
                 name: "Kortnummer",
-                type: "number"
+                type: "number",
+                value: 0,
+                error: "",
+                errorState: false,
             },
             {
-                name: "Datum",
-                type: "number"
+                name: "Utgångsdatum",
+                type: "number",
+                value: 0,
+                error: "",
+                errorState: false,
             },
             {
                 name: "CVC",
-                type: "number"
+                type: "number",
+                value: 0,
+                error: "",
+                errorState: false,
             },
             {
                 name: "Kortinnehavarens namn",
-                type: "text"
+                type: "text",
+                value: "",
+                error: "",
+                errorState: false,
             },
         ]
     },
