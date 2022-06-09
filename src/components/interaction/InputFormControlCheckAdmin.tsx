@@ -3,13 +3,19 @@ import React from "react";
 import { FC, useContext } from "react"
 import { includings } from "../../data/products";
 import { DeviceContext } from "../context/provider";
-import { Error } from "./../adminParts/addAndModifyProduct"
 
 interface Props {
     includeInput: string[]
     setIncludes: React.Dispatch<React.SetStateAction<string[]>>
     updatedErrorList: Error[]
 }
+
+interface Error {
+    name: string
+    value: string | number| string[] | undefined
+    error: boolean
+}
+
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;

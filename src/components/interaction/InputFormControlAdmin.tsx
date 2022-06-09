@@ -2,10 +2,14 @@ import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from "@m
 import React from "react";
 import { FC } from "react"
 import { icons } from "../../data/products";
-import { Error } from "./../adminParts/addAndModifyProduct"
 
 
 
+interface Error {
+    name: string
+    value: string | number| string[] | undefined
+    error: boolean
+}
 
 interface Props {
     icon: string
