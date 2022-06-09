@@ -47,7 +47,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     }
 
     // Gets Context
-    const { productList, getProductList } = useContext(productContext)
+    const { productList, setProductList } = useContext(productContext)
 
     // Updates fields when a package is selected
     React.useEffect(() => {
@@ -151,14 +151,12 @@ const AddAndModifyProduct: FC<Props> = (props) => {
                 }
             })
             // Updates localstorage with the correct productlist
-            localStorage.setItem('productList', JSON.stringify(updatedList));
+                setProductList(updatedList)
         }
         else {
             ascendProductList.push(newProduct)
-            localStorage.setItem('productList', JSON.stringify(ascendProductList));
+            setProductList(ascendProductList)
         }
-        // Fetching the correct productlist from localstorage and sets the context
-        getProductList();
 
         // Sets the correct success message to window dialog
         wimdowDialog(true, props.action == "change" ? "Paket " + '"' + nameInput + '"' + " är nu uppdaterad" : "Paketet " + '"' + nameInput + '"' + " är nu skapat", "black", "Information!")
