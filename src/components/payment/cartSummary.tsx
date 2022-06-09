@@ -2,17 +2,12 @@ import TextField from "@mui/material/TextField";
 import { FC } from "react";
 import { colors } from "../../data/color";
 import SectionCartContainer from "../common/sectionCartContainer";
-import { inputData } from "../interaction/inputFieldsCart";
+import { inputData } from "../../data/invoice";
 import ProductCardCart from "../product/productCardCart";
 import RenderPaymentOptions from "./paymentOptions";
 
 
-
-
 interface Props {}
-
-
-
 
 
 const CartSummary: FC<Props> = (props) => {
@@ -63,17 +58,8 @@ const CartSummary: FC<Props> = (props) => {
 
             </div>
 
-
-
         </SectionCartContainer>
-
-
-
-
     )
-
-
-
 }
 
 

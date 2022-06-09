@@ -8,7 +8,7 @@ import { includings } from '../../data/products';
 import ModifyProduct from './modifyProduct';
 import ProductDetailsAdmin from '../product/productDetailsAdmin';
 import { CSSProperties, useContext } from 'react';
-import { productContext } from '../context/provider';
+import { productContext } from '../context/productListProvider';
 
 export default function SimpleAccordion() {
 

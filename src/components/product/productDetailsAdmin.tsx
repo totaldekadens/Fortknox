@@ -1,7 +1,9 @@
 import { FC, CSSProperties, useContext } from "react"
 import { Product } from '../../data/products'
 import { colors } from "../../data/color";
-import { DeviceContext, DeviceContextData, productContext } from "../context/provider";
+import { DeviceContext } from "../context/mediaQueryProvider";
+import { DeviceContextData } from "../context/mediaQueryProvider";
+import { productContext } from "../context/productListProvider";
 import * as React from 'react';
 import DialogWindow from "../interaction/dialogs";
 import DeleteButton from "../interaction/deleteButton";
