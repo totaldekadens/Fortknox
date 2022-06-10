@@ -4,7 +4,8 @@ import { colors } from "../../data/color"
 import Button from '@mui/material/Button';
 import Lines from "../common/lines";
 import ContentTitle from "../common/contentTitle";
-import { DeviceContext, DeviceContextData, productContext } from "./../context/provider";
+import { productContext } from "../context/productListProvider";
+import { DeviceContext, DeviceContextData} from "../context/mediaQueryProvider";
 
 interface Props {}
 

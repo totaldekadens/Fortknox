@@ -3,7 +3,8 @@ import { Product } from '../../data/products'
 import { colors } from "../../data/color";
 import CartButton from '../interaction/cartButton';
 import ProductButton from '../interaction/toProductButton';
-import { DeviceContext, DeviceContextData } from "../context/provider";
+import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider";
+
 
 
 

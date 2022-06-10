@@ -2,7 +2,7 @@ import { CSSProperties, FC, useContext } from "react"
 import CheckIcon from '@mui/icons-material/Check';
 import { colors } from "../../data/color";
 import { flexColumn } from "../../style/common";
-import { productContext } from "../context/provider";
+import { productContext } from "../context/productListProvider";
 
 
 
