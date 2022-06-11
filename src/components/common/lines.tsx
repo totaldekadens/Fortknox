@@ -1,5 +1,5 @@
 import { CSSProperties, FC, useContext } from "react"
-import { DeviceContext, DeviceContextData } from "../context/provider"
+import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider"
 
 interface Props {
     firstColor: string

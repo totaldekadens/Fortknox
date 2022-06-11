@@ -3,7 +3,7 @@ import { includings, Product, Integration, Accounting, Invoice, Salary } from '.
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
-import { productContext } from "../context/provider";
+import { productContext } from "../context/productListProvider";
 import { DialogInfoWindow } from "../interaction/dialogs";
 import InputTextFieldsAdmin from "../interaction/InputTextFieldsAdmin";
 import InputFormControlCheckAdmin from "../interaction/InputFormControlCheckAdmin";

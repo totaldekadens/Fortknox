@@ -1,16 +1,12 @@
 import { FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { CSSProperties, FC, useContext, useState } from "react";
-import { invoiceContext } from "../context/provider";
-
-interface Props {}
+import { CSSProperties, FC, useContext, useEffect, useState } from "react";
+import { InputData } from "../../data/invoice";
+import { invoiceContext } from "../context/invoiceProvider";
 
 const InputFieldsCart: FC<Props> = (props) => {
 
-   /*  const [getInputData, setInputData] = useState(inputData); */
-
     const { getInputData, setInputData } = useContext(invoiceContext)
-    
 
     // Sets the input value to the state.
     const setInput = (name: string, e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) => {
@@ -28,77 +24,6 @@ const InputFieldsCart: FC<Props> = (props) => {
 
         // Updates the state to the updated list of objects.
         setInputData(inputDataCopy);
-
-    }
-
-    // Function for checking for incorrected input.
-    const errorLoop = () => {
-
-        const inputDataCopy = getInputData.map((input) => {
-
-            // Copy of the input object from the state.
-            const inputCopy = {...input}
-
-                // Checks for empty input value.
-            if(inputCopy.required && inputCopy.value === "" || inputCopy.value == " ") {
-
-                inputCopy.errorState = true;
-                inputCopy.error = "Vänligen fyll i detta fält.";
-                return inputCopy;
-
-                // Checks for more than two consecutive spaces in the input value.
-            } else if(inputCopy.required && /\s{2,}/g.test(inputCopy.value)) {
-
-                inputCopy.errorState = true;
-                inputCopy.error = "Vänligen ta bort onödiga mellanslag.";
-                return inputCopy;
-
-                // Checks for special characters in the input value.
-            } else if(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(inputCopy.value)) {
-
-                inputCopy.errorState = true;
-                inputCopy.error = "Specialtecken är inte tillåtna i detta fält.";
-                return inputCopy;
-
-                // Checks for numbers in the fields that are not supposed to have numbers in the input value.
-            } else if(inputCopy.name != "foretagsnamn" && input.name != "organisationsnummer" && input.name != "postnummer" && /([1-90])/g.test(inputCopy.value) ) {
-
-                inputCopy.errorState = true;
-                inputCopy.error = "Nummer är inte tillåtna i detta fält.";
-                return inputCopy;
-
-                // Checks the length of the input value on "postnummer".
-            } else if(inputCopy.name === "postnummer" && inputCopy.value.length != 5) {
-
-                inputCopy.errorState = true;
-                inputCopy.error = "Vänligen fyll i fältet i följande format: XXXXX";
-                return inputCopy;
-
-                // Checks the length of the input value on "organisationsnummer".
-            } else if (inputCopy.name === "organisationsnummer" && inputCopy.value.length != 10) {
-            
-                inputCopy.errorState = true;
-                inputCopy.error = "Vänligen fyll i fältet i följande format: XXXXXXXXXX";
-                return inputCopy;
-
-                // Sets the error state to false since the field is filled out correctly.
-            } else {
-
-                inputCopy.errorState = false;
-                inputCopy.error = "";
-                return inputCopy;
-
-            }
-        })
-
-        // Updates the state for re-rendering the fields that have been updated.
-
-
-        const found = inputDataCopy.find(e => e.errorState == true)
-
-        !found ? setInputData(inputDataCopy) : undefined // Sätta knappen som disabled?
-        
-
     }
 
     return (
@@ -114,6 +39,7 @@ const InputFieldsCart: FC<Props> = (props) => {
                 error={input.errorState}
                 helperText={input.error.length >= 2 ? input.error : undefined }
                 onChange={(e) => {setInput(input.name, e)}}
+                value={input.value} // Lade till denna för då vet vi för tillfället vad statet innehåller
                 label={input.label}
                 fullWidth={ input.fullWidth ? true : false}
                 style={!input.fullWidth ? inputHalf : undefined}
@@ -123,7 +49,6 @@ const InputFieldsCart: FC<Props> = (props) => {
             )
         })}
         </FormControl>
-        <div onClick={errorLoop}>test</div>
         </>
     );
 }

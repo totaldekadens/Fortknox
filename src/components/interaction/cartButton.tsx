@@ -3,7 +3,7 @@ import { CartProduct, Product, products } from "../../data/products"
 import Button from '@mui/material/Button';
 import { Link, useParams } from 'react-router-dom';
 import { buttonStyle } from "../../style/common";
-import { productContext } from "../context/provider";
+import { productContext } from "../context/productListProvider";
 import { cartContext } from "../context/cartProvider";
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import SvgIcon from "@mui/icons-material/AddShoppingCart";

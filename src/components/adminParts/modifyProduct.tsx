@@ -4,7 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { productContext } from "../context/provider";
+import { productContext } from "../context/productListProvider";
 import AddAndModifyProduct from "./addAndModifyProduct";
 
 interface Props {}

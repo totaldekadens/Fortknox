@@ -4,7 +4,7 @@ import { useParams, Navigate, Link } from "react-router-dom";
 import { colors } from "../../data/color";
 import {  products } from "../../data/products";
 import ContentTitle from "../common/contentTitle";
-import { productContext } from "../context/provider";
+import { productContext } from "../context/productListProvider";
 
 
 interface Props {

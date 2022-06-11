@@ -7,7 +7,7 @@ import { colors } from "../../data/color";
 import { includings } from "../../data/products"
 import ProductDetailsAdmin from "../product/productDetailsAdmin";
 import AddAndModifyProduct from "./addAndModifyProduct";
-import { productContext } from "../context/provider";
+import { productContext } from "../context/productListProvider";
 import { TabPanel, a11yProps } from "./adminTemplatePart";
 import ModifyProduct from "./modifyProduct";
 

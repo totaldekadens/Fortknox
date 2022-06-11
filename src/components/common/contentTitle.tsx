@@ -1,6 +1,6 @@
 import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color";
-import { DeviceContext } from "../context/provider";
+import { DeviceContext } from "../context/mediaQueryProvider";
 import Lines from "./lines";
 
 

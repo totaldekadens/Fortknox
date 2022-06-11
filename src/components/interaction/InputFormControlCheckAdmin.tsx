@@ -2,7 +2,7 @@ import { Checkbox, FormControl, InputLabel, ListItemText, MenuItem, OutlinedInpu
 import React from "react";
 import { FC, useContext } from "react"
 import { includings } from "../../data/products";
-import { DeviceContext } from "../context/provider";
+import { DeviceContext } from "../context/mediaQueryProvider";
 
 interface Props {
     includeInput: string[]

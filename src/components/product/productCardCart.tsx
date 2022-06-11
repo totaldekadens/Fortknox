@@ -8,7 +8,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import CheckIcon from '@mui/icons-material/Check';
 import SectionCartContainer from "../common/sectionCartContainer";
 import { cartContext } from "../context/cartProvider";
-import { productContext } from "../context/provider";
+import { productContext } from "../context/productListProvider";
 import { borderRadius } from "@mui/system";
 import React from "react";
 import { render } from "react-dom";

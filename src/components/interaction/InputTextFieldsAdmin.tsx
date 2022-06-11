@@ -1,6 +1,6 @@
 import { Box, TextField } from "@mui/material";
 import { FC, useContext } from "react"
-import { DeviceContext } from "../context/provider";
+import { DeviceContext } from "../context/mediaQueryProvider";
 
 interface Props {
     setNameProp: React.Dispatch<React.SetStateAction<string>>
