@@ -1,5 +1,5 @@
 
-import { CSSProperties, FC } from "react"
+import { CSSProperties, FC, useContext } from "react"
 import ProductCardCart from "../product/productCardCart"
 
 import * as React from 'react';
@@ -13,6 +13,7 @@ import InputFieldsCart from "../interaction/inputFieldsCart";
 import SummaryCard from "../payment/summaryCard";
 import DeliveryPage from "../payment/delivery";
 import CartSummary from "../payment/cartSummary";
+import { cartContext } from "../context/cartProvider";
 
 const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp"];
 
@@ -24,6 +25,8 @@ const CheckOut: FC<Props> = (props) => {
 
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set<number>());
+    const [getStatusButton, setStatusButton ] = React.useState("")
+    const { cartItem } = useContext(cartContext)
 
     const isStepOptional = (step: number) => {
         return false;
@@ -108,10 +111,10 @@ const CheckOut: FC<Props> = (props) => {
 
                     {/*  container div for checkout  */}
                     <div style={{ maxWidth: "100%", display: "flex", justifyContent: "center", padding: "4%" }}>
-                        {activeStep == 0 ? (<><ProductCardCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
-                        {activeStep == 2 ? (<><InputFieldsCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 3 ? (<><CartSummary /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
+                        {activeStep == 0 ? (<><ProductCardCart /> {cartItem ?  <SummaryCard setStatusButton={setStatusButton} statusButton={getStatusButton} nextFunc={handleNext} activeStep={activeStep} steps={steps} /> : undefined }</>) : ""}
+                        {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard setStatusButton={setStatusButton} statusButton={getStatusButton} nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
+                        {activeStep == 2 ? (<><InputFieldsCart setStatusButton={setStatusButton} /> <SummaryCard setStatusButton={setStatusButton} statusButton={getStatusButton} nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
+                        {activeStep == 3 ? (<><CartSummary /> <SummaryCard setStatusButton={setStatusButton} statusButton={getStatusButton} nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                     </div>
                     <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                         <Button

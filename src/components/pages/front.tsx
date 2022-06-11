@@ -29,7 +29,7 @@ const FrontPage: FC<Props> = (props) => {
           <div style={textContainer({devices: devices})}>
             <p>Oavsett vad framgång är för dig som företagare, hjälper vi dig att nå dit du vill. Vi har samlat allt du behöver för att starta, växa och utvecklas – på ett ställe.</p>
           </div>
-          <Button onClick={executeScroll} sx={{color: "white", borderColor: "white", padding: "20px 30px 20px 30px", marginTop: "40px"}} variant="outlined">Beställ paket</Button>
+          <Button onClick={executeScroll} sx={{color: "white", borderColor: "white", padding: "20px 30px 20px 30px", marginTop: "40px"}} variant="outlined">Gå till våra paket</Button>
         </div>
       </div>
 

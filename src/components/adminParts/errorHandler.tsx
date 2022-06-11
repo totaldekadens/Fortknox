@@ -2,11 +2,15 @@ import { Product } from '../../data/products';
 import { Error } from './addAndModifyProduct'
 
 // Sets error on all fields thats not approved
-const errorLoop = (errorList: Error[]) =>  {
+const errorLoop = (errorList: Error[], productList: Product[]) =>  {
+
+   
 
     const copy =  errorList.map((item) => {
 
         const itemCopy = item
+
+        const productName = productList.find((product) => product.name == itemCopy.value )
 
         // Checks for empty input value.
         if(itemCopy.value == "" || itemCopy.value == " ") {
@@ -15,7 +19,11 @@ const errorLoop = (errorList: Error[]) =>  {
             return itemCopy;
 
         // Checks if number is less than 1
-        } else if(typeof(itemCopy.value) == "number" && itemCopy.value < 1 ) {
+        }  else if(productName) {
+            itemCopy.error = true;
+            return itemCopy;
+
+        }else if(typeof(itemCopy.value) == "number" && itemCopy.value < 1 ) {
             itemCopy.error = true;
             return itemCopy;
 
@@ -73,11 +81,19 @@ interface windowObject {
 }
 
 // Checks state, return right info to window dialog
-export const checkState: (product: Product, includeInput : string[] ) => windowObject  = (product, includeInput) => {
+export const checkState: (product: Product, includeInput : string[], productList: Product[] ) => windowObject  = (product, includeInput, productList) => {
+
+    const productName = productList.find((currentProduct) => currentProduct.name == product.name)
+
+    console.log(productName)
 
     if(!product.name || !product.desc || !product.thumbnail || !product.icon || !product.price3mth || !product.price12mth || product.including[0] == undefined || includeInput.length < 1) {
             
         return {open: true, message: "Alla fält måste vara ifyllda", color: "red", title: "Ajajaj!"} 
+    }
+
+    if(productName) {
+        return {open: true, message: "Paketnamnet existerar redan, var god välj ett nytt", color: "red", title: "Vilken otur!"} 
     }
 
     const checkURL = checkImage(product.thumbnail)

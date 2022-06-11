@@ -5,6 +5,8 @@ import { Link, useParams } from 'react-router-dom';
 import { buttonStyle } from "../../style/common";
 import { productContext } from "../context/provider";
 import { cartContext } from "../context/cartProvider";
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import SvgIcon from "@mui/icons-material/AddShoppingCart";
 
 
 interface Props {
@@ -52,7 +54,7 @@ const CartButton: FC<Props> = (props) => {
     
     return (
         <Link style={{ textDecoration: "none" }} to={`/checkout/${props.product.id}`} >
-            <Button sx={{...buttonStyle, padding: props.paddingBtn }} variant="outlined" onClick={() => { saveProductToLocalstorage() }}>Beställ</Button>
+            <Button sx={{...buttonStyle, padding: props.paddingBtn }} variant="outlined" onClick={() => { saveProductToLocalstorage() }}><SvgIcon>< AddShoppingCartIcon /></SvgIcon></Button>
         </Link>
         )
 }

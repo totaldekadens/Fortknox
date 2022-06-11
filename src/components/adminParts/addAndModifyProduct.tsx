@@ -131,9 +131,9 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         const ascendProductList = descendProductList.sort((first, second) => 0 - (first.id > second.id ? -1 : 1))
         
         // Check errors
-        const updatedList = errorLoop(errorList); 
+        const updatedList = errorLoop(errorList, productList); 
         setErrorList(updatedList)
-        const result = checkState(newProduct, includeInput)
+        const result = checkState(newProduct, includeInput, productList)
 
         if(result.open) {
             wimdowDialog(result.open, result.message, result.color, result.title) 
@@ -156,6 +156,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         else {
             ascendProductList.push(newProduct)
             setProductList(ascendProductList)
+            localStorage.setItem('productList', JSON.stringify(productList)); // vill inte skickas till Provider och sätta det nya statet när denna sätts. Kör localstorage här sålänge.
         }
 
         // Sets the correct success message to window dialog
