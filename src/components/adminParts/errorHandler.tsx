@@ -2,9 +2,7 @@ import { Product } from '../../data/products';
 import { Error } from './addAndModifyProduct'
 
 // Sets error on all fields thats not approved
-const errorLoop = (errorList: Error[], productList: Product[]) =>  {
-
-   
+const errorLoop = (errorList: Error[], productList: Product[], action: string | undefined) =>  {
 
     const copy =  errorList.map((item) => {
 
@@ -19,7 +17,7 @@ const errorLoop = (errorList: Error[], productList: Product[]) =>  {
             return itemCopy;
 
         // Checks if number is less than 1
-        }  else if(productName) {
+        }  else if(productName && !action) {
             itemCopy.error = true;
             return itemCopy;
 
@@ -81,18 +79,16 @@ interface windowObject {
 }
 
 // Checks state, return right info to window dialog
-export const checkState: (product: Product, includeInput : string[], productList: Product[] ) => windowObject  = (product, includeInput, productList) => {
+export const checkState: (product: Product, includeInput : string[], productList: Product[], action: string | undefined ) => windowObject  = (product, includeInput, productList, action) => {
 
     const productName = productList.find((currentProduct) => currentProduct.name == product.name)
-
-    console.log(productName)
 
     if(!product.name || !product.desc || !product.thumbnail || !product.icon || !product.price3mth || !product.price12mth || product.including[0] == undefined || includeInput.length < 1) {
             
         return {open: true, message: "Alla fält måste vara ifyllda", color: "red", title: "Ajajaj!"} 
     }
 
-    if(productName) {
+    if(productName && !action) {
         return {open: true, message: "Paketnamnet existerar redan, var god välj ett nytt", color: "red", title: "Vilken otur!"} 
     }
 

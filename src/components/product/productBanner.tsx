@@ -85,7 +85,8 @@ const overlayInfo: (devices: DeviceContextData) => CSSProperties = (devices) => 
         return {
             position: "absolute", 
             top: 100, 
-            zIndex: 1
+            zIndex: 1,
+            width: "90%"
         }
     }
     return {
@@ -100,7 +101,7 @@ const bannerStyle: (devices: DeviceContextData) => CSSProperties = (devices) => 
         minHeight: "100vh",
         position: 'relative',
         objectFit: "cover",
-        filter: devices.devices.isTablet ? "brightness(60%)" : devices.devices.isMobile ? "brightness(40%)" : "brightness(60%)"
+        filter: devices.devices.isTablet ? "brightness(50%)" : devices.devices.isMobile ? "brightness(40%)" : "brightness(60%)"
     }
 }
 

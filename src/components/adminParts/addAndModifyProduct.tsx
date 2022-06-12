@@ -7,7 +7,7 @@ import { productContext } from "../context/productListProvider";
 import { DialogInfoWindow } from "../interaction/dialogs";
 import InputTextFieldsAdmin from "../interaction/InputTextFieldsAdmin";
 import InputFormControlCheckAdmin from "../interaction/InputFormControlCheckAdmin";
-import errorLoop, { checkImage, checkState } from "./errorHandler";
+import errorLoop, { checkState } from "./errorHandler";
 import InputFormControlAdmin from "../interaction/InputFormControlAdmin";
 
 interface Props {
@@ -131,9 +131,9 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         const ascendProductList = descendProductList.sort((first, second) => 0 - (first.id > second.id ? -1 : 1))
         
         // Check errors
-        const updatedList = errorLoop(errorList, productList); 
+        const updatedList = errorLoop(errorList, productList, props.action); 
         setErrorList(updatedList)
-        const result = checkState(newProduct, includeInput, productList)
+        const result = checkState(newProduct, includeInput, productList, props.action)
 
         if(result.open) {
             wimdowDialog(result.open, result.message, result.color, result.title) 

@@ -59,7 +59,7 @@ const container2:(devices: DeviceContextData) => CSSProperties = (devices) =>  {
     display: 'flex',
     justifyContent: "space-around",
     flexWrap: "wrap",
-    minHeight: '70vh',
+    minHeight: '80vh',
     marginBottom: '30px',
     justifyItems: 'stretch',
     alignItems: 'stretch',
