@@ -51,6 +51,15 @@ export const inputData: InputData[] = [
         error: "",
         errorState: false,
     }, {
+        name: "email",
+        label: "E-post",
+        required: true,
+        fullWidth: true,
+        type: "text",
+        value: "",
+        error: "",
+        errorState: false,
+    }, {
         name: "street-address",
         label: "Faktureringsadress",
         required: true,

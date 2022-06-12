@@ -2,7 +2,7 @@
 import { InputData } from "./../../data/invoice";
 
 
-    // Function for checking for incorrected input.
+    // Function for checking for incorrect input.
 
 const errorLoop = (getInputData: InputData[]) => {
 
@@ -26,14 +26,14 @@ const errorLoop = (getInputData: InputData[]) => {
             return inputCopy;
 
             // Checks for special characters in the input value.
-        } else if(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(inputCopy.value)) {
+        } else if( inputCopy.name != "email" && /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/g.test(inputCopy.value)) {
 
             inputCopy.errorState = true;
             inputCopy.error = "Specialtecken är inte tillåtna i detta fält.";
             return inputCopy;
 
             // Checks for numbers in the fields that are not supposed to have numbers in the input value.
-        } else if(inputCopy.name != "foretagsnamn" && input.name != "organisationsnummer" && input.name != "postnummer" && /([1-90])/g.test(inputCopy.value) ) {
+        } else if(inputCopy.name != "organization" && input.name != "organisationsnummer" && inputCopy.name != "street-address" && input.name != "postnummer" && /([1-90])/g.test(inputCopy.value) ) {
 
             inputCopy.errorState = true;
             inputCopy.error = "Nummer är inte tillåtna i detta fält.";
@@ -46,9 +46,16 @@ const errorLoop = (getInputData: InputData[]) => {
             inputCopy.error = "Vänligen fyll i fältet i följande format: XXXXX";
             return inputCopy;
 
+            // Checks if the user have inputed a valid formated email adress.
+        } else if(inputCopy.name === "email" && !(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(input.value))) {
+
+            inputCopy.errorState = true;
+            inputCopy.error = "Vänligen fyll i fältet i en giltig e-postadress";
+            return inputCopy;
+
             // Checks the length of the input value on "organisationsnummer".
         } else if (inputCopy.name === "organisationsnummer" && inputCopy.value.length != 10) {
-        
+            
             inputCopy.errorState = true;
             inputCopy.error = "Vänligen fyll i fältet i följande format: XXXXXXXXXX";
             return inputCopy;
