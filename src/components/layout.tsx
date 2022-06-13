@@ -8,6 +8,7 @@ import DeviceProvider from "./context/mediaQueryProvider"
 import InvoiceInfoProvider from "./context/invoiceProvider"
 import CartProvider from "./context/cartProvider"
 import DeliveryProvider from "./context/deliveryProvider"
+import PaymentProvider from "./context/checkOutProvider"
 
 
 const Layout: FC = () => {
@@ -18,10 +19,12 @@ const Layout: FC = () => {
               <ProductListProvider>
                 <CartProvider>
                   <DeliveryProvider>
-                    <ScrollToTop />
-                    <Navbar />
-                    <ContentContainer />
-                    <Footer />
+                    <PaymentProvider>
+                      <ScrollToTop />
+                      <Navbar />
+                      <ContentContainer />
+                      <Footer />
+                    </PaymentProvider>
                   </DeliveryProvider>
                 </CartProvider>
               </ProductListProvider>

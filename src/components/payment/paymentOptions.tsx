@@ -1,4 +1,4 @@
-import {FC} from 'react';
+import {FC, useContext} from 'react';
 import React from 'react';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
@@ -6,13 +6,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import { FormControl, Radio, RadioGroup, TextField } from '@mui/material';
 import { PaymentOptions, paymentOptions } from '../../data/paymentOptions';
 import { colors } from '../../data/color';
+import { paymentContext } from '../context/checkOutProvider';
 
 interface Props {}
 
 const RenderPaymentOptions: FC<Props> = (props) => {
 
-
-    const [paymentOptionState, setPaymentOptionState] = React.useState<PaymentOptions | undefined>();
+    const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
 
     const setPaymentOptionDelay = (paymentOption: PaymentOptions) => {
         setPaymentOptionState(undefined);
@@ -30,9 +30,6 @@ const RenderPaymentOptions: FC<Props> = (props) => {
     React.useEffect(() => {
         setPaymentOptionOnLoad();
     }, [])
-    React.useEffect(() => {
-        setPaymentOptionOnLoad();
-    }, [])
 
     const textFieldColor = "white";
     const textFieldSX = {
@@ -44,10 +41,10 @@ const RenderPaymentOptions: FC<Props> = (props) => {
 
     const setInput = (id: number, name: string, e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> ) => {
 
-        // Copy of the inputData array from the state.
-
+        
         if (paymentOptionState) {
 
+            // Copy of the inputData array from the state.
             const paymentOptionStateCopy = {...paymentOptionState};
 
             if(paymentOptionStateCopy.input) {
