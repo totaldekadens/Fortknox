@@ -32,9 +32,12 @@ const CartSelectedItem: FC<Props> = (props) => {
         
             function decrement(id: number) {
                 const foundInclude = item.including!.find((ele) => Number(id) == ele.include!.id)
-                foundInclude!.qty = foundInclude!.qty - 1
+                if(foundInclude!.qty > 1){
+                    foundInclude!.qty = foundInclude!.qty - 1
+                    setCartItem(item)
+
+                }
                 
-                setCartItem(item)
             }
 
             return (
