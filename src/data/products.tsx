@@ -57,7 +57,7 @@ export interface CartProduct {
 }
 
 interface Includ {
-    include: Integration |  Accounting | Invoice | Salary | undefined,
+    include: Integration |  Accounting | Invoice | Salary ,
     qty: number
 }
 
