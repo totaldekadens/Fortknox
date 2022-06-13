@@ -8,14 +8,13 @@ import { products } from "../../data/products"
 import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
+import Confirmation from "../pages/confirmation"
 
 
 interface Props {
     nextFunc: () => void
     activeStep: number,
     steps: string[]
-    statusButton: string
-    setStatusButton: React.Dispatch<React.SetStateAction<string>>
 }
 
 
@@ -46,8 +45,11 @@ const SummaryCard: FC<Props> = (props) => {
             const found = result.find(e => e.errorState == true || e.required == true && e.value == "")
 
             // Om inga fel hittade sätt knapp till enable annars disable
-            !found ? props.setStatusButton("enable")  : props.setStatusButton("disable") // Får se om vi använder denna?
             !found ? props.nextFunc() : undefined; 
+        } if(props.activeStep === 3) {
+            console.log("Du kommer in här")
+            props.nextFunc() 
+        
         }
 
     }
@@ -64,23 +66,10 @@ const SummaryCard: FC<Props> = (props) => {
                                 <div style={{ ...spaceBetween }}>
                                     <h5 >Fortknox Bas</h5>
                                     <h5>139 kr/mån</h5>
-
                                 </div>
                             </div>
                             <hr />
                         </div>
-
-                        {/* <div>
-                            <div style={{ ...spaceBetween }}>
-                                <h4 style={{ ...noMarginbottom }}>Extra Beställning</h4>
-                            </div>
-                            <div style={{ ...spaceBetween }}>
-                                <h5>includes</h5>
-                                <h5>Antal</h5>
-                                <h5>139 kr/mån</h5>
-                            </div>
-                            <hr />
-                        </div> */}
                         <div>
                             <div style={{ ...spaceBetween }}>
                                 <h5 style={{ ...noMarginbottom }}>Avtalsperiod</h5>
@@ -105,14 +94,11 @@ const SummaryCard: FC<Props> = (props) => {
                     <div style={{ display:"flex", justifyContent: "center" }}>
 
                         <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={validateNextStep}    >
-                            
-                            {props.activeStep === props.steps.length - 1 ? 'Slutför köp' : props.activeStep == 0 ? 'Beställ' : 'Nästa'}
+                            {props.activeStep === props.steps.length - 2 ? 'Slutför köp' : props.activeStep == 0 ? 'Beställ' : 'Nästa'}
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </>
     )
 }
