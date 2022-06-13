@@ -24,7 +24,7 @@ const RenderPaymentOptions: FC<Props> = (props) => {
     }
 
     const setPaymentOptionOnLoad = () => {
-        !paymentOptionState ? setPaymentOptionState(paymentOptions[0]): undefined
+        setPaymentOptionState(paymentOptions[0])
     }
 
     React.useEffect(() => {
@@ -59,108 +59,6 @@ const RenderPaymentOptions: FC<Props> = (props) => {
                 setPaymentOptionState(paymentOptionStateCopy);
 
             }
-        }
-
-    }
-
-
-    // Function for validating the choosen fields.
-    const testCard = () => {
-
-        if(paymentOptionState) {
-
-            if(paymentOptionState.id === 2) {
-
-                    const inputDataCopy = {...paymentOptionState};
-
-                    if(inputDataCopy.input) {
-
-                        inputDataCopy.input.map((input) => {
-
-                            // Copy of the input object from the state.
-                                // Checks for empty input value.
-                            if( input.value === "" || input.value == " ") {
-
-                                input.errorState = true;
-                                input.error = "Vänligen fyll i detta fält.";
-                                return input;
-
-                                // Checks for special characters in the input value.
-                            } else if( input.name === "Kortnummer" && !/^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/.test(input.value.toString())) {
-
-                                input.errorState = true;
-                                input.error = "Detta är inte ett giltigt kortnummer.";
-                                return input;
-                            } else if( input.name === "Utgångsdatum" && input.value.toString().length != 4) {
-
-                                input.errorState = true;
-                                input.error = "Vänligen ange utgångsdatumet som XXXX";
-                                return input;
-
-                            } else if( input.name === "CVC" && input.value.toString().length != 3) {
-
-                                input.errorState = true;
-                                input.error = "Detta är inte ett giltigt CVC-nummer";
-                                return input;
-                            } else if( input.name === "Kortinnehavarens namn" && input.value.toString().length < 3) {
-
-                                input.errorState = true;
-                                input.error = "Vänligen ange ditt namn";
-                                return input;
-
-                                // Sets the error state to false since the field is filled out correctly.
-                            } else {
-                
-                                input.errorState = false;
-                                input.error = "";
-                                return input;
-                
-                            }
-                        })
-                
-                        // Updates the state for re-rendering the fields that have been updated.
-                        setPaymentOptionState(inputDataCopy)
-                    }
-            }
-            if(paymentOptionState.id === 1) {
-
-                    const inputDataCopy = {...paymentOptionState};
-
-                    if(inputDataCopy.input) {
-
-                        inputDataCopy.input.map((input) => {
-
-                            // Copy of the input object from the state.
-                            // Checks for empty input value.
-                            if( input.value === "" || input.value == " ") {
-
-                                input.errorState = true;
-                                input.error = "Vänligen fyll i detta fält.";
-                                return input;
-
-                                // Checks for special characters in the input value.
-                            } else if(!/^07([0-9][ -]*){7}[0-9]$/.test(input.value.toString())) {
-
-                                input.errorState = true;
-                                input.error = "Detta är inte ett giltigt mobilnummer. Fyll ditt mobilnummer och börja med 07.";
-                                return input;
-
-                                // Sets the error state to false since the field is filled out correctly.
-                            } else {
-
-                                input.errorState = false;
-                                input.error = "";
-                                return input;
-
-                            }
-                        })
-                        
-                        // Updates the state for re-rendering the fields that have been updated.
-                        setPaymentOptionState(inputDataCopy)
-                    }
-
-            }
-            
         }
 
     }
@@ -206,7 +104,7 @@ const RenderPaymentOptions: FC<Props> = (props) => {
                                             margin="dense"
                                             key = {input.name}
                                             id={input.name}
-                                            label={input.name}
+                                            label={input.label}
                                             required
                                             fullWidth
                                             error={input.errorState}
@@ -229,8 +127,6 @@ const RenderPaymentOptions: FC<Props> = (props) => {
             })
         }
         </FormControl>
-
-        <div onClick={testCard}>Test</div>
 
         </Box>
     );

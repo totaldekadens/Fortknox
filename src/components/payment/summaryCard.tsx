@@ -5,9 +5,11 @@ import { color, height } from "@mui/system"
 import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
 import { products } from "../../data/products"
+import { paymentContext } from "../context/checkOutProvider"
 import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
+import { validateFields } from "../interaction/paymentOptionsErrorHandler"
 
 
 interface Props {
@@ -22,11 +24,12 @@ interface Props {
 const SummaryCard: FC<Props> = (props) => {
     const { getInputData, setInputData } = useContext(invoiceContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
+    const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
 
     //const { getInputData, setInputData } = useContext(inputContext)
 
     const validateNextStep = () => {
-        
+
         if(props.activeStep === 0) {
             
             props.nextFunc()
@@ -48,6 +51,31 @@ const SummaryCard: FC<Props> = (props) => {
             // Om inga fel hittade sätt knapp till enable annars disable
             !found ? props.setStatusButton("enable")  : props.setStatusButton("disable") // Får se om vi använder denna?
             !found ? props.nextFunc() : undefined; 
+        }
+        if(props.activeStep === 3) {
+
+            if(paymentOptionState) {
+
+                if(paymentOptionState.input) {
+
+                    const result = validateFields({...paymentOptionState});
+                    setPaymentOptionState(result)
+
+                    // Kollar om något error state är true (dvs är fel)
+                    const found = result!.input!.find(e => e.errorState == true)
+
+                    // Om inga fel hittade sätt knapp till enable annars disable
+                    !found ? props.setStatusButton("enable")  : props.setStatusButton("disable") // Får se om vi använder denna?
+                    !found ? props.nextFunc() : undefined; 
+
+                } else {
+
+                    props.nextFunc();
+
+                }
+            }
+            
+
         }
 
     }
