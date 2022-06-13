@@ -44,7 +44,7 @@ const Confirmation: FC<Props> = (props) => {
             <div style={{ display:"flex", justifyContent: "center", marginTop: "30px" }}>
                 <Link to={"/"}>
                     <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={clearHistory} >
-                        {"Gå tillbaka till startsidan"}
+                        Gå tillbaka till startsidan
                     </div>
                 </Link>
             </div>
@@ -83,9 +83,9 @@ const Confirmation: FC<Props> = (props) => {
                             <div>
                                 {inputData ?  inputData.map((input) => {
                                     return (
-                                    <div style={{ ...spaceBetween }}>
-                                        <h5 key={input.name} style={{ ...noMarginbottom, fontSize: devices.isMobile ? "12px" : "16px" }}>{input.label}</h5>
-                                        <p key={input.name} style={{ ...noMarginbottom, fontSize: devices.isMobile ? "12px" : "16px" }}>{input.value}</p>
+                                    <div key={input.label} style={{ ...spaceBetween }}>
+                                        <h5 style={{ ...noMarginbottom, fontSize: devices.isMobile ? "12px" : "16px" }}>{input.label}</h5>
+                                        <p  style={{ ...noMarginbottom, fontSize: devices.isMobile ? "12px" : "16px" }}>{input.value}</p>
                                     </div>
                                 )
                                 }) : <div>Finns ingen inputdata att ta ifrån</div> }

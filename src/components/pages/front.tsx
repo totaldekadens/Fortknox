@@ -18,9 +18,6 @@ const FrontPage: FC<Props> = (props) => {
   const { productList } = useContext(productContext)
   const { setInputData } = useContext(invoiceContext)
 
-  // Sets inputData to defaultvalue
-  setInputData(inputData)
-
   const myRef = useRef<HTMLInputElement>(null);
 
   const executeScroll = () => myRef!.current!.scrollIntoView({
