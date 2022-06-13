@@ -4,7 +4,7 @@ export interface PaymentOptions {
     id: number,
     name: string,
     description: string,
-    input: InputField[]
+    input?: InputField[]
 }
 
 interface InputField {
@@ -64,5 +64,9 @@ export const paymentOptions: PaymentOptions[] = [
                 errorState: false,
             },
         ]
+    }, {
+        id: 3,
+        name: "Faktura",
+        description: "Betala mot faktura, 30 dagar.",
     },
 ]
