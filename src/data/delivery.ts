@@ -14,13 +14,13 @@ export const delivery: Delivery[] = [
         id: 1,
         title: "Fri integration",
         numberOfDays: 30,
-        description: "Integration inom 30 arbetsdagar.",
+        description: "Integration inom 30 dagar.",
         price: 0,
     }, {
         id: 2,
         title: "Standardintegration",
         numberOfDays: 10,
-        description: "Integration inom 10 arbetsdagar.",
+        description: "Integration inom 10 dagar.",
         price: 1000,
     }, {
         id: 3,
