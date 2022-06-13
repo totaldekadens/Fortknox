@@ -9,6 +9,7 @@ import ProductsCompare from "../product/compareProduct";
 import ProductBanner from "../product/productBanner";
 import ProductIncludeCard from "../product/productIncludeCard";
 
+
 interface Props {
 
 }
@@ -28,7 +29,6 @@ const ProductPage: FC<Props> = (props) => {
     if (!foundProduct) {
         return <Navigate to="/" />
     }
-
 
     return (
         <>

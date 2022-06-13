@@ -40,7 +40,7 @@ const ProductBanner: FC<Props> = (props) => {
 
                             return (
                                 <div key={include!.id} style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap" }}>
-                                    <h2 style={{ fontSize: devices.isMobile ? "20px" : "24px"}}>{include?.name}</h2>
+                                    <h2 style={{ fontSize: devices.isMobile ? "20px" : devices.isTablet ? "21px" : "24px"}}>{include?.name}</h2>
                                     <h3 style={{ fontSize: devices.isMobile ? "13px" : "", marginTop: "20px"}}>(Ord.pris {include?.price} kr/mån)</h3>
                                 </div>
                             )
@@ -85,7 +85,8 @@ const overlayInfo: (devices: DeviceContextData) => CSSProperties = (devices) => 
         return {
             position: "absolute", 
             top: 100, 
-            zIndex: 1
+            zIndex: 1,
+            width: "90%"
         }
     }
     return {
@@ -100,7 +101,7 @@ const bannerStyle: (devices: DeviceContextData) => CSSProperties = (devices) => 
         minHeight: "100vh",
         position: 'relative',
         objectFit: "cover",
-        filter: devices.devices.isTablet ? "brightness(60%)" : devices.devices.isMobile ? "brightness(40%)" : "brightness(60%)"
+        filter: devices.devices.isTablet ? "brightness(50%)" : devices.devices.isMobile ? "brightness(40%)" : "brightness(60%)"
     }
 }
 
@@ -108,7 +109,7 @@ const textContainer : (devices: DeviceContextData) => CSSProperties = (devices) 
 
     return {
       width: devices.devices.isDesktop ? "50%" : devices.devices.isTablet ? "60%" : devices.devices.isMobile ? "80%" : "60%",
-      fontSize: devices.devices.isDesktop ? "22px" : devices.devices.isTablet ? "22px" : devices.devices.isMobile ? "15px" : "22px"
+      fontSize: devices.devices.isDesktop ? "22px" : devices.devices.isTablet ? "18px" : devices.devices.isMobile ? "15px" : "22px"
     }
   }
 
