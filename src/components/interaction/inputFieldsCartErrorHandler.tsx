@@ -33,13 +33,19 @@ const errorLoop = (getInputData: InputData[]) => {
             return inputCopy;
 
             // Checks for numbers in the fields that are not supposed to have numbers in the input value.
-        } else if(inputCopy.name != "organization" && input.name != "organisationsnummer" && inputCopy.name != "street-address" && input.name != "postnummer" && /([1-90])/g.test(inputCopy.value) ) {
+        } else if(inputCopy.name != "organization" && input.name != "organisationsnummer" && input.name != "email "&& input.name != "phone" && inputCopy.name != "street-address" && input.name != "postnummer" && /([1-90])/g.test(inputCopy.value) ) {
 
             inputCopy.errorState = true;
             inputCopy.error = "Nummer är inte tillåtna i detta fält.";
             return inputCopy;
 
             // Checks the length of the input value on "postnummer".
+        } else if(inputCopy.name === "phone" && !/^07([0-9][ -]*){7}[0-9]$/.test(input.value.toString())) {
+
+            inputCopy.errorState = true;
+            inputCopy.error = "Vänligen fyll i ett giltigt telefonnummer.";
+            return inputCopy;
+
         } else if(inputCopy.name === "postnummer" && inputCopy.value.length != 5) {
 
             inputCopy.errorState = true;
