@@ -1,5 +1,5 @@
 import { FC, useContext } from "react"
-import { includings, Product, Integration, Accounting, Invoice, Salary } from '../../data/products'
+import { includings, Product, Integration, Accounting, Invoice, Salary, integration } from '../../data/products'
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
@@ -32,7 +32,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     const [imageInput, setImage] = React.useState('');
     const [includeInput, setIncludes] = React.useState<string[]>([]);
     let [newInclude, setNewInclude] = React.useState<[(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?]>([]);
-    
+
     // States dialog window
     const [message, setMessage] = React.useState('');
     const [open, setOpen] = React.useState(false);
@@ -78,6 +78,19 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     // Handle the click "Skapa" and "Ändra"  
     const handleClickAddProduct = () => {
         let newIncludeCopy : [(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?] = [...newInclude]
+        let includeCopy = includeInput
+
+        const result2 = includeCopy.map((inc) => {
+            if(inc == "Integration") {
+                return true
+            } else {
+                return false
+            }
+        })
+    
+        const found = result2.find(e => e == false )
+    
+        found == false ? includeCopy.push("Integration") : undefined
 
         // If action = "change" - sets variable to empty array first
         let emptyArray : [(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?] = []

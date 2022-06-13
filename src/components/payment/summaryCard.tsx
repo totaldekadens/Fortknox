@@ -179,7 +179,8 @@ const SummaryCard: FC<Props> = (props) => {
     )
     
 }
-function totalAmount(){
+
+export function totalAmount(){
     const { cartItem, setCartItem } = useContext(cartContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
     
@@ -201,7 +202,6 @@ function totalAmount(){
     })
     return <h5 style={{ ...noMarginbottom }}> {totalPriceForIncludes * 12} kr/år</h5>
     
-   
 }
 
 
@@ -212,7 +212,7 @@ const container: CSSProperties = {
     marginLeft: "5em"
 
 }
-const summaryCardContainer: CSSProperties = {
+export const summaryCardContainer: CSSProperties = {
     marginBottom: "30px",
 
 
@@ -243,7 +243,7 @@ const btnContainer: CSSProperties = {
 
 }
 
-const spaceBetween: CSSProperties = {
+export const spaceBetween: CSSProperties = {
     display: "flex",
     justifyContent: "space-between"
 }

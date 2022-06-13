@@ -45,12 +45,13 @@ const InputFormControlCheckAdmin: FC<Props> = (props: Props) => {
             <FormControl sx={{ m: 1, width:  devices.isDesktop ? "400px" : devices.isTablet ? "400px" : devices.isMobile ? "90%" : "90%" }} error={props.updatedErrorList ? props.updatedErrorList[6].error: false} >
                 <InputLabel sx={{backgroundColor: "white" }} id="demo-multiple-checkbox-label">Komponenter</InputLabel>
                 <Select required labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={props.includeInput} onChange={handleChange2} input={<OutlinedInput label="Tag" />} renderValue={(selected) => selected.join(', ')} MenuProps={MenuProps}>
-                    {includings.map((include) => (
+                    { includings ? includings.map((include) => ( 
+                        include!.name != "Integration" ?
                         <MenuItem key={include!.id} value={include!.name}>
                             <Checkbox checked={props.includeInput.indexOf(include!.name) > -1} />
                             <ListItemText primary={include!.name} />
-                        </MenuItem>
-                    ))}
+                        </MenuItem> : undefined
+                    )) : <h1>Finns inga Komponenter</h1> }
                 </Select>
             </FormControl>
     )
