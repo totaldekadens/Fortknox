@@ -4,8 +4,13 @@ import Button from "@mui/material/Button"
 import { color, height } from "@mui/system"
 import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
+
+
+import { cartContext } from "../context/cartProvider"
+
 import { products } from "../../data/products"
 import { paymentContext } from "../context/checkOutProvider"
+
 import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
@@ -22,26 +27,69 @@ interface Props {
 
 const SummaryCard: FC<Props> = (props) => {
     const { getInputData, setInputData } = useContext(invoiceContext)
-    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
+    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext) 
     const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
 
+
+    const { cartItem, setCartItem } = useContext(cartContext)
+    
+    
+    const extraOrderRender = () => {
+        return cartItem?.including.map(includeObj => {
+            if (includeObj.qty > 1) {
+
+             
+                return (
+                    <div key={includeObj.include.name} style={{ ...spaceBetween }}>
+                        <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.name}</h5>
+                        <h5 style={{ width: "33%", textAlign: "center", margin: "10px 0px" }}>Antal: {includeObj.qty - 1}</h5>
+                        <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.price} kr/mån</h5>
+                    </div>
+                )
+            } else {
+                return undefined
+            }
+        })
+
+    }
+
+    //const { getInputData, setInputData } = useContext(inputContext)
+    const extraOrder = () => {
+
+
+        const foundQtyChange = cartItem!.including.find((x) => 1 < x.qty)
+
+        if (foundQtyChange) {
+            return (<div>
+                <div style={{ ...spaceBetween }}>
+                    <h4>Extra Beställning</h4>
+                </div>
+                {extraOrderRender()}
+                <hr />
+            </div>
+            )
+        } else {
+            return undefined
+        }
+
+    }
     const validateNextStep = () => {
 
+
         if(props.activeStep === 0) {
-            
             props.nextFunc()
         }
-        if(props.activeStep === 1) {
-            
-            deliveryInput ? props.nextFunc() : undefined; 
+        if (props.activeStep === 1) {
+
+            deliveryInput ? props.nextFunc() : undefined;
 
         }
-        if(props.activeStep === 2) {
+        if (props.activeStep === 2) {
 
             // Fick kalla på errorloopen här sålänge för att det skulle fungera
             const result = errorLoop(getInputData)
-            setInputData(result); 
-            
+            setInputData(result);
+
             // Kollar om något error state är true (dvs är fel)
             const found = result.find(e => e.errorState == true || e.required == true && e.value == "")
 
@@ -71,6 +119,7 @@ const SummaryCard: FC<Props> = (props) => {
             }
             
 
+
         }
 
     }
@@ -91,6 +140,11 @@ const SummaryCard: FC<Props> = (props) => {
                             </div>
                             <hr />
                         </div>
+
+                        <div>
+                            {extraOrder()}
+                        </div>
+
                         <div>
                             <div style={{ ...spaceBetween }}>
                                 <h5 style={{ ...noMarginbottom }}>Avtalsperiod</h5>
@@ -98,7 +152,8 @@ const SummaryCard: FC<Props> = (props) => {
                             </div>
                             <div style={{ ...spaceBetween }}>
                                 <h5 style={{ ...noMarginbottom }}>Summa</h5>
-                                <h5 style={{ ...noMarginbottom }}>3000 kr/år</h5>
+                                { totalAmount()}
+                                
                             </div>
                             <hr />
                         </div>
@@ -112,7 +167,7 @@ const SummaryCard: FC<Props> = (props) => {
                             </div>
                         </div>
                     </div>
-                    <div style={{ display:"flex", justifyContent: "center" }}>
+                    <div style={{ display: "flex", justifyContent: "center" }}>
 
                         <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={validateNextStep}    >
                             {props.activeStep === props.steps.length - 2 ? 'Slutför köp' : props.activeStep == 0 ? 'Beställ' : 'Nästa'}
@@ -122,7 +177,33 @@ const SummaryCard: FC<Props> = (props) => {
             </div>
         </>
     )
+    
 }
+function totalAmount(){
+    const { cartItem, setCartItem } = useContext(cartContext)
+    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
+    
+    let totalPriceForIncludes: number = 0;
+    if(cartItem){
+
+        totalPriceForIncludes += cartItem!.price12mth
+    }
+
+    cartItem?.including.forEach((x)=> {
+        
+        if(x.qty > 1 && x.include.price && x.include?.name != "Integration"){
+            let qty = x.qty - 1
+            totalPriceForIncludes += qty * x.include.price
+            
+        }else{
+            return undefined
+        }
+    })
+    return <h5 style={{ ...noMarginbottom }}> {totalPriceForIncludes * 12} kr/år</h5>
+    
+   
+}
+
 
 const container: CSSProperties = {
     display: "flex",
@@ -134,7 +215,7 @@ const container: CSSProperties = {
 const summaryCardContainer: CSSProperties = {
     marginBottom: "30px",
 
-    
+
 }
 
 
@@ -146,7 +227,7 @@ const sumContainer: CSSProperties = {
     borderRadius: "10px",
     marginBottom: "20px",
     padding: "0 30px",
-    
+
 
 
 }
