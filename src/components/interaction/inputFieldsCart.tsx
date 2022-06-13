@@ -5,7 +5,7 @@ import { InputData } from "../../data/invoice";
 import { invoiceContext } from "../context/invoiceProvider";
 
 interface Props {
-    setStatusButton: React.Dispatch<React.SetStateAction<string>>
+
 }
 
 const InputFieldsCart: FC<Props> = (props) => {

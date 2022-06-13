@@ -12,12 +12,11 @@ import errorLoop from "../interaction/inputFieldsCartErrorHandler"
 import { validateFields } from "../interaction/paymentOptionsErrorHandler"
 
 
+
 interface Props {
     nextFunc: () => void
     activeStep: number,
     steps: string[]
-    statusButton: string
-    setStatusButton: React.Dispatch<React.SetStateAction<string>>
 }
 
 
@@ -25,8 +24,6 @@ const SummaryCard: FC<Props> = (props) => {
     const { getInputData, setInputData } = useContext(invoiceContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
     const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
-
-    //const { getInputData, setInputData } = useContext(inputContext)
 
     const validateNextStep = () => {
 
@@ -49,9 +46,9 @@ const SummaryCard: FC<Props> = (props) => {
             const found = result.find(e => e.errorState == true || e.required == true && e.value == "")
 
             // Om inga fel hittade sätt knapp till enable annars disable
-            !found ? props.setStatusButton("enable")  : props.setStatusButton("disable") // Får se om vi använder denna?
             !found ? props.nextFunc() : undefined; 
-        }
+        } 
+
         if(props.activeStep === 3) {
 
             if(paymentOptionState) {
@@ -63,9 +60,7 @@ const SummaryCard: FC<Props> = (props) => {
 
                     // Kollar om något error state är true (dvs är fel)
                     const found = result!.input!.find(e => e.errorState == true)
-
                     // Om inga fel hittade sätt knapp till enable annars disable
-                    !found ? props.setStatusButton("enable")  : props.setStatusButton("disable") // Får se om vi använder denna?
                     !found ? props.nextFunc() : undefined; 
 
                 } else {
@@ -92,23 +87,10 @@ const SummaryCard: FC<Props> = (props) => {
                                 <div style={{ ...spaceBetween }}>
                                     <h5 >Fortknox Bas</h5>
                                     <h5>139 kr/mån</h5>
-
                                 </div>
                             </div>
                             <hr />
                         </div>
-
-                        {/* <div>
-                            <div style={{ ...spaceBetween }}>
-                                <h4 style={{ ...noMarginbottom }}>Extra Beställning</h4>
-                            </div>
-                            <div style={{ ...spaceBetween }}>
-                                <h5>includes</h5>
-                                <h5>Antal</h5>
-                                <h5>139 kr/mån</h5>
-                            </div>
-                            <hr />
-                        </div> */}
                         <div>
                             <div style={{ ...spaceBetween }}>
                                 <h5 style={{ ...noMarginbottom }}>Avtalsperiod</h5>
@@ -133,14 +115,11 @@ const SummaryCard: FC<Props> = (props) => {
                     <div style={{ display:"flex", justifyContent: "center" }}>
 
                         <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={validateNextStep}    >
-                            
-                            {props.activeStep === props.steps.length - 1 ? 'Slutför köp' : props.activeStep == 0 ? 'Beställ' : 'Nästa'}
+                            {props.activeStep === props.steps.length - 2 ? 'Slutför köp' : props.activeStep == 0 ? 'Beställ' : 'Nästa'}
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </>
     )
 }
