@@ -23,21 +23,6 @@ const ProductListProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
     const [productList, setProductList] = useState<Product[]> (products)
 
-    // Updates productList - Vara i useeffect?
-    const getProductList: () => void = () => {
-        
-        const getCurrentProductList = localStorage.getItem('productList')
-
-        if(getCurrentProductList == "[]" || !getCurrentProductList) {
-            localStorage.removeItem('productList')
-        } 
-        else {
-            const currentProcuctList = JSON.parse(getCurrentProductList)
-            setProductList(currentProcuctList)
-        }
-    }
-
-
     // Deletes product
     const deleteProduct = (productToRemove: Product) => {
 
@@ -52,19 +37,44 @@ const ProductListProvider:  FC<PropsWithChildren<Props>> = (props) => {
         localStorage.setItem('productList', JSON.stringify(filteredList));
     }   
 
-    const setProductListToLS: () => void = () => { 
-        localStorage.setItem('productList', JSON.stringify(productList));
-    }
 
+    // Sets productList to LS
     useEffect(() => {
+
+        const setProductListToLS: () => void = () => { 
+
+            if(productList != products) {
+                localStorage.setItem('productList', JSON.stringify(productList));
+            }
+        }
+
         setProductListToLS();
-        
+
     }, [productList])
 
-    useEffect(() => {
-        getProductList()
 
-    }, [])
+
+
+    // Gets productList from LS and sets the state
+    useEffect(() => {
+
+    const getProductList: () => void = () => {
+            
+        const getCurrentProductList = localStorage.getItem('productList')
+
+        if(getCurrentProductList == "[]" || !getCurrentProductList) {
+            localStorage.removeItem('productList')
+        } 
+        else {
+            const currentProcuctList = JSON.parse(getCurrentProductList)
+            setProductList(currentProcuctList)
+        }
+    }
+
+    getProductList()
+
+    }, [] )
+
 
 
     return (

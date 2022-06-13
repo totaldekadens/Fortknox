@@ -51,6 +51,24 @@ export const inputData: InputData[] = [
         error: "",
         errorState: false,
     }, {
+        name: "email",
+        label: "E-post",
+        required: true,
+        fullWidth: false,
+        type: "text",
+        value: "",
+        error: "",
+        errorState: false,
+    }, {
+        name: "phone",
+        label: "Telefonnummer",
+        required: true,
+        fullWidth: false,
+        type: "number",
+        value: "",
+        error: "",
+        errorState: false,
+    }, {
         name: "street-address",
         label: "Faktureringsadress",
         required: true,
@@ -69,7 +87,7 @@ export const inputData: InputData[] = [
         error: "",
         errorState: false,
     }, {
-        name: "postnummer",
+        name: "zipcode",
         label: "Postnummer",
         required: true,
         fullWidth: false,
@@ -78,7 +96,7 @@ export const inputData: InputData[] = [
         error: "",
         errorState: false,
     }, {
-        name: "address-level1",
+        name: "city",
         label: "Postort",
         required: true,
         fullWidth: false,

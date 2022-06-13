@@ -10,11 +10,13 @@ import AddAndModifyProduct from "./addAndModifyProduct";
 import { productContext } from "../context/productListProvider";
 import { TabPanel, a11yProps } from "./adminTemplatePart";
 import ModifyProduct from "./modifyProduct";
+import { DeviceContext } from "../context/mediaQueryProvider";
 
 const TabPanelAdmin : FC = () => { 
 
     // Gets product context
     const { productList } = useContext(productContext)
+    const { devices } = useContext(DeviceContext)
 
     // State of what panel to be seen
     const [value, setValue] = React.useState(0);
@@ -36,7 +38,7 @@ const TabPanelAdmin : FC = () => {
                 value={value}
                 onChange={handleChange}
                 aria-label="Vertical tabs example"
-                sx={{ borderRight: 1, borderColor: 'divider', width: "214px"}}
+                sx={{ borderRight: 1, borderColor: 'divider', maxWidth: "214px", minWidth: "160px"}}
             >
                 <Tab label="Skapa paket" {...a11yProps(0)} />
                 <Tab label="Ändra paket" {...a11yProps(1)} />

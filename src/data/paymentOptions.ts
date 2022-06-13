@@ -4,11 +4,12 @@ export interface PaymentOptions {
     id: number,
     name: string,
     description: string,
-    input: InputField[]
+    input?: InputField[]
 }
 
 interface InputField {
     name: string,
+    label: string,
     type: string,
     value: string | number
     error: string
@@ -23,7 +24,8 @@ export const paymentOptions: PaymentOptions[] = [
         description: "Betala snabbt och enkelt med Swish.",
         input: [
             {
-                name: "Mobilnummer",
+                name: "tel",
+                label: "Mobilnummer",
                 type: "number",
                 value: 0,
                 error: "",
@@ -36,33 +38,41 @@ export const paymentOptions: PaymentOptions[] = [
         description: "Betala med valfritt kort.",
         input: [
             {
-                name: "Kortnummer",
+                name: "cc-number",
+                label: "Kortnummer",
                 type: "number",
                 value: 0,
                 error: "",
                 errorState: false,
             },
             {
-                name: "Utgångsdatum",
+                name: "cc-exp",
+                label: "Utgångsdatum",
                 type: "number",
                 value: 0,
                 error: "",
                 errorState: false,
             },
             {
-                name: "CVC",
+                name: "cc-csc",
+                label: "CVC",
                 type: "number",
                 value: 0,
                 error: "",
                 errorState: false,
             },
             {
-                name: "Kortinnehavarens namn",
+                name: "cc-name",
+                label: "Kortinnehavarens namn",
                 type: "text",
                 value: "",
                 error: "",
                 errorState: false,
             },
         ]
+    }, {
+        id: 3,
+        name: "Faktura",
+        description: "Betala mot faktura, 30 dagar.",
     },
 ]

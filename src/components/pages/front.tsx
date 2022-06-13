@@ -6,6 +6,9 @@ import Lines from "../common/lines";
 import ContentTitle from "../common/contentTitle";
 import { productContext } from "../context/productListProvider";
 import { DeviceContext, DeviceContextData} from "../context/mediaQueryProvider";
+import { cartContext } from "../context/cartProvider";
+import { invoiceContext } from "../context/invoiceProvider";
+import { inputData } from "../../data/invoice";
 
 interface Props {}
 
@@ -13,6 +16,10 @@ const FrontPage: FC<Props> = (props) => {
 
   const { devices } = useContext(DeviceContext)
   const { productList } = useContext(productContext)
+  const { setInputData } = useContext(invoiceContext)
+
+  // Sets inputData to defaultvalue
+  setInputData(inputData)
 
   const myRef = useRef<HTMLInputElement>(null);
 
@@ -30,7 +37,7 @@ const FrontPage: FC<Props> = (props) => {
           <div style={textContainer({devices: devices})}>
             <p>Oavsett vad framgång är för dig som företagare, hjälper vi dig att nå dit du vill. Vi har samlat allt du behöver för att starta, växa och utvecklas – på ett ställe.</p>
           </div>
-          <Button onClick={executeScroll} sx={{color: "white", borderColor: "white", padding: "20px 30px 20px 30px", marginTop: "40px"}} variant="outlined">Beställ paket</Button>
+          <Button onClick={executeScroll} sx={{color: "white", borderColor: "white", padding: "20px 30px 20px 30px", marginTop: "40px"}} variant="outlined">Gå till våra paket</Button>
         </div>
       </div>
 
@@ -59,7 +66,7 @@ const container2:(devices: DeviceContextData) => CSSProperties = (devices) =>  {
     display: 'flex',
     justifyContent: "space-around",
     flexWrap: "wrap",
-    minHeight: '70vh',
+    minHeight: '80vh',
     marginBottom: '30px',
     justifyItems: 'stretch',
     alignItems: 'stretch',

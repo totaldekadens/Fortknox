@@ -4,25 +4,33 @@ import Button from "@mui/material/Button"
 import { color, height } from "@mui/system"
 import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
-import { includings, products, Salary } from "../../data/products"
+
+
 import { cartContext } from "../context/cartProvider"
+
+import { products } from "../../data/products"
+import { paymentContext } from "../context/checkOutProvider"
+
 import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
+import { validateFields } from "../interaction/paymentOptionsErrorHandler"
+
 
 
 interface Props {
     nextFunc: () => void
     activeStep: number,
     steps: string[]
-    statusButton: string
-    setStatusButton: React.Dispatch<React.SetStateAction<string>>
 }
 
 
 const SummaryCard: FC<Props> = (props) => {
     const { getInputData, setInputData } = useContext(invoiceContext)
-    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
+    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext) 
+    const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
+
+
     const { cartItem, setCartItem } = useContext(cartContext)
     
     
@@ -48,6 +56,7 @@ const SummaryCard: FC<Props> = (props) => {
     //const { getInputData, setInputData } = useContext(inputContext)
     const extraOrder = () => {
 
+
         const foundQtyChange = cartItem!.including.find((x) => 1 < x.qty)
 
         if (foundQtyChange) {
@@ -66,8 +75,8 @@ const SummaryCard: FC<Props> = (props) => {
     }
     const validateNextStep = () => {
 
-        if (props.activeStep === 0) {
 
+        if(props.activeStep === 0) {
             props.nextFunc()
         }
         if (props.activeStep === 1) {
@@ -85,8 +94,32 @@ const SummaryCard: FC<Props> = (props) => {
             const found = result.find(e => e.errorState == true || e.required == true && e.value == "")
 
             // Om inga fel hittade sätt knapp till enable annars disable
-            !found ? props.setStatusButton("enable") : props.setStatusButton("disable") // Får se om vi använder denna?
-            !found ? props.nextFunc() : undefined;
+            !found ? props.nextFunc() : undefined; 
+        } 
+
+        if(props.activeStep === 3) {
+
+            if(paymentOptionState) {
+
+                if(paymentOptionState.input) {
+
+                    const result = validateFields({...paymentOptionState});
+                    setPaymentOptionState(result)
+
+                    // Kollar om något error state är true (dvs är fel)
+                    const found = result!.input!.find(e => e.errorState == true)
+                    // Om inga fel hittade sätt knapp till enable annars disable
+                    !found ? props.nextFunc() : undefined; 
+
+                } else {
+
+                    props.nextFunc();
+
+                }
+            }
+            
+
+
         }
 
     }
@@ -103,14 +136,15 @@ const SummaryCard: FC<Props> = (props) => {
                                 <div style={{ ...spaceBetween }}>
                                     <h5 >Fortknox Bas</h5>
                                     <h5>139 kr/mån</h5>
-
                                 </div>
                             </div>
                             <hr />
                         </div>
+
                         <div>
                             {extraOrder()}
                         </div>
+
                         <div>
                             <div style={{ ...spaceBetween }}>
                                 <h5 style={{ ...noMarginbottom }}>Avtalsperiod</h5>
@@ -136,14 +170,11 @@ const SummaryCard: FC<Props> = (props) => {
                     <div style={{ display: "flex", justifyContent: "center" }}>
 
                         <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={validateNextStep}    >
-
-                            {props.activeStep === props.steps.length - 1 ? 'Slutför köp' : 'Nästa'}
+                            {props.activeStep === props.steps.length - 2 ? 'Slutför köp' : props.activeStep == 0 ? 'Beställ' : 'Nästa'}
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </>
     )
     

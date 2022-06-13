@@ -16,6 +16,18 @@ const DeliveryPage: FC<Props> = (props) => {
 
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
 
+    const date = (time: number): string => {
+
+        const today = new Date();
+        const tomorrow = new Date();
+
+        const options: Intl.DateTimeFormatOptions = { weekday: "short", year: "numeric", month: "long", day: "numeric" };
+
+        tomorrow.setDate(today.getDate() + time);
+
+        return tomorrow.toLocaleDateString("se-SE", options)
+
+    }
 
     useEffect(() => {
         setDeliveryInput(delivery[0])
@@ -35,9 +47,15 @@ const DeliveryPage: FC<Props> = (props) => {
                 delivery.map((deliveryOption) => {
                     return (
                         <div key={"container" + deliveryOption.id}style={radioContainer}>
-                            <FormControlLabel style={{width: "100%"}} onChange={() => {setDeliveryInput(deliveryOption)} } key={deliveryOption.id} value={deliveryOption.title} control={<Radio sx={{color: colors.textWhite}} />} label={deliveryOption.title} />
-                            <p key={deliveryOption.description}>{deliveryOption.description}</p>
-                            <p key={deliveryOption.price}>Engångskostnad {deliveryOption.price} kr</p>
+                            <FormControlLabel 
+                                style={{width: "100%"}} 
+                                onChange={() => {setDeliveryInput(deliveryOption)} } 
+                                key={deliveryOption.id} value={deliveryOption.title} 
+                                control={<Radio sx={{color: colors.textWhite}} />} 
+                                label={deliveryOption.title} 
+                            />
+                            <p style={{minWidth: "210px"}} key={deliveryOption.price}>Engångskostnad {deliveryOption.price} kr</p>
+                            <p key={deliveryOption.description}>Leverans: {date(deliveryOption.numberOfDays)}</p>
                         </div>
                     )
                 })
@@ -53,7 +71,9 @@ export default DeliveryPage
 
 const radioContainer: CSSProperties = {
     borderBottom: "1px solid lightgrey", 
+    width: "100%",
     display: "flex", 
     justifyContent: "space-between", 
-    flexWrap:"wrap", marginTop: "20px"
+    flexWrap:"wrap",
+    marginTop: "20px"
 }

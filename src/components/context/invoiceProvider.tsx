@@ -15,7 +15,7 @@ export const invoiceContext = React.createContext<InvoiceContextData>({
     setInputData: () => {}
 })
 
-export const InvoiceInfoProvider:  FC<PropsWithChildren<Props>> = (props) => {
+const InvoiceInfoProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
     const [getInputData, setInputData] = useState(inputData);
 

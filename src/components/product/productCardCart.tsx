@@ -14,6 +14,7 @@ import React from "react";
 import { render } from "react-dom";
 import CartOption from "./cartOptions";
 import CartSelectedItem from "./cartSelectedItem";
+import { Link } from "react-router-dom";
 
 
 interface Props {}
@@ -31,7 +32,8 @@ const ProductCardCart: FC<Props> = (props) => {
     } else {
         return (
             <SectionCartContainer>
-                <h1>Cartitem existerer ej</h1>
+                <h1>Din varukorg är tom</h1>
+                <p>Gå tillbaka till <Link style={{color: colors.fourth}} to={"/"}>startsidan</Link></p>
             </SectionCartContainer>
         )
     }

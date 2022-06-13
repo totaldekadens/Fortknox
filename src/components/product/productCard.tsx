@@ -23,7 +23,7 @@ const ProductCard: FC<Props> = (props) => {
             </div>
             <div style={cardCont}>
                 <div>
-                    {props.product.including.map((include) => { return (<span key={include!.id} style={includeStyle}>{include?.name}, </span>) })}
+                    {props.product.including.map((include) => { return  (include ? (<span key={include.id} style={includeStyle}>{include?.name} </span>) : <h1>Inga komponenter finns på detta paket</h1> )})}
                 </div>
                 <div style={{ display: "flex", height: "100%" }}>
                     <div>

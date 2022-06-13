@@ -23,7 +23,7 @@ export const DeviceContext = React.createContext<DeviceContextData>({
 
 interface Props {}
 
-export const DeviceProvider: FC<PropsWithChildren<Props>> = (props) => {
+const DeviceProvider: FC<PropsWithChildren<Props>> = (props) => {
 
     const [devices, setDevices] = useState<Device>(DefaultContextData)
 
@@ -54,9 +54,6 @@ export const DeviceProvider: FC<PropsWithChildren<Props>> = (props) => {
         </DeviceContext.Provider>
     )
 }
-
-
-
 
 
 
