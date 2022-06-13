@@ -17,7 +17,7 @@ import { cartContext } from "../context/cartProvider";
 import { colors } from "../../data/color";
 import { invoiceContext } from "../context/invoiceProvider";
 import { deliveryContext } from "../context/deliveryProvider";
-import { ManOutlined } from "@mui/icons-material";
+import { Link, ManOutlined } from "@mui/icons-material";
 import { inputData } from "../../data/invoice";
 import { DeviceContext } from "../context/mediaQueryProvider";
 
@@ -42,9 +42,11 @@ const Confirmation: FC<Props> = (props) => {
         <div style={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center", width: "100%"}} >
             <h1 style={{color: colors.primary, textAlign: "center"}}>Tack för din beställning!</h1>
             <div style={{ display:"flex", justifyContent: "center", marginTop: "30px" }}>
-                <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={clearHistory} >
-                    {"Gå tillbaka till startsidan"}
-                </div>
+                <Link to={"/"}>
+                    <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={clearHistory} >
+                        {"Gå tillbaka till startsidan"}
+                    </div>
+                </Link>
             </div>
             <div style={{display: "flex", gap: "30px", marginTop: "40px" , flexWrap: "wrap", justifyContent: "center", width: "100%"}}>
                 <div style={container}>
@@ -79,14 +81,14 @@ const Confirmation: FC<Props> = (props) => {
                                 <hr />
                             </div>
                             <div>
-                                {inputData.map((input) => {
+                                {inputData ?  inputData.map((input) => {
                                     return (
                                     <div style={{ ...spaceBetween }}>
-                                        <h5 style={{ ...noMarginbottom, fontSize: devices.isMobile ? "12px" : "16px" }}>{input.label}</h5>
-                                        <p style={{ ...noMarginbottom, fontSize: devices.isMobile ? "12px" : "16px" }}>{input.value}</p>
+                                        <h5 key={input.name} style={{ ...noMarginbottom, fontSize: devices.isMobile ? "12px" : "16px" }}>{input.label}</h5>
+                                        <p key={input.name} style={{ ...noMarginbottom, fontSize: devices.isMobile ? "12px" : "16px" }}>{input.value}</p>
                                     </div>
                                 )
-                                })}
+                                }) : <div>Finns ingen inputdata att ta ifrån</div> }
                             </div>
                         </div>
                     </div>

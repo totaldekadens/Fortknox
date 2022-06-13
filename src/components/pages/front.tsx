@@ -6,6 +6,9 @@ import Lines from "../common/lines";
 import ContentTitle from "../common/contentTitle";
 import { productContext } from "../context/productListProvider";
 import { DeviceContext, DeviceContextData} from "../context/mediaQueryProvider";
+import { cartContext } from "../context/cartProvider";
+import { invoiceContext } from "../context/invoiceProvider";
+import { inputData } from "../../data/invoice";
 
 interface Props {}
 
@@ -13,6 +16,10 @@ const FrontPage: FC<Props> = (props) => {
 
   const { devices } = useContext(DeviceContext)
   const { productList } = useContext(productContext)
+  const { setInputData } = useContext(invoiceContext)
+
+  // Sets inputData to defaultvalue
+  setInputData(inputData)
 
   const myRef = useRef<HTMLInputElement>(null);
 

@@ -1,7 +1,6 @@
 
 import { CSSProperties, FC, useContext } from "react"
 import ProductCardCart from "../product/productCardCart"
-
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Stepper from '@mui/material/Stepper';
@@ -70,7 +69,6 @@ const CheckOut: FC<Props> = (props) => {
         setActiveStep(0);
     };
 
-    console.log(activeStep)
     return (
         <Box sx={{ width: '100%', display: "flex", flexDirection: "column" }}>
             <div style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center", marginTop: activeStep == 4 ? "10px" : "50px" }}>
