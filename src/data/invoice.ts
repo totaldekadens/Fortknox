@@ -87,7 +87,7 @@ export const inputData: InputData[] = [
         error: "",
         errorState: false,
     }, {
-        name: "postnummer",
+        name: "zipcode",
         label: "Postnummer",
         required: true,
         fullWidth: false,
@@ -96,7 +96,7 @@ export const inputData: InputData[] = [
         error: "",
         errorState: false,
     }, {
-        name: "address-level1",
+        name: "city",
         label: "Postort",
         required: true,
         fullWidth: false,
