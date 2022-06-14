@@ -16,7 +16,9 @@ import { cartContext } from "../context/cartProvider";
 import SectionCartContainer from "../common/sectionCartContainer";
 import OrderConfirmWindow from "../interaction/confirmation";
 
-const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp"];
+
+const steps = ['Varukorg', 'Leverans', 'Faktureringsuppgifter', "Slutför köp"];
+
 
 
 interface Props { }
