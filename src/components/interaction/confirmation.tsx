@@ -1,5 +1,12 @@
-
-import { CSSProperties, FC, useContext } from "react"
+import { FC, useContext } from "react"
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Button from "@mui/material/Button";
+import { Product } from "../../data/products";
+import { CSSProperties} from "react"
 import * as React from 'react';
 import { spaceBetween, summaryCardContainer, priceSummaryFunc } from "../payment/summaryCard";
 import { cartContext } from "../context/cartProvider";
@@ -16,10 +23,16 @@ import { PropsWithChildren, useEffect } from "react";
 import { paymentContext } from "../context/checkOutProvider";
 import RenderPaymentOptions from "../payment/paymentOptions";
 
-interface Props {}
+interface Props {
+    handleClose?: (answer: boolean) => void
+    open: boolean
+    setOpen?: React.Dispatch<React.SetStateAction<boolean>>
+}
 
-const Confirmation: FC<PropsWithChildren<Props>> = (props) => {
 
+
+const OrderConfirmWindow: FC<Props> = (props) => {
+    
     const { cartItem, setCartItem } = useContext(cartContext)
     const { getInputData, setInputData } = useContext(invoiceContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
@@ -27,6 +40,7 @@ const Confirmation: FC<PropsWithChildren<Props>> = (props) => {
     const { devices } = useContext(DeviceContext)
 
     const clearHistory = () => {
+        props.setOpen!(false);
         setCartItem(undefined)
         localStorage.removeItem('cartItem');
         componentWillUnmount(InvoiceInfoProvider)
@@ -34,7 +48,26 @@ const Confirmation: FC<PropsWithChildren<Props>> = (props) => {
     }
 
     return (
-        <>
+        <Dialog
+        open={props.open}
+        onClose={props.handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        fullWidth
+        sx={{
+            "& .MuiDialog-container": {
+                "& .MuiPaper-root": {
+                    width: "100%",
+                   /*  height: devices.isDesktop ? "100%" : devices.isTablet ? "100%" : devices.isMobile ? "100vh" : "100vh", */
+                    minHeight: "90vh",
+                    maxWidth: devices.isDesktop ? "70vw" : devices.isTablet ? "80vw" : devices.isMobile ? "97vw" : "100vw",
+                    margin: devices.isDesktop ? "32p" : devices.isTablet ? "32px" : devices.isMobile ? "0px" : "0px"
+                },
+            },
+        }}
+        >
+            <DialogContent>
+            <>
         <div style={{...rootContainer}} >
             <h1 style={{color: colors.primary, textAlign: "center", marginTop: devices.isDesktop ? "50px" : devices.isTablet ? "50px" : devices.isMobile ? "20px" : "50px" }}>Tack för din beställning!</h1>
             <div style={{ display:"flex", justifyContent: "center", marginTop: "30px" }}>
@@ -121,8 +154,11 @@ const Confirmation: FC<PropsWithChildren<Props>> = (props) => {
             </div>
         </div>
         </>
+            </DialogContent>
+        </Dialog>
     )
 }
+
 
 
 // Kolla med Freddan om dessa kan exporteras från hans istället med property "cartItem" Gäller extraOrdeRender och extraOrder
@@ -147,21 +183,25 @@ const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) =
 
 const extraOrder = (cartItem: CartProduct | undefined, devices: Device ) => {
 
+    if(cartItem) {
+        const foundQtyChange = cartItem!.including.find((x) => 1 < x.qty)
 
-    const foundQtyChange = cartItem!.including.find((x) => 1 < x.qty)
-
-    if (foundQtyChange) {
-        return (<div>
-            <div style={{ ...spaceBetween }}>
-                <h4 style={{color: colors.primary}}>Extra licenser</h4>
+        if (foundQtyChange) {
+            return (<div>
+                <div style={{ ...spaceBetween }}>
+                    <h4 style={{color: colors.primary}}>Extra licenser</h4>
+                </div>
+                {extraOrderRender(cartItem, devices)}
+                <hr />
             </div>
-            {extraOrderRender(cartItem, devices)}
-            <hr />
-        </div>
-        )
+            )
+        } else {
+            return undefined
+        }
     } else {
         return undefined
     }
+   
 
 }
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -223,9 +263,9 @@ const labelCSS: CSSProperties = {
 
 }
 
-export default Confirmation
 
 function componentWillUnmount(InvoiceInfoProvider: FC<React.PropsWithChildren<Props>>) {
     throw new Error("Function not implemented.");
 }
 
+export default OrderConfirmWindow
