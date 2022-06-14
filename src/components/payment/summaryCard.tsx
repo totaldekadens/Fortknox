@@ -193,7 +193,7 @@ const SummaryCard: FC<Props> = (props) => {
 }
 
 
-function totalAmount(sum: boolean) {
+export function totalAmount(sum: boolean) {
 
     const { cartItem, setCartItem } = useContext(cartContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
