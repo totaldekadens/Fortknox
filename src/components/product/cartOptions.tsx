@@ -3,6 +3,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import { colors } from "../../data/color";
 import { flexColumn } from "../../style/common";
 import { productContext } from "../context/productListProvider";
+import ProductCard from "./productCard";
 
 
 
@@ -17,60 +18,29 @@ const CartOption: FC<Props> = (props) => {
     let items = productList
     if(items){
         
-        let test = items.map((item) => {
+        let products = items.map((item) => {
             if(props.cartSelected != item.id){
 
                 return ( 
-                <div key={item.id} style={{ ...cartProductContainer }}>
-        
-                    <div style={{ ...cartItemInfo, ...flexColumn, backgroundColor: colors.secondary }}>
-                        <h2 style={{ color: colors.fourth }}>{item.name}</h2>
-        
-                        <h4 style={cartItemPropertiesHeader}>Inkluderade moduler:</h4>
-                        
-                        {
-                            
-                            item.including.map((includes) => {
-                                if(includes){
-                                    
-                                    if (includes.name == "Integration") {
-                                        return (
-                                            <div key={includes.id} style={cartItemPropertiesContainer}>
-                                                <div style={cartItemInfoContainer}>
-                                                    <CheckIcon style={{ color: "lightgreen" }} />
-                                                    <p key={includes.name} style={cartItemProperties}>{includes.name}</p>
-                                                </div>
-                                                <div style={cartItemInfoContainer}>
-                                                    <p style={cartItemProperties}>Inkluderat</p>
-                                                </div>
-                                                <div style={priceQuantityContainer}>
-                                                    <p style={{ ...cartItemProperties, marginRight: "27px" }}>1</p>
-                                                </div>
-                                            </div>
-                                        )
-                                    }
-                                    else  {
-                                        return (
-                                            <div key={includes.id} style={cartItemPropertiesContainer}>
-                                                <div style={cartItemInfoContainer}>
-                                                    <p key={includes.name} style={{ ...cartItemProperties, marginLeft: "24px" }}>{includes.name}</p>
-                                                </div>
-                                                <div style={cartItemInfoContainer}>
-                                                    <p style={cartItemProperties}>{includes.price} kr/mån</p>
-                                                </div>
-            
-                                            </div>
-                                        )
-                                    }
-                                }
-                            })
-                        }
+                    <div style={{minWidth:"320px",margin:"20px", color: "white"}}>
+                        <ProductCard key={item.id} product={item} />
+
                     </div>
-                </div>
+                    
+                
                 )
             }
         })
-        return ( <div>{test}</div>)
+        return ( 
+        <div style={{display:"flex",flexDirection:"column",justifyContent:"center", alignItems:"center", color: colors.primary}}>
+            <hr style={{width:"100%"}}/>
+            <h1>Våra andra paket</h1>
+            <div style={{display:"flex",flexWrap:"wrap", justifyContent:"center"}}>
+                {products}
+            </div>
+        </div>
+        )
+
     }else{
         return <h1>CartSelectedItem row 78</h1>
     }
