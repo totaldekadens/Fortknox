@@ -89,7 +89,7 @@ const CheckOut: FC<Props> = (props) => {
 
     return (
         <>
-        <Box sx={{ width: '100%', display: "flex", flexDirection: "column" }}>
+        <Box sx={{ width: '100%', display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center", marginTop: activeStep == 4 ? "10px" : "50px"}}>
                 
                 <Stepper activeStep={activeStep} style={{ display: "flex", width: "80%", alignItems: "center", justifyContent: "center", flexWrap: "wrap", ...stepStyle({devices: devices}) }}>
