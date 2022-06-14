@@ -197,7 +197,10 @@ const SummaryCard: FC<Props> = (props) => {
     )
 
 }
-function priceSummaryFunc(summary: string) {
+
+export function priceSummaryFunc(summary: string) {
+
+
     const { cartItem, setCartItem } = useContext(cartContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
 
@@ -218,8 +221,6 @@ function priceSummaryFunc(summary: string) {
             return undefined
         }
     })
-
-
 
     if (summary === "ex.year") {
         return (<> {totalPriceForIncludes * 12} </> )
@@ -245,7 +246,7 @@ const container: CSSProperties = {
     marginLeft: "5em"
 
 }
-const summaryCardContainer: CSSProperties = {
+export const summaryCardContainer: CSSProperties = {
     marginBottom: "30px",
 
 
@@ -276,7 +277,7 @@ const btnContainer: CSSProperties = {
 
 }
 
-const spaceBetween: CSSProperties = {
+export const spaceBetween: CSSProperties = {
     display: "flex",
     justifyContent: "space-between"
 }

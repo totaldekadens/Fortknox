@@ -16,8 +16,6 @@ const CartSummary: FC<Props> = (props) => {
 
     const { getInputData, setInputData } = useContext(invoiceContext)
 
-
-    console.log(getInputData)
     const textFieldColor = "white";
     const textFieldSX = {
         input: {

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import { colors } from '../../data/color'
 
 import Badge, { BadgeProps } from '@mui/material/Badge';
@@ -7,13 +7,18 @@ import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
+import { deliveryContext } from '../context/deliveryProvider';
+import { paymentContext } from '../context/checkOutProvider';
 
 interface Props {}
 
 
 const Navbar: FC<Props> = (props) => {
+
+    const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
+    
     return (
-        <div style={{display: "flex", justifyContent: "space-between", padding: "20px", backgroundColor: colors.primary }}>
+        <div style={{display: "flex", justifyContent: "space-between", padding: "20px", backgroundColor: colors.primary, pointerEvents: paymentOptionState ? "none" : "auto" }}>
             <div>
                 <Link style={{color: "white", textDecoration: "none", fontSize: "30px"}} to={"/"} >Fortknox</Link>
             </div>

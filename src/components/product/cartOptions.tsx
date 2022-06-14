@@ -22,7 +22,7 @@ const CartOption: FC<Props> = (props) => {
             if(props.cartSelected != item.id){
 
                 return ( 
-                    <div style={{minWidth:"320px",margin:"20px", color: "white"}}>
+                    <div key={item.id} style={{minWidth:"320px",margin:"20px", color: "white"}}>
                         <ProductCard key={item.id} product={item} />
 
                     </div>
