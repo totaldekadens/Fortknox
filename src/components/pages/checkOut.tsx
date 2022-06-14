@@ -16,7 +16,7 @@ import { cartContext } from "../context/cartProvider";
 import Confirmation from "./confirmation";
 import SectionCartContainer from "../common/sectionCartContainer";
 
-const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp", "Kvitto"];
+const steps = ['Varukorg', 'Leverans', 'Faktureringsuppgifter', "Slutför köp", "Kvitto"];
 
 
 interface Props { }
