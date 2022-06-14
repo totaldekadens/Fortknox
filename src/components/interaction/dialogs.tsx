@@ -70,4 +70,5 @@ export const DialogInfoWindow: FC<Props> = (props) => {
     )
 }
 
+
 export default DialogWindow

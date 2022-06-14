@@ -13,10 +13,12 @@ import SummaryCard from "../payment/summaryCard";
 import DeliveryPage from "../payment/delivery";
 import CartSummary from "../payment/cartSummary";
 import { cartContext } from "../context/cartProvider";
-import Confirmation from "./confirmation";
 import SectionCartContainer from "../common/sectionCartContainer";
+import OrderConfirmWindow from "../interaction/confirmation";
 
-const steps = ['Varukorg', 'Leverans', 'Faktureringsuppgifter', "Slutför köp", "Kvitto"];
+
+const steps = ['Varukorg', 'Leverans', 'Faktureringsuppgifter', "Slutför köp"];
+
 
 
 interface Props { }
@@ -26,6 +28,7 @@ const CheckOut: FC<Props> = (props) => {
 
     const [activeStep, setActiveStep] = React.useState(0);
     const [skipped, setSkipped] = React.useState(new Set<number>());
+    const [open, setOpen] = React.useState(false);
     const { cartItem } = useContext(cartContext)
 
     const isStepOptional = (step: number) => {
@@ -70,9 +73,12 @@ const CheckOut: FC<Props> = (props) => {
         setActiveStep(0);
     };
 
+    
+
     return (
+        <>
         <Box sx={{ width: '100%', display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center", marginTop: activeStep == 4 ? "10px" : "50px", visibility: activeStep == 4 ? "hidden" : "visible" }}>
+            <div style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center", marginTop: activeStep == 4 ? "10px" : "50px"}}>
                 
                 <Stepper activeStep={activeStep} style={{ display: "flex", width: "80%", alignItems: "center", justifyContent: "center" }}>
                 {steps.map((label, index) => {
@@ -120,11 +126,12 @@ const CheckOut: FC<Props> = (props) => {
                         {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
                         {activeStep == 2 ? (<><SectionCartContainer><InputFieldsCart /></SectionCartContainer> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                         {activeStep == 3 ? (<><CartSummary /> <SummaryCard  nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 4 ? (<Confirmation />) : ""}
                     </div>
                 </React.Fragment>
             )}
         </Box>
+        < OrderConfirmWindow setOpen={setOpen} open={open} />
+        </>
     );
 
 
