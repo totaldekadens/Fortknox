@@ -1,5 +1,5 @@
 
-import { CSSProperties, FC, useContext } from "react"
+import { CSSProperties, FC, useContext, useEffect } from "react"
 import ProductCardCart from "../product/productCardCart"
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -14,6 +14,10 @@ import DeliveryPage from "../payment/delivery";
 import CartSummary from "../payment/cartSummary";
 import { cartContext } from "../context/cartProvider";
 import SectionCartContainer from "../common/sectionCartContainer";
+
+import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider";
+
+
 import OrderConfirmWindow from "../interaction/confirmation";
 
 
@@ -30,6 +34,14 @@ const CheckOut: FC<Props> = (props) => {
     const [skipped, setSkipped] = React.useState(new Set<number>());
     const [open, setOpen] = React.useState(false);
     const { cartItem } = useContext(cartContext)
+    const { devices } = useContext(DeviceContext)
+
+    // Scrolls the user to the top of the page on update of step.
+    React.useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [activeStep])
+
+
 
     const isStepOptional = (step: number) => {
         return false;
@@ -77,10 +89,10 @@ const CheckOut: FC<Props> = (props) => {
 
     return (
         <>
-        <Box sx={{ width: '100%', display: "flex", flexDirection: "column" }}>
+        <Box sx={{ width: '100%', display: "flex", flexDirection: "column", alignItems: "center"}}>
             <div style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center", marginTop: activeStep == 4 ? "10px" : "50px"}}>
                 
-                <Stepper activeStep={activeStep} style={{ display: "flex", width: "80%", alignItems: "center", justifyContent: "center" }}>
+                <Stepper activeStep={activeStep} style={{ display: "flex", width: "80%", alignItems: "center", justifyContent: "center", flexWrap: "wrap", ...stepStyle({devices: devices}) }}>
                 {steps.map((label, index) => {
                         const stepProps: { completed?: boolean } = {};
                         const labelProps: {
@@ -121,7 +133,7 @@ const CheckOut: FC<Props> = (props) => {
                     <Typography sx={{ mt: 2, mb: 1 }}></Typography>
 
                     {/*  container div for checkout  */}
-                    <div style={{ maxWidth: "100%", display: "flex", justifyContent: "center", padding: "4% 10%" }}>
+                    <div style={stepperContentContainer({devices: devices})}>
                         {activeStep == 0 ? (<><SectionCartContainer><ProductCardCart /></SectionCartContainer> {cartItem ?  <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> : undefined }</>) : ""}
                         {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
                         {activeStep == 2 ? (<><SectionCartContainer><InputFieldsCart /></SectionCartContainer> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
@@ -140,6 +152,29 @@ const CheckOut: FC<Props> = (props) => {
 
 const labelCSS: CSSProperties = {
     fontWeight: "100px"
+}
+
+export const stepperContentContainer: (devices: DeviceContextData) => CSSProperties = (devices) => {
+    return {
+        maxWidth: devices.devices.isDesktop ? "80%" : "100%", 
+        paddingBottom: "20px",
+        display: "flex", 
+        gap: "20px", 
+        justifyContent: "center", 
+        flexWrap: devices.devices.isDesktop ? "nowrap" : "wrap",
+    }
+
+}
+
+const stepStyle:  (devices: DeviceContextData) => CSSProperties = (devices) => { 
+
+    return {
+        flexDirection: devices.devices.isDesktop ? "row" : "column",
+        alignItems: devices.devices.isDesktop ? "center" : "start",
+        gap: devices.devices.isDesktop ? "0px" : "10px",
+    }
+
+
 }
 
 export default CheckOut

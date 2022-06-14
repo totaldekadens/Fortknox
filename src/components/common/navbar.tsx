@@ -9,6 +9,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
 import { deliveryContext } from '../context/deliveryProvider';
 import { paymentContext } from '../context/checkOutProvider';
+import { cartContext } from '../context/cartProvider';
 
 interface Props {}
 
@@ -16,7 +17,8 @@ interface Props {}
 const Navbar: FC<Props> = (props) => {
 
     const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
-    
+    const { cartItem } = useContext(cartContext)
+
     return (
         <div style={{display: "flex", justifyContent: "space-between", padding: "20px", backgroundColor: colors.primary, pointerEvents: paymentOptionState ? "none" : "auto" }}>
             <div>
@@ -28,7 +30,7 @@ const Navbar: FC<Props> = (props) => {
                 </Link>
                 <Link to={"/checkout"}>
                 <IconButton aria-label="cart">
-                    <StyledBadge badgeContent={4} style={{color: "white"}} > {/* Denna blir dynamisk sedan */}
+                    <StyledBadge badgeContent={cartItem ? "1" : undefined} style={{color: "white"}} > {/* Denna blir dynamisk sedan */}
                         <ShoppingCartIcon />
                     </StyledBadge>
                 </IconButton>

@@ -10,9 +10,13 @@ import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
 import { validateFields } from "../interaction/paymentOptionsErrorHandler"
+
+import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider"
+
 import React from "react"
 import OrderConfirmWindow from "../interaction/confirmation"
 import { priceSummaryFunc } from "./priceLogic"
+
 
 
 
@@ -29,7 +33,11 @@ const SummaryCard: FC<Props> = (props) => {
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
     const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
     const { cartItem, setCartItem } = useContext(cartContext)
+
+    const { devices } = useContext(DeviceContext)
+
     const [open, setOpen] = React.useState(false);
+
 
     const validateNextStep = () => {
 
@@ -143,9 +151,9 @@ const SummaryCard: FC<Props> = (props) => {
 
     return (
         <>
-            <div style={container}>
+            <div style={container({devices: devices})}>
                 <div style={summaryCardContainer}>
-                    <div style={{ ...sumContainer, padding: "30px" }}>
+                    <div style={{ ...sumContainer({devices: devices}), padding: "30px" }}>
                         <div>
                             <h1 style={{ ...noMarginbottom, color: colors.fourth }}>Din Varukorg</h1>
                             <div>
@@ -187,7 +195,7 @@ const SummaryCard: FC<Props> = (props) => {
                     </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
 
-                        <div style={{ ...btnContainer, backgroundColor: colors.secondary, }} onClick={validateNextStep}    >
+                        <div style={{ ...btnContainer({devices: devices}), backgroundColor: colors.secondary, }} onClick={validateNextStep}    >
                             {props.activeStep === props.steps.length - 2 ? 'Slutför köp' : props.activeStep == 0 ? 'Beställ' : 'Nästa'}
                         </div>
                     </div>
@@ -200,36 +208,46 @@ const SummaryCard: FC<Props> = (props) => {
 }
 
 
-const container: CSSProperties = {
-    display: "flex",
-    flexDirection: "column",
-    minWidth: "350px",
-    marginLeft: "5em"
+const container: (devices: DeviceContextData) => CSSProperties = (devices) => {
+    
+    return {
+        display: "flex",
+        flexDirection: "column",
+        minWidth: "350px",
+        width: devices.devices.isMobile ? "100%" : "350px"
+    }
+
 
 }
 export const summaryCardContainer: CSSProperties = {
     marginBottom: "30px",
 }
 
+const sumContainer: (devices: DeviceContextData) => CSSProperties = (devices) => {
 
+    return {
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: colors.primary,
+        borderRadius: devices.devices.isMobile ? "0px" : "10px",
+        marginBottom: "20px",
+        padding: "0 30px",
+    }
 
-const sumContainer: CSSProperties = {
-    display: "flex",
-    flexDirection: "column",
-    backgroundColor: colors.primary,
-    borderRadius: "10px",
-    marginBottom: "20px",
-    padding: "0 30px",
 }
 
-const btnContainer: CSSProperties = {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    minHeight: "60px",
-    borderRadius: "40px",
-    cursor: "pointer"
+const btnContainer: (devices: DeviceContextData) => CSSProperties = (devices) => {
+
+    return {
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: devices.devices.isMobile ? "60%": "100%",
+        minHeight: "60px",
+        borderRadius: "40px",
+        cursor: "pointer"
+    }
+
 }
 
 export const spaceBetween: CSSProperties = {
