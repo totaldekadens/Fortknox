@@ -1,7 +1,7 @@
 
 import { CSSProperties, FC, useContext } from "react"
 import * as React from 'react';
-import { spaceBetween, summaryCardContainer, totalAmount } from "../payment/summaryCard";
+import { spaceBetween, summaryCardContainer, priceSummaryFunc } from "../payment/summaryCard";
 import { cartContext } from "../context/cartProvider";
 import { colors } from "../../data/color";
 import InvoiceInfoProvider, { invoiceContext } from "../context/invoiceProvider";
@@ -67,7 +67,7 @@ const Confirmation: FC<PropsWithChildren<Props>> = (props) => {
                                 </div>
                                 <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
                                     <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Summa</h5>
-                                    {totalAmount(true)}
+                                    {priceSummaryFunc("inc.year")}
                                 </div>
                                 <div style={{ display: "flex", justifyContent:"flex-end" }}>
                                     <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), justifyContent:"flex-end"  }}>385 kr/mån</h5> {/* // Skall renderas ut. väntar på Freddan */}
