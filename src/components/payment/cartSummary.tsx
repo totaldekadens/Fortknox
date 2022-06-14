@@ -16,7 +16,7 @@ const CartSummary: FC<Props> = (props) => {
 
     const { getInputData, setInputData } = useContext(invoiceContext)
 
-    const textFieldColor = "white";
+    const textFieldColor = colors.primary;
     const textFieldSX = {
         input: {
             "WebkitTextFillColor": `${textFieldColor} !important`,
@@ -44,7 +44,7 @@ const CartSummary: FC<Props> = (props) => {
 
                     return (
                         <div key= {input.label} style={{display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent:"space-between"}}>
-                            <h4 style={{minWidth:"210px"}}>{input.label}:</h4>
+                            <h4 style={{minWidth:"210px", color: colors.primary}}>{input.label}:</h4>
                             <TextField 
                             hiddenLabel
                             id="filled-hidden-label-small"

@@ -95,7 +95,7 @@ const RenderPaymentOptions: FC<Props> = (props) => {
                 return (
                     <Collapse key={paymentOption.id} in={paymentOptionState ? paymentOptionState.id === paymentOption.id : undefined}>
                         <div style={{width: "100%"}}>
-                            <h5>{paymentOption.description}</h5>
+                            <h5 style={{color: colors.primary}}>{paymentOption.description}</h5>
                             {paymentOption.input ? (
                                 paymentOption.input.map((input) => {
                                     return (

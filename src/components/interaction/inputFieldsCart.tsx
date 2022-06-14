@@ -1,6 +1,7 @@
 import { FormControl } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { CSSProperties, FC, useContext, useEffect, useState } from "react";
+import { colors } from "../../data/color";
 import { InputData } from "../../data/invoice";
 import { invoiceContext } from "../context/invoiceProvider";
 
@@ -30,6 +31,14 @@ const InputFieldsCart: FC<Props> = (props) => {
         setInputData(inputDataCopy);
     }
 
+    const textFieldColor = colors.primary;
+    const textFieldSX = {
+        input: {
+            "WebkitTextFillColor": `${textFieldColor} !important`,
+            color: `${textFieldColor} !important`, 
+        },
+    };
+
     return (
         <>
         <FormControl component="form" style= {{...container}}>
@@ -43,12 +52,13 @@ const InputFieldsCart: FC<Props> = (props) => {
                 error={input.errorState}
                 helperText={input.error.length >= 2 ? input.error : undefined }
                 onChange={(e) => {setInput(input.name, e)}}
-                value={input.value} // Lade till denna för då vet vi för tillfället vad statet innehåller
+                value={input.value} 
                 label={input.label}
                 fullWidth={ input.fullWidth ? true : false}
                 style={!input.fullWidth ? inputHalf : undefined}
                 required={input.required ? true : undefined}
                 type={input.type}
+                sx={textFieldSX}
                 />
             )
         })}

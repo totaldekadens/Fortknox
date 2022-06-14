@@ -44,7 +44,7 @@ const CartSelectedItem: FC<Props> = (props) => {
             <div key={item.id} style={{ ...cartProductContainer }}>
 
                 <div style={{ ...cartItemInfo, ...flexColumn, /* backgroundColor: colors.primary */}}>
-                    <h1 style={{ }}>Ditt köp</h1>
+                    <h1 style={{ }}>Valt paket</h1>
                     <h2 style={{ }}>{item.name}</h2>
                     <h4 style={cartItemPropertiesHeader}>Hur många användare ska ha åtkomst till respektive program?</h4>
 
@@ -81,7 +81,7 @@ const CartSelectedItem: FC<Props> = (props) => {
                                                 </div>
                                                 <div style={{display:"flex", alignItems:"center", width:"80px"}}>
                                                     { includes.qty == 1 ? <RemoveIcon  style={{color: colors.bgCart}} onClick={() => decrement(includes.include!.id)} /> : <RemoveIcon  style={{cursor:"pointer"}} onClick={() => decrement(includes.include!.id)} />}
-                                                    <h4 key={includes.qty} style={{width:"30px",height:"30px",borderRadius: "5px", backgroundColor:"white",display:"flex", alignItems:"center",textAlign:"center", justifyContent:"center", border:"solid black 1px"}}>{includes.qty}</h4>
+                                                    <h4 key={includes.qty} style={{width:"30px",height:"30px",borderRadius: "5px", margin: "0px 5px",  backgroundColor:"white",display:"flex", alignItems:"center",textAlign:"center", justifyContent:"center", border:"solid black 1px"}}>{includes.qty}</h4>
 
                                                     <AddIcon style={{cursor:"pointer"}} onClick={() => increment(includes.include!.id)} />
 

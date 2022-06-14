@@ -53,7 +53,7 @@ const CartButton: FC<Props> = (props) => {
     }   
     
     return (
-        <Link style={{ textDecoration: "none" }} to={`/checkout/${props.product.id}`} >
+        <Link style={{ textDecoration: "none" }} to={`/checkout/`} >
             <Button sx={{...buttonStyle, padding: props.paddingBtn }} variant="outlined" onClick={() => { saveProductToLocalstorage() }}><SvgIcon>< AddShoppingCartIcon /></SvgIcon></Button>
         </Link>
         )
