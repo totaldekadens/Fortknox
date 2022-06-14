@@ -84,7 +84,7 @@ const SummaryCard: FC<Props> = (props) => {
 
     const renderDelivery = () => {
         if (props.activeStep >= 1) {
-            if(deliveryInput){
+            if (deliveryInput) {
 
                 return (
                     <div key={deliveryInput!.title}>
@@ -97,7 +97,7 @@ const SummaryCard: FC<Props> = (props) => {
                         </div>
                         <hr />
                     </div>
-    
+
                 )
             }
         } else {
@@ -168,14 +168,20 @@ const SummaryCard: FC<Props> = (props) => {
                                 <h5 style={{ ...noMarginbottom }}>Avtalsperiod</h5>
                                 <h5 style={{ ...noMarginbottom }}>12/mån</h5>
                             </div>
-                            {totalAmount(true) /* render out 1/month x 12 */}
-
+                            <div style={{ ...spaceBetween }}>
+                                <h5 style={{ ...noMarginbottom }}>Summa</h5>
+                                <h5 style={{ ...noMarginbottom }}> {priceSummaryFunc("ex.year")} kr/år</h5>
+                            </div>
+                            <h6>* Priser är exklusive moms.</h6>
                             <hr />
                         </div>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <div style={{ ...spaceBetween, width: "80%", alignItems: "center", backgroundColor: "white", padding: "0 20px", borderRadius: "10px", color: "black" }}>
                                 <h5>Att betala</h5>
-                                {totalAmount(false) /* render out 1/month */}
+                                <div style={{ display: "flex" }}>
+                                    <h1>{priceSummaryFunc("ex.month")}</h1>
+                                    <h5>kr/mån</h5>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -191,10 +197,10 @@ const SummaryCard: FC<Props> = (props) => {
     )
 
 }
-function totalAmount(sum: boolean) {
+function priceSummaryFunc(summary: string) {
     const { cartItem, setCartItem } = useContext(cartContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
-    
+
     let totalPriceForIncludes: number = 0;
     let totalsum: number = 0;
     if (cartItem) {
@@ -215,27 +221,19 @@ function totalAmount(sum: boolean) {
 
 
 
-    if (sum) {
-
-
-        return (
-            <>
-            <div style={{ ...spaceBetween }}>
-                <h5 style={{ ...noMarginbottom }}>Summa</h5>
-                <h5 style={{ ...noMarginbottom }}> {totalPriceForIncludes * 12} kr/år</h5>
-            </div>
-            <h6>* Priser är exklusive moms.</h6>
-           </>
-        )
-    } else {
-        return (
-            <div style={{ display: "flex" }}>
-                <h1>{totalPriceForIncludes}</h1>
-                <h5>kr/mån</h5>
-            </div>
-        )
-
+    if (summary === "ex.year") {
+        return (<> {totalPriceForIncludes * 12} </> )
     }
+    if (summary === "ex.month") {
+        return (<> {totalPriceForIncludes} </>)
+    }
+    if (summary === "inc.year") {
+        return (<> {totalPriceForIncludes * 12 * 1.2} </> )
+    }
+    if (summary === "inc.month") {
+        return (<> {totalPriceForIncludes *  1.2} </> )
+    }
+    
 
 }
 
