@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { FC, PropsWithChildren, useState } from "react"
-import { CartProduct, Product, products } from "../../data/products"
+import { CartProduct } from "../../data/products"
 
 interface Props {}
 

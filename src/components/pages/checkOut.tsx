@@ -16,7 +16,7 @@ import { cartContext } from "../context/cartProvider";
 import Confirmation from "./confirmation";
 import SectionCartContainer from "../common/sectionCartContainer";
 
-const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp", ""];
+const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp", "Kvitto"];
 
 
 interface Props { }
@@ -72,13 +72,10 @@ const CheckOut: FC<Props> = (props) => {
 
     return (
         <Box sx={{ width: '100%', display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center", marginTop: activeStep == 4 ? "10px" : "50px" }}>
-                {activeStep == 4 ? <div></div> : 
+            <div style={{ display: "flex", width: "100%", alignItems: "center", justifyContent: "center", marginTop: activeStep == 4 ? "10px" : "50px", visibility: activeStep == 4 ? "hidden" : "visible" }}>
+                
                 <Stepper activeStep={activeStep} style={{ display: "flex", width: "80%", alignItems: "center", justifyContent: "center" }}>
                 {steps.map((label, index) => {
-                    if(index == 4) {
-                        return <div></div>
-                    } else {
                         const stepProps: { completed?: boolean } = {};
                         const labelProps: {
                             optional?: React.ReactNode;
@@ -91,14 +88,16 @@ const CheckOut: FC<Props> = (props) => {
                         if (isStepSkipped(index)) {
                             stepProps.completed = false;
                         }
+
                         return (
-                            <Step key={label} {...stepProps}>
+                            <Step key={label} {...stepProps} >
                                 <StepLabel style={{cursor: "pointer"}}{...labelProps} onClick={() => {index < activeStep ? setActiveStep(index) : undefined}}>{label}</StepLabel>
                             </Step>
                         );
-                    }
                 })}
-            </Stepper> }
+
+            </Stepper> 
+            
                 
             </div>
             {activeStep === steps.length ? (
@@ -123,25 +122,6 @@ const CheckOut: FC<Props> = (props) => {
                         {activeStep == 3 ? (<><CartSummary /> <SummaryCard  nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                         {activeStep == 4 ? (<Confirmation />) : ""}
                     </div>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                        <Button
-                            disabled={activeStep === 0}
-                            onClick={handleBack}
-                            sx={{ mr: 1 }}
-                        >
-                            Tillbaka
-                        </Button>
-                        <Box sx={{ flex: '1 1 auto' }} />
-                        {isStepOptional(activeStep) && (
-                            <Button color="inherit" onClick={handleSkip} sx={{ mr: 1 }}>
-                                Skip
-                            </Button>
-                        )}
-                        <Button onClick={handleNext}>
-                            {activeStep === 4 - 1 ? 'Slutför köp' : 'Nästa'}
-
-                        </Button>
-                    </Box>
                 </React.Fragment>
             )}
         </Box>
@@ -156,4 +136,3 @@ const labelCSS: CSSProperties = {
 }
 
 export default CheckOut
-
