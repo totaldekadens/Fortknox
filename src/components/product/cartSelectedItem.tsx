@@ -35,7 +35,6 @@ const CartSelectedItem: FC<Props> = (props) => {
             if (foundInclude!.qty > 1) {
                 foundInclude!.qty = foundInclude!.qty - 1
                 setCartItem(item)
-
             }
 
         }
@@ -81,7 +80,7 @@ const CartSelectedItem: FC<Props> = (props) => {
                                                     <p style={cartItemProperties}>{includes.include.price} kr/mån</p>
                                                 </div>
                                                 <div style={{display:"flex", alignItems:"center", width:"80px"}}>
-                                                    <RemoveIcon style={{cursor:"pointer"}} onClick={() => decrement(includes.include!.id)} />
+                                                    { includes.qty == 1 ? <RemoveIcon  style={{color: colors.bgCart}} onClick={() => decrement(includes.include!.id)} /> : <RemoveIcon  style={{cursor:"pointer"}} onClick={() => decrement(includes.include!.id)} />}
                                                     <h4 key={includes.qty} style={{width:"30px",height:"30px",borderRadius: "5px", backgroundColor:"white",display:"flex", alignItems:"center",textAlign:"center", justifyContent:"center", border:"solid black 1px"}}>{includes.qty}</h4>
 
                                                     <AddIcon style={{cursor:"pointer"}} onClick={() => increment(includes.include!.id)} />

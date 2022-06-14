@@ -1,21 +1,23 @@
 import { Info } from "@mui/icons-material"
 import Button from "@mui/material/Button"
-
 import { color, height } from "@mui/system"
 import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
-
-
 import { cartContext } from "../context/cartProvider"
-
 import { products } from "../../data/products"
 import { paymentContext } from "../context/checkOutProvider"
-
 import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
 import { validateFields } from "../interaction/paymentOptionsErrorHandler"
+
 import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider"
+
+import React from "react"
+import OrderConfirmWindow from "../interaction/confirmation"
+import { priceSummaryFunc } from "./priceLogic"
+
+
 
 
 
@@ -31,7 +33,11 @@ const SummaryCard: FC<Props> = (props) => {
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
     const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
     const { cartItem, setCartItem } = useContext(cartContext)
+
     const { devices } = useContext(DeviceContext)
+
+    const [open, setOpen] = React.useState(false);
+
 
     const validateNextStep = () => {
 
@@ -69,12 +75,12 @@ const SummaryCard: FC<Props> = (props) => {
                     // Kollar om något error state är true (dvs är fel)
                     const found = result!.input!.find(e => e.errorState == true)
                     // Om inga fel hittade sätt knapp till enable annars disable
-                    !found ? props.nextFunc() : undefined;
+                    !found ? setOpen(true) : undefined;
 
                 } else {
 
-                    props.nextFunc();
-
+                    /* props.nextFunc(); */
+                    setOpen(true)  // skall det vara true här ? 
                 }
             }
 
@@ -195,48 +201,9 @@ const SummaryCard: FC<Props> = (props) => {
                     </div>
                 </div>
             </div>
+            < OrderConfirmWindow setOpen={setOpen} open={open} />
         </>
     )
-
-}
-
-export function priceSummaryFunc(summary: string) {
-
-
-    const { cartItem, setCartItem } = useContext(cartContext)
-    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
-
-    let totalPriceForIncludes: number = 0;
-    let totalsum: number = 0;
-    if (cartItem) {
-
-        totalPriceForIncludes += cartItem!.price12mth
-    }
-
-    cartItem?.including.forEach((x) => {
-
-        if (x.qty > 1 && x.include.price && x.include?.name != "Integration") {
-            let qty = x.qty - 1
-            totalPriceForIncludes += qty * x.include.price
-
-        } else {
-            return undefined
-        }
-    })
-
-    if (summary === "ex.year") {
-        return (<> {totalPriceForIncludes * 12} </> )
-    }
-    if (summary === "ex.month") {
-        return (<> {totalPriceForIncludes} </>)
-    }
-    if (summary === "inc.year") {
-        return (<> {totalPriceForIncludes * 12 * 1.2} </> )
-    }
-    if (summary === "inc.month") {
-        return (<> {totalPriceForIncludes *  1.2} </> )
-    }
-    
 
 }
 
@@ -254,11 +221,7 @@ const container: (devices: DeviceContextData) => CSSProperties = (devices) => {
 }
 export const summaryCardContainer: CSSProperties = {
     marginBottom: "30px",
-
-
 }
-
-
 
 const sumContainer: (devices: DeviceContextData) => CSSProperties = (devices) => {
 
@@ -270,8 +233,6 @@ const sumContainer: (devices: DeviceContextData) => CSSProperties = (devices) =>
         marginBottom: "20px",
         padding: "0 30px",
     }
-
-
 
 }
 
