@@ -53,7 +53,7 @@ const CartSummary: FC<Props> = (props) => {
                             size="small"
                             disabled
                             sx={textFieldSX}
-                            style={{minWidth: "200px"}}
+                            
                             />
                         </div>
                     )
