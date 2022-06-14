@@ -19,9 +19,10 @@ export const SectionCartContainer: FC<PropsWithChildren<Props>> = (props) => {
 const container: CSSProperties = {
     width: "100%",
     maxWidth: "1200px",
-    backgroundColor: colors.secondary,
+    backgroundColor: colors.bgCart, 
     borderRadius: "10px",
-    padding: "2% 4%"
+    padding: "2% 2%",
+    color: "black"
 
 }
 

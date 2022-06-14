@@ -35,13 +35,13 @@ const DeliveryPage: FC<Props> = (props) => {
 
     return (
         <SectionCartContainer>
-            <FormControl>
-                <FormLabel sx={{color: colors.textWhite}} id="demo-radio-buttons-group-label">Val av leverans</FormLabel>
+            <FormControl style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
+                <FormLabel sx={{color: colors.primary}} id="demo-radio-buttons-group-label">Val av leverans</FormLabel>
                 <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
                     name="radio-buttons-group"
                     defaultValue={delivery[0].title}
-                    sx = {{color: colors.textWhite}}
+                    sx = {{color: colors.primary}}
                 >
             {
                 delivery.map((deliveryOption) => {
@@ -51,7 +51,7 @@ const DeliveryPage: FC<Props> = (props) => {
                                 style={{width: "100%"}} 
                                 onChange={() => {setDeliveryInput(deliveryOption)} } 
                                 key={deliveryOption.id} value={deliveryOption.title} 
-                                control={<Radio sx={{color: colors.textWhite}} />} 
+                                control={<Radio sx={{color: colors.primary}} />} 
                                 label={deliveryOption.title} 
                             />
                             <p style={{minWidth: "210px"}} key={deliveryOption.price}>Engångskostnad {deliveryOption.price} kr</p>

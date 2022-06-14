@@ -27,56 +27,14 @@ interface Props {
 
 const SummaryCard: FC<Props> = (props) => {
     const { getInputData, setInputData } = useContext(invoiceContext)
-    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext) 
+    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
     const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
-
-
     const { cartItem, setCartItem } = useContext(cartContext)
-    
-    
-    const extraOrderRender = () => {
-        return cartItem?.including.map(includeObj => {
-            if (includeObj.qty > 1) {
 
-             
-                return (
-                    <div key={includeObj.include.name} style={{ ...spaceBetween }}>
-                        <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.name}</h5>
-                        <h5 style={{ width: "33%", textAlign: "center", margin: "10px 0px" }}>Antal: {includeObj.qty - 1}</h5>
-                        <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.price} kr/mån</h5>
-                    </div>
-                )
-            } else {
-                return undefined
-            }
-        })
-
-    }
-
-    //const { getInputData, setInputData } = useContext(inputContext)
-    const extraOrder = () => {
-
-
-        const foundQtyChange = cartItem!.including.find((x) => 1 < x.qty)
-
-        if (foundQtyChange) {
-            return (<div>
-                <div style={{ ...spaceBetween }}>
-                    <h4>Extra Beställning</h4>
-                </div>
-                {extraOrderRender()}
-                <hr />
-            </div>
-            )
-        } else {
-            return undefined
-        }
-
-    }
     const validateNextStep = () => {
 
 
-        if(props.activeStep === 0) {
+        if (props.activeStep === 0) {
             props.nextFunc()
         }
         if (props.activeStep === 1) {
@@ -94,22 +52,22 @@ const SummaryCard: FC<Props> = (props) => {
             const found = result.find(e => e.errorState == true || e.required == true && e.value == "")
 
             // Om inga fel hittade sätt knapp till enable annars disable
-            !found ? props.nextFunc() : undefined; 
-        } 
+            !found ? props.nextFunc() : undefined;
+        }
 
-        if(props.activeStep === 3) {
+        if (props.activeStep === 3) {
 
-            if(paymentOptionState) {
+            if (paymentOptionState) {
 
-                if(paymentOptionState.input) {
+                if (paymentOptionState.input) {
 
-                    const result = validateFields({...paymentOptionState});
+                    const result = validateFields({ ...paymentOptionState });
                     setPaymentOptionState(result)
 
                     // Kollar om något error state är true (dvs är fel)
                     const found = result!.input!.find(e => e.errorState == true)
                     // Om inga fel hittade sätt knapp till enable annars disable
-                    !found ? props.nextFunc() : undefined; 
+                    !found ? props.nextFunc() : undefined;
 
                 } else {
 
@@ -117,9 +75,68 @@ const SummaryCard: FC<Props> = (props) => {
 
                 }
             }
-            
 
 
+
+        }
+
+    }
+
+    const renderDelivery = () => {
+        if (props.activeStep >= 1) {
+            if(deliveryInput){
+
+                return (
+                    <div key={deliveryInput!.title}>
+                        <div style={{ ...spaceBetween }}>
+                            <h4>Engångskostnad </h4>
+                        </div>
+                        <div style={{ ...spaceBetween }} >
+                            <h5 style={{ ...noMarginbottom }}>{deliveryInput!.title}</h5>
+                            <h5 style={{ ...noMarginbottom }}>{deliveryInput!.price} kr</h5>
+                        </div>
+                        <hr />
+                    </div>
+    
+                )
+            }
+        } else {
+            return undefined
+        }
+    }
+
+    const extraOrderRender = () => {
+        return cartItem?.including.map(includeObj => {
+            if (includeObj.qty > 1) {
+                return (
+                    <div key={includeObj.include.name} style={{ ...spaceBetween }}>
+                        <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.name}</h5>
+                        <h5 style={{ width: "33%", textAlign: "center", margin: "10px 0px" }}>Antal: {includeObj.qty - 1}</h5>
+                        <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.price} kr/mån</h5>
+                    </div>
+                )
+            } else {
+                return undefined
+            }
+        })
+
+    }
+
+    //const { getInputData, setInputData } = useContext(inputContext)
+    const extraOrder = () => {
+        const foundQtyChange = cartItem!.including.find((x) => 1 < x.qty)
+        if (foundQtyChange) {
+            return (
+                <div>
+                    <div style={{ ...spaceBetween }}>
+                        <h4>Extra Beställning</h4>
+                    </div>
+                    {extraOrderRender()}
+                    <hr />
+                </div>
+            )
+        } else {
+            return undefined
         }
 
     }
@@ -134,8 +151,8 @@ const SummaryCard: FC<Props> = (props) => {
                             <div>
                                 <h4 style={{ ...noMarginbottom }}>Paket</h4>
                                 <div style={{ ...spaceBetween }}>
-                                    <h5 >Fortknox Bas</h5>
-                                    <h5>139 kr/mån</h5>
+                                    <h5 >{cartItem?.name}</h5>
+                                    <h5>{cartItem?.price12mth} kr/mån</h5>
                                 </div>
                             </div>
                             <hr />
@@ -146,24 +163,19 @@ const SummaryCard: FC<Props> = (props) => {
                         </div>
 
                         <div>
+                            {renderDelivery()}
                             <div style={{ ...spaceBetween }}>
                                 <h5 style={{ ...noMarginbottom }}>Avtalsperiod</h5>
                                 <h5 style={{ ...noMarginbottom }}>12/mån</h5>
                             </div>
-                            <div style={{ ...spaceBetween }}>
-                                <h5 style={{ ...noMarginbottom }}>Summa</h5>
-                                { totalAmount()}
-                                
-                            </div>
+                            {totalAmount(true) /* render out 1/month x 12 */}
+
                             <hr />
                         </div>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <div style={{ ...spaceBetween, width: "80%", alignItems: "center", backgroundColor: "white", padding: "0 20px", borderRadius: "10px", color: "black" }}>
                                 <h5>Att betala</h5>
-                                <div style={{ display: "flex" }}>
-                                    <h1>385</h1>
-                                    <h5>kr/mån</h5>
-                                </div>
+                                {totalAmount(false) /* render out 1/month */}
                             </div>
                         </div>
                     </div>
@@ -177,31 +189,54 @@ const SummaryCard: FC<Props> = (props) => {
             </div>
         </>
     )
-    
+
 }
-function totalAmount(){
+function totalAmount(sum: boolean) {
     const { cartItem, setCartItem } = useContext(cartContext)
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
     
     let totalPriceForIncludes: number = 0;
-    if(cartItem){
+    let totalsum: number = 0;
+    if (cartItem) {
 
         totalPriceForIncludes += cartItem!.price12mth
     }
 
-    cartItem?.including.forEach((x)=> {
-        
-        if(x.qty > 1 && x.include.price && x.include?.name != "Integration"){
+    cartItem?.including.forEach((x) => {
+
+        if (x.qty > 1 && x.include.price && x.include?.name != "Integration") {
             let qty = x.qty - 1
             totalPriceForIncludes += qty * x.include.price
-            
-        }else{
+
+        } else {
             return undefined
         }
     })
-    return <h5 style={{ ...noMarginbottom }}> {totalPriceForIncludes * 12} kr/år</h5>
-    
-   
+
+
+
+    if (sum) {
+
+
+        return (
+            <>
+            <div style={{ ...spaceBetween }}>
+                <h5 style={{ ...noMarginbottom }}>Summa</h5>
+                <h5 style={{ ...noMarginbottom }}> {totalPriceForIncludes * 12} kr/år</h5>
+            </div>
+            <h6>* Priser är exklusive moms.</h6>
+           </>
+        )
+    } else {
+        return (
+            <div style={{ display: "flex" }}>
+                <h1>{totalPriceForIncludes}</h1>
+                <h5>kr/mån</h5>
+            </div>
+        )
+
+    }
+
 }
 
 

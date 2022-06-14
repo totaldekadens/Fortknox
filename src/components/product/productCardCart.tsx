@@ -24,10 +24,10 @@ const ProductCardCart: FC<Props> = (props) => {
     
     if(cartItem){
         return (
-            <SectionCartContainer>
+            <>
                 <CartSelectedItem />
                 <CartOption cartSelected={cartItem!.id}/>
-            </SectionCartContainer>
+            </>
         )          
     } else {
         return (

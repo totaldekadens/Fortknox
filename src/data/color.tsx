@@ -4,6 +4,7 @@ export interface Colors {
     third: string,
     fourth: string,
     textWhite: string,
+    bgCart: string
 }
 
 
@@ -17,5 +18,7 @@ export const colors: Colors = {
     //beach 
     fourth: "#f7d6bf",
     //White text
-    textWhite: "#ffffff"
+    textWhite: "#ffffff",
+    //bg-cart
+    bgCart: "#e6e7ec"
 }
