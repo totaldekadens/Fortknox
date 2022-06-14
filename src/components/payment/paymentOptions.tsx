@@ -31,11 +31,11 @@ const RenderPaymentOptions: FC<Props> = (props) => {
         setPaymentOptionOnLoad();
     }, [])
 
-    const textFieldColor = "white";
+    const textFieldColor = colors.primary;
     const textFieldSX = {
         input: {
             "WebkitTextFillColor": `${textFieldColor} !important`,
-            color: `${textFieldColor} !important`,
+            color: `${textFieldColor} !important`, 
         },
     };
 
@@ -70,7 +70,7 @@ const RenderPaymentOptions: FC<Props> = (props) => {
             aria-labelledby="demo-radio-buttons-group-label"
             name="radio-buttons-group"
             defaultValue={paymentOptions[0].id}
-            sx = {{color: colors.textWhite, display: "flex"}}
+            sx = {{color: colors.primary, display: "flex"}}
         >
         {
             paymentOptions.map((paymentOption) => {
@@ -80,7 +80,7 @@ const RenderPaymentOptions: FC<Props> = (props) => {
                             <FormControlLabel 
                                 onChange={() => {setPaymentOptionDelay(paymentOption)} } 
                                 value={paymentOption.id} 
-                                control={<Radio sx={{color: colors.textWhite}} />} 
+                                control={<Radio sx={{color: colors.primary}} />} 
                                 label={paymentOption.name} 
                             />
                         </div>
@@ -113,7 +113,7 @@ const RenderPaymentOptions: FC<Props> = (props) => {
                                             type={input.type}
                                             sx={textFieldSX}
                                             InputLabelProps={{
-                                                style: { color: '#fff', borderColor: "#fff" }, 
+                                                style: { color: colors.primary}, 
                                             }}
                                         />
                                     )

@@ -5,6 +5,7 @@ import SectionCartContainer from "../common/sectionCartContainer";
 import ProductCardCart from "../product/productCardCart";
 import RenderPaymentOptions from "./paymentOptions";
 import { invoiceContext } from "../context/invoiceProvider";
+import CartSelectedItem from "../product/cartSelectedItem";
 
 
 interface Props {}
@@ -29,11 +30,15 @@ const CartSummary: FC<Props> = (props) => {
     return (
 
         <SectionCartContainer>
-
-            <ProductCardCart />
-
             <div>
-                <h2 style={{color: colors.fourth}}>Dina uppgifter:</h2>
+                <h2 style={{color: colors.primary}}>Betalning:</h2>
+
+                <RenderPaymentOptions />
+
+            </div>
+            
+            <div>
+                <h2 style={{color: colors.primary}}>Dina uppgifter:</h2>
                 
                 {removeEmptyFields.map((input) => {
 
@@ -56,12 +61,7 @@ const CartSummary: FC<Props> = (props) => {
 
             </div>
 
-            <div>
-                <h2 style={{color: colors.fourth}}>Betalning:</h2>
-
-                <RenderPaymentOptions />
-
-            </div>
+            
 
         </SectionCartContainer>
     )

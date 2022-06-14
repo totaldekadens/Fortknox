@@ -14,6 +14,7 @@ import DeliveryPage from "../payment/delivery";
 import CartSummary from "../payment/cartSummary";
 import { cartContext } from "../context/cartProvider";
 import Confirmation from "./confirmation";
+import SectionCartContainer from "../common/sectionCartContainer";
 
 const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp", "Kvitto"];
 
@@ -114,10 +115,10 @@ const CheckOut: FC<Props> = (props) => {
                     <Typography sx={{ mt: 2, mb: 1 }}></Typography>
 
                     {/*  container div for checkout  */}
-                    <div style={{ maxWidth: "100%", display: "flex", justifyContent: "center", padding: "4%" }}>
-                        {activeStep == 0 ? (<><ProductCardCart /> {cartItem ?  <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> : undefined }</>) : ""}
+                    <div style={{ maxWidth: "100%", display: "flex", justifyContent: "center", padding: "4% 10%" }}>
+                        {activeStep == 0 ? (<><SectionCartContainer><ProductCardCart /></SectionCartContainer> {cartItem ?  <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> : undefined }</>) : ""}
                         {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
-                        {activeStep == 2 ? (<><InputFieldsCart /> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
+                        {activeStep == 2 ? (<><SectionCartContainer><InputFieldsCart /></SectionCartContainer> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                         {activeStep == 3 ? (<><CartSummary /> <SummaryCard  nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
                         {activeStep == 4 ? (<Confirmation />) : ""}
                     </div>
