@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import { Product } from "../../data/products";
 import { CSSProperties} from "react"
 import * as React from 'react';
-import { spaceBetween, summaryCardContainer, priceSummaryFunc } from "../payment/summaryCard";
+import { spaceBetween, summaryCardContainer } from "../payment/summaryCard";
 import { cartContext } from "../context/cartProvider";
 import { colors } from "../../data/color";
 import InvoiceInfoProvider, { invoiceContext } from "../context/invoiceProvider";
@@ -22,6 +22,7 @@ import ReactDOM from "react-dom";
 import { PropsWithChildren, useEffect } from "react";
 import { paymentContext } from "../context/checkOutProvider";
 import RenderPaymentOptions from "../payment/paymentOptions";
+import { priceSummaryFunc } from "../payment/priceLogic";
 
 interface Props {
     handleClose?: (answer: boolean) => void

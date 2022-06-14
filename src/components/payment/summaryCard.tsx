@@ -1,22 +1,19 @@
 import { Info } from "@mui/icons-material"
 import Button from "@mui/material/Button"
-
 import { color, height } from "@mui/system"
 import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
-
-
 import { cartContext } from "../context/cartProvider"
-
 import { products } from "../../data/products"
 import { paymentContext } from "../context/checkOutProvider"
-
 import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
 import { validateFields } from "../interaction/paymentOptionsErrorHandler"
 import React from "react"
 import OrderConfirmWindow from "../interaction/confirmation"
+import { priceSummaryFunc } from "./priceLogic"
+
 
 
 
@@ -202,46 +199,6 @@ const SummaryCard: FC<Props> = (props) => {
 
 }
 
-export function priceSummaryFunc(summary: string) {
-
-
-    const { cartItem, setCartItem } = useContext(cartContext)
-    const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
-
-    let totalPriceForIncludes: number = 0;
-    let totalsum: number = 0;
-    if (cartItem) {
-
-        totalPriceForIncludes += cartItem!.price12mth
-    }
-
-    cartItem?.including.forEach((x) => {
-
-        if (x.qty > 1 && x.include.price && x.include?.name != "Integration") {
-            let qty = x.qty - 1
-            totalPriceForIncludes += qty * x.include.price
-
-        } else {
-            return undefined
-        }
-    })
-
-    if (summary === "ex.year") {
-        return (<> {totalPriceForIncludes * 12} </> )
-    }
-    if (summary === "ex.month") {
-        return (<> {totalPriceForIncludes} </>)
-    }
-    if (summary === "inc.year") {
-        return (<> {totalPriceForIncludes * 12 * 1.2} </> )
-    }
-    if (summary === "inc.month") {
-        return (<> {totalPriceForIncludes *  1.2} </> )
-    }
-    
-
-}
-
 
 const container: CSSProperties = {
     display: "flex",
@@ -252,8 +209,6 @@ const container: CSSProperties = {
 }
 export const summaryCardContainer: CSSProperties = {
     marginBottom: "30px",
-
-
 }
 
 
@@ -265,9 +220,6 @@ const sumContainer: CSSProperties = {
     borderRadius: "10px",
     marginBottom: "20px",
     padding: "0 30px",
-
-
-
 }
 
 const btnContainer: CSSProperties = {
@@ -278,7 +230,6 @@ const btnContainer: CSSProperties = {
     minHeight: "60px",
     borderRadius: "40px",
     cursor: "pointer"
-
 }
 
 export const spaceBetween: CSSProperties = {
