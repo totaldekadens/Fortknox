@@ -17,7 +17,6 @@ const ContentContainer: FC<Props> = (props) => {
                 <Route path="/" element={ <FrontPage /> } />
                 <Route path="/:productId" element={ <ProductPage /> } />
                 <Route path="/checkout" element={ <CheckOut /> } />
-                <Route path="/checkout/:productId" element={ <CheckOut /> } />  
                 <Route path="/admin" element={ <AdminPanel /> } />
             </Routes>
         </>

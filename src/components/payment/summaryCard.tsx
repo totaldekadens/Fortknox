@@ -97,12 +97,13 @@ const SummaryCard: FC<Props> = (props) => {
                 return (
                     <div key={deliveryInput!.title}>
                         <div style={{ ...spaceBetween }}>
-                            <h4>Engångskostnad </h4>
+                            <h4>Leverans </h4>
                         </div>
                         <div style={{ ...spaceBetween }} >
                             <h5 style={{ ...noMarginbottom }}>{deliveryInput!.title}</h5>
                             <h5 style={{ ...noMarginbottom }}>{deliveryInput!.price} kr</h5>
                         </div>
+                        <h6>* Leveransen betalas direkt.</h6>
                         <hr />
                     </div>
 
@@ -119,7 +120,7 @@ const SummaryCard: FC<Props> = (props) => {
                 return (
                     <div key={includeObj.include.name} style={{ ...spaceBetween }}>
                         <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.name}</h5>
-                        <h5 style={{ width: "33%", textAlign: "center", margin: "10px 0px" }}>Antal: {includeObj.qty - 1}</h5>
+                        <h5 style={{ width: "33%", textAlign: "center", margin: "10px 0px" }}>{includeObj.qty - 1} st</h5>
                         <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.price} kr/mån</h5>
                     </div>
                 )
@@ -171,7 +172,6 @@ const SummaryCard: FC<Props> = (props) => {
                         </div>
 
                         <div>
-                            {renderDelivery()}
                             <div style={{ ...spaceBetween }}>
                                 <h5 style={{ ...noMarginbottom }}>Avtalsperiod</h5>
                                 <h5 style={{ ...noMarginbottom }}>12/mån</h5>
@@ -180,8 +180,9 @@ const SummaryCard: FC<Props> = (props) => {
                                 <h5 style={{ ...noMarginbottom }}>Summa</h5>
                                 <h5 style={{ ...noMarginbottom }}> {priceSummaryFunc("ex.year")} kr/år</h5>
                             </div>
-                            <h6>* Priser är exklusive moms.</h6>
                             <hr />
+                            {renderDelivery()}
+                            <h6>* Priser är exklusive moms.</h6>
                         </div>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <div style={{ ...spaceBetween, width: "80%", alignItems: "center", backgroundColor: "white", padding: "0 20px", borderRadius: "10px", color: "black" }}>

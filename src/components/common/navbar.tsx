@@ -20,7 +20,7 @@ const Navbar: FC<Props> = (props) => {
     const { cartItem } = useContext(cartContext)
 
     return (
-        <div style={{display: "flex", justifyContent: "space-between", padding: "20px", backgroundColor: colors.primary, pointerEvents: paymentOptionState ? "none" : "auto" }}>
+        <div style={{display: "flex", justifyContent: "space-between", padding: "20px", backgroundColor: colors.primary}}>
             <div>
                 <Link style={{color: "white", textDecoration: "none", fontSize: "30px"}} to={"/"} >Fortknox</Link>
             </div>
