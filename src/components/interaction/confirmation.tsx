@@ -54,8 +54,6 @@ const OrderConfirmWindow: FC<Props> = (props) => {
         componentWillUnmount(RenderPaymentOptions)
     }
 
-    const sumYear = priceSummaryFunc("inc.year")
-
     return (
         <Dialog
         open={props.open}
@@ -91,7 +89,7 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                                 <h2 style={{ ...noMarginbottom, color: colors.primary}}>Din order:</h2><hr />
                                 <div>
                                     <h4 style={{ ...noMarginbottom, color: colors.primary }}>Paket</h4>
-                                    {cartItem ? renderInfoWithCont(cartItem!.name, cartItem!.price3mth, devices, true, " kr/mån")
+                                    {cartItem ? renderInfoWithCont(cartItem!.name, cartItem!.price12mth , devices, true, " kr/mån")
                                     : <div>{"Finns inget paket"}</div>
                                     }
                                 </div>
@@ -118,16 +116,29 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                             <div>
                                 <h4 style={{ ...noMarginbottom, color: colors.primary }}>Summering abonnemang</h4>
                                 {renderInfoWithCont("Avtalsperiod", "12 mån", devices, false)}
-                                {renderInfoWithCont("Summa", sumYear, devices, true, "kr/år", colors.secondary)}
+                                {renderInfoWithCont("Summa", priceSummaryFunc("ex.year"), devices, true, "kr/år", colors.secondary)}
                                 <div style={{ display: "flex", justifyContent:"flex-end" }}>
                                     <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), justifyContent:"flex-end"  }}>{priceSummaryFunc("ex.month")} kr/mån</h5> 
                                 </div>
+                                <div style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
+                                    <p style={{fontSize: "9px", margin: "0px" }}> ({priceSummaryFunc("inc.month")}  kr inkl. moms)</p>
+                                </div>
+
                                 <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: "black"  }}>När du betalat leveranskostnaden, startar vi integrationen av ditt paket. När integrationen är gjord påbörjas din abonnemangstid hos oss. Du kommer få en inbetalningsförfrågan via det betalsätt du valt.</p>
                             </div>
+                            <h4 style={{ ...noMarginbottom, color: colors.primary }}>Betalning (Leverans)</h4>
                             <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
-                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Att betala</h5>
-                                    <h3 style={{textDecoration: "underline"}}> {deliveryInput?.price} kr</h3>
-                                </div>
+                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Totalt</h5>
+                                    <h3 > {deliveryInput?.price} kr</h3>
+                            </div>
+                            <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
+                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Moms</h5>
+                                    <h3>{priceSummaryFunc("moms.delivery")} kr</h3>
+                            </div>
+                            <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
+                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Totalt inkl. moms</h5>
+                                    <h3 style={{textDecoration: "underline"}}> {deliveryInput ? deliveryInput?.price*1.25 : undefined } kr</h3>
+                            </div>
                             <div>
                                 <h2 style={{ ...noMarginbottom, color: colors.primary }}>Faktureringsuppgifter:</h2>
                                 <hr />
@@ -190,7 +201,7 @@ const renderInfoWithCont = (title: string, info: string | number | JSX.Element |
             </div>
             {moms ? 
             <div style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
-                <p style={{fontSize: "9px", margin: "0px" }}> (inkl. {Number(info)*0.25} kr Moms)</p>
+                <p style={{fontSize: "9px", margin: "0px" }}> ({Number(info)*1.25} kr inkl. moms)</p>
             </div> : undefined }
         </>
     ) 
@@ -203,11 +214,16 @@ const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) =
         if (includeObj.qty > 1) {
 
             return (
-                <div key={includeObj.include.name} style={{ ...spaceBetween, width: "100%" }}>
-                    <h5 style={{ width: "33%", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})}}>{includeObj.include?.name}</h5>
-                    <p style={{ width: "33%", textAlign: "center", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})   }}>{includeObj.qty - 1} st</p>
-                    <p style={{ width: "33%", margin: "10px 0px", color: colors.secondary, textAlign: "end", ...fontSize({devices: devices})   }}>{includeObj.include?.price} kr/mån</p>
-                </div>
+                <>
+                    <div key={includeObj.include.name} style={{ ...spaceBetween, width: "100%" }}>
+                        <h5 style={{ width: "33%", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})}}>{includeObj.include?.name}</h5>
+                        <p style={{ width: "33%", textAlign: "center", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})   }}>{includeObj.qty - 1} st</p>
+                        <p style={{ width: "33%", margin: "10px 0px", color: colors.secondary, textAlign: "end", ...fontSize({devices: devices})   }}>{includeObj.include?.price} kr/mån</p>
+                    </div>
+                    <div style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
+                        <p style={{fontSize: "9px", margin: "0px" }}> {includeObj.include?.price*1.25}  kr inkl. moms</p>
+                    </div>
+                </>
             )
         } else {
             return undefined
