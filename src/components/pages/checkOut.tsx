@@ -15,7 +15,7 @@ import CartSummary from "../payment/cartSummary";
 import { cartContext } from "../context/cartProvider";
 import Confirmation from "./confirmation";
 
-const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp", ""];
+const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp", "Kvitto"];
 
 
 interface Props { }
@@ -89,7 +89,7 @@ const CheckOut: FC<Props> = (props) => {
                         }
 
                         return (
-                            <Step key={label} {...stepProps}>
+                            <Step key={label} {...stepProps} >
                                 <StepLabel style={{cursor: "pointer"}}{...labelProps} onClick={() => {index < activeStep ? setActiveStep(index) : undefined}}>{label}</StepLabel>
                             </Step>
                         );

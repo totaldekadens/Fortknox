@@ -9,6 +9,7 @@ import { DeviceContext, DeviceContextData} from "../context/mediaQueryProvider";
 import { cartContext } from "../context/cartProvider";
 import { invoiceContext } from "../context/invoiceProvider";
 import { inputData } from "../../data/invoice";
+import { products } from "../../data/products";
 
 interface Props {}
 

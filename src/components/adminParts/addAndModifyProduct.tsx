@@ -1,5 +1,5 @@
 import { FC, useContext } from "react"
-import { includings, Product, Integration, Accounting, Invoice, Salary, integration } from '../../data/products'
+import { Include, Product, includings } from '../../data/products'
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Button from "@mui/material/Button";
@@ -31,7 +31,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     const [icon, setIcon] = React.useState('');
     const [imageInput, setImage] = React.useState('');
     const [includeInput, setIncludes] = React.useState<string[]>([]);
-    let [newInclude, setNewInclude] = React.useState<[(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?]>([]);
+    let [newInclude, setNewInclude] = React.useState<Include[]>([]);
 
     // States dialog window
     const [message, setMessage] = React.useState('');
@@ -77,7 +77,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
 
     // Handle the click "Skapa" and "Ändra"  
     const handleClickAddProduct = () => {
-        let newIncludeCopy : [(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?] = [...newInclude]
+        let newIncludeCopy : Include[] = [...newInclude]
         let includeCopy = includeInput
 
         const result2 = includeCopy.map((inc) => {
@@ -90,10 +90,10 @@ const AddAndModifyProduct: FC<Props> = (props) => {
     
         const found = result2.find(e => e == false )
     
-        found == false ? includeCopy.push("Integration") : undefined
+        found == false ? includeCopy.unshift("Integration") : undefined 
 
         // If action = "change" - sets variable to empty array first
-        let emptyArray : [(Integration | undefined)?, (Accounting | undefined)?, (Invoice | undefined)?, (Salary | undefined)?, (null | undefined)?] = []
+        let emptyArray : Include[] = []
         props.action == "change" ? newIncludeCopy = emptyArray : newIncludeCopy 
 
         // Sets new array with objects of includes from the string array of includes coming from select. 
@@ -176,7 +176,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         wimdowDialog(true, props.action == "change" ? "Paket " + '"' + nameInput + '"' + " är nu uppdaterad" : "Paketet " + '"' + nameInput + '"' + " är nu skapat", "black", "Information!")
 
         // Clear fields
-        setName(""); setDesc(""); setPrice3(0); setPrice12(0); setIcon(""); setImage(""); setNewInclude([undefined]);
+        setName(""); setDesc(""); setPrice3(0); setPrice12(0); setIcon(""); setImage(""); setNewInclude([]);
     }
     
     return (

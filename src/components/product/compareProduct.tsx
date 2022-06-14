@@ -7,11 +7,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { products, } from '../../data/products';
+import { productDetailList, } from '../../data/products_old';
 import { colors } from '../../data/color';
 import { CSSProperties, FC } from 'react';
 import CartButton from '../interaction/cartButton';
 import ProductButton from '../interaction/toProductButton';
+import { products } from '../../data/products';
 
 interface Props {
 
@@ -125,7 +126,7 @@ const rows = [
   include
 })  */
 
-const headerTableCell = products.map((product) => {
+const headerTableCell = productDetailList.map((product) => {
  
   return <StyledTableCell key={product.name} align="center" >{product.name}</StyledTableCell>
 })
@@ -134,13 +135,11 @@ const footerTableCell = products.map((products) => {
   return (
     <StyledTableCell key={products.name} align="center">
       {products.name}
-      <CartButton product={products} />
+      <CartButton product={products} paddingBtn={""} />
       <ProductButton product={products}/>
     </StyledTableCell>
   )
 })
-
-
 
 const ProductsCompare: FC<Props> = (props) => {
   return (

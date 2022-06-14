@@ -16,11 +16,7 @@ import { PropsWithChildren, useEffect } from "react";
 import { paymentContext } from "../context/checkOutProvider";
 import RenderPaymentOptions from "../payment/paymentOptions";
 
-
-const steps = ['Varukorg', 'Integration', 'Faktureringsuppgifter', "Slutför köp"];
-
 interface Props {}
-
 
 const Confirmation: FC<PropsWithChildren<Props>> = (props) => {
 

@@ -1,5 +1,5 @@
 import { FC, useContext, useState } from "react"
-import { CartProduct, Product, products } from "../../data/products"
+import { CartProduct, Includ, Product } from "../../data/products"
 import Button from '@mui/material/Button';
 import { Link, useParams } from 'react-router-dom';
 import { buttonStyle } from "../../style/common";
@@ -37,7 +37,7 @@ const CartButton: FC<Props> = (props) => {
 
             foundProduct?.including.map((include) => {
     
-                const newIncludeObj = {
+                const newIncludeObj : Includ = {
                     include: include,
                     qty: 1
                 }
