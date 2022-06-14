@@ -63,7 +63,7 @@ const CartSelectedItem: FC<Props> = (props) => {
                                         return (
                                             <div key={includes.include.id} style={cartItemPropertiesContainer}>
                                                 <div style={cartItemInfoContainer}>
-                                                    <p key={includes.include.name} style={{...cartItemProperties, textAlign: "center", marginLeft: "24px"}}>- {includes.include.name}</p>
+                                                    <p key={includes.include.name} style={{...cartItemProperties, textAlign: "center"}}>- {includes.include.name}</p>
                                                 </div>
                                                 <div style={priceQuantityContainer}>
                                                     <h4 style={{ ...cartItemProperties, width:"80px", textAlign:"center" }}>{includes.qty}</h4>
@@ -75,7 +75,7 @@ const CartSelectedItem: FC<Props> = (props) => {
                                         return (
                                             <div key={includes.include.id} style={cartItemPropertiesContainer}>
                                                 <div style={cartItemInfoContainer}>
-                                                    <p key={includes.include.name} style={{ ...cartItemProperties, marginLeft: "24px" }}>- {includes.include.name}</p>
+                                                    <p key={includes.include.name} style={{ ...cartItemProperties}}>- {includes.include.name}</p>
                                                 </div>
                                                 <div style={cartItemInfoContainer}>
                                                     <p style={cartItemProperties}>{includes.include.price} kr/mån</p>
@@ -133,7 +133,6 @@ const cartProductContainer: CSSProperties = {
 
 const cartItemInfo: CSSProperties = {
     width: "100%",
-    padding: "20px",
     borderRadius: "10px",
     
 }

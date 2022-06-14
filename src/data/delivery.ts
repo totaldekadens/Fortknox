@@ -12,21 +12,21 @@ export interface Delivery {
 export const delivery: Delivery[] = [
     {
         id: 1,
-        title: "Fri integration",
+        title: "Fri leverans",
         numberOfDays: 30,
-        description: "Integration inom 30 dagar.",
+        description: "Leverans inom 30 dagar.",
         price: 0,
     }, {
         id: 2,
-        title: "Standardintegration",
+        title: "Standardleverans",
         numberOfDays: 10,
-        description: "Integration inom 10 dagar.",
+        description: "Leverans inom 10 dagar.",
         price: 1000,
     }, {
         id: 3,
-        title: "Expressintegration",
+        title: "Expressleverans",
         numberOfDays: 1,
-        description: "Integration inom 24 timmar.",
+        description: "Leverans inom 24 timmar.",
         price: 7000,
     }
 ]
