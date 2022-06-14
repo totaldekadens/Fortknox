@@ -1,11 +1,6 @@
 import { FC, useContext } from "react"
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Button from "@mui/material/Button";
-import { Product } from "../../data/products";
 import { CSSProperties} from "react"
 import * as React from 'react';
 import { spaceBetween, summaryCardContainer } from "../payment/summaryCard";
@@ -13,13 +8,10 @@ import { cartContext } from "../context/cartProvider";
 import { colors } from "../../data/color";
 import InvoiceInfoProvider, { invoiceContext } from "../context/invoiceProvider";
 import { deliveryContext } from "../context/deliveryProvider";
-import { ManOutlined } from "@mui/icons-material";
 import { Link } from 'react-router-dom';
 import { inputData } from "../../data/invoice";
 import { Device, DeviceContext, DeviceContextData } from "../context/mediaQueryProvider";
 import { CartProduct } from "../../data/products";
-import ReactDOM from "react-dom";
-import { PropsWithChildren, useEffect } from "react";
 import { paymentContext } from "../context/checkOutProvider";
 import RenderPaymentOptions from "../payment/paymentOptions";
 import { priceSummaryFunc } from "../payment/priceLogic";
@@ -30,6 +22,19 @@ interface Props {
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
+// Kolla om denna kan exporteras istället
+const date = (time: number): string => {
+
+    const today = new Date();
+    const tomorrow = new Date();
+
+    const options: Intl.DateTimeFormatOptions = { weekday: "short", year: "numeric", month: "long", day: "numeric" };
+
+    tomorrow.setDate(today.getDate() + time);
+
+    return tomorrow.toLocaleDateString("se-SE", options)
+
+}
 
 
 const OrderConfirmWindow: FC<Props> = (props) => {
@@ -40,6 +45,7 @@ const OrderConfirmWindow: FC<Props> = (props) => {
     const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
     const { devices } = useContext(DeviceContext)
 
+
     const clearHistory = () => {
         props.setOpen!(false);
         setCartItem(undefined)
@@ -47,6 +53,8 @@ const OrderConfirmWindow: FC<Props> = (props) => {
         componentWillUnmount(InvoiceInfoProvider)
         componentWillUnmount(RenderPaymentOptions)
     }
+
+    const sumYear = priceSummaryFunc("inc.year")
 
     return (
         <Dialog
@@ -59,9 +67,8 @@ const OrderConfirmWindow: FC<Props> = (props) => {
             "& .MuiDialog-container": {
                 "& .MuiPaper-root": {
                     width: "100%",
-                   /*  height: devices.isDesktop ? "100%" : devices.isTablet ? "100%" : devices.isMobile ? "100vh" : "100vh", */
                     minHeight: "90vh",
-                    maxWidth: devices.isDesktop ? "70vw" : devices.isTablet ? "80vw" : devices.isMobile ? "97vw" : "100vw",
+                    maxWidth: devices.isDesktop ? "70vw" : devices.isTablet ? "80vw" : devices.isMobile ? "100vw" : "100vw",
                     margin: devices.isDesktop ? "32p" : devices.isTablet ? "32px" : devices.isMobile ? "0px" : "0px"
                 },
             },
@@ -84,29 +91,43 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                                 <h2 style={{ ...noMarginbottom, color: colors.primary}}>Din order:</h2><hr />
                                 <div>
                                     <h4 style={{ ...noMarginbottom, color: colors.primary }}>Paket</h4>
-                                    <div style={{ ...spaceBetween }}>
-                                        <h5 style={{ ...fontSize({devices: devices}), color: colors.secondary }} >{cartItem?.name}</h5>
-                                        <p style={{ ...fontSize({devices: devices}), color: colors.secondary}}>{cartItem?.price3mth}  kr/mån</p>
-                                    </div>
+                                    {cartItem ? renderInfoWithCont(cartItem!.name, cartItem!.price3mth, devices, " kr/mån")
+                                    : <div>{"Finns inget paket"}</div>
+                                    }
                                 </div>
                                 <hr />
                             </div>
                             <div>
-                                {extraOrder(cartItem, devices)}
+                                {cartItem ? extraOrder(cartItem, devices)
+                                : undefined}
                             </div>
                             <div>
-                                <div style={{ ...spaceBetween }}>
-                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})}}>Avtalsperiod</h5>
-                                    <p style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>12 mån</p>
+                                <h4 style={{ ...noMarginbottom, color: colors.primary }}>Leverans</h4>
+                                {deliveryInput ? 
+                                <>
+                                    <div>
+                                        {renderInfoWithCont("Typ", deliveryInput?.title, devices)}
+                                        {renderInfoWithCont("Antal dagar", deliveryInput?.numberOfDays, devices, " dag(ar)")}
+                                        {renderInfoWithCont("Leverandsdag", date(deliveryInput!.numberOfDays), devices)}
+                                        {renderInfoWithCont("Pris", deliveryInput?.price, devices, " kr")}
+                                    </div>
+                                    <hr />
+                                </>
+                                : <div>{"Finns ingen leverans"}</div> }
                                 </div>
-                                <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
-                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Summa</h5>
-                                    {priceSummaryFunc("inc.year")}
-                                </div>
+                            <div>
+                                <h4 style={{ ...noMarginbottom, color: colors.primary }}>Summering abonnemang</h4>
+                                {renderInfoWithCont("Avtalsperiod", "12 mån", devices)}
+                                {renderInfoWithCont("Summa", sumYear, devices, "kr/år", colors.secondary)}
                                 <div style={{ display: "flex", justifyContent:"flex-end" }}>
-                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), justifyContent:"flex-end"  }}>385 kr/mån</h5> {/* // Skall renderas ut. väntar på Freddan */}
+                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), justifyContent:"flex-end"  }}>{priceSummaryFunc("ex.month")} kr/mån</h5> 
                                 </div>
+                                <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: "black"  }}>När du betalat leveranskostnaden, startar vi integrationen av ditt paket. När integrationen är gjord påbörjas din abonnemangstid hos oss. Du kommer få en inbetalningsförfrågan via det betalsätt du valt.</p>
                             </div>
+                            <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
+                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Att betala</h5>
+                                    <h3 style={{textDecoration: "underline"}}> {deliveryInput?.price} kr</h3>
+                                </div>
                             <div>
                                 <h2 style={{ ...noMarginbottom, color: colors.primary }}>Faktureringsuppgifter:</h2>
                                 <hr />
@@ -122,30 +143,18 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                                 }) : <div>Finns ingen inputdata att ta ifrån</div> }
                             </div>
                             <div>
-                                <h2 style={{ ...noMarginbottom, color: colors.primary}}>Leverans:</h2><hr />
-                                <div>
-                                    <h4 style={{ ...noMarginbottom, color: colors.primary }}>{deliveryInput?.title}</h4>
-                                    <div style={{ ...spaceBetween }}>
-                                        <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} >Leveranstid</h5>
-                                        <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary}}>{deliveryInput?.numberOfDays} dag(ar)</p>
-                                    </div>
-                                    <div style={{ ...spaceBetween }}>
-                                        <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} >Leveransdag</h5>
-                                        <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary}}>Rendera ut datum här</p>
-                                    </div>
-                                    <div style={{ ...spaceBetween }}>
-                                        <h5 style={{...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} >Pris</h5>
-                                        <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary}}>{deliveryInput?.price} kr</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
                                 <h2 style={{ ...noMarginbottom, color: colors.primary}}>Betalsätt:</h2><hr />
                                 <div>
-                                    <h4 style={{ ...noMarginbottom, color: colors.primary }}>Faktura</h4> {/* Fixa rendering när Freddan är klar */}
+                                    <h4 style={{ ...noMarginbottom, color: colors.primary }}>{paymentOptionState?.name}</h4> 
                                     <div style={{ ...spaceBetween }}>
-                                        <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} ></h5>  {/* Fixa rendering när Freddan är klar */}
-                                        <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary}}></p>  {/* Fixa rendering när Freddan är klar */}
+                                        {paymentOptionState?.name == "Swish" ? 
+                                        renderInfo(paymentOptionState.input![0].label, paymentOptionState.input![0].value, devices)
+
+                                        : paymentOptionState?.name == "Kortbetalning" ? 
+                                        renderInfo(paymentOptionState.input![0].label, String(paymentOptionState!.input![0].value).slice(-4), devices, "****")
+
+                                        :  <div></div>
+                                    }
                                     </div>
                                 </div>
                             </div>
@@ -161,6 +170,27 @@ const OrderConfirmWindow: FC<Props> = (props) => {
 }
 
 
+const renderInfo = (title: string, info: string | number, devices: Device, prefix?: string ) => {
+
+    return (
+        <>
+        <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} >{title}</h5> 
+        <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary}}>{prefix}{info}</p> 
+        </>
+    ) 
+}
+
+const renderInfoWithCont = (title: string, info: string | number | JSX.Element | undefined, devices: Device, suffix?: string, color?: string ) => {
+
+    return (
+        <>
+        <div style={{ ...spaceBetween, color: color }}>
+            <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} >{title}</h5> 
+            <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary}}>{info}{suffix}</p> 
+        </div>
+        </>
+    ) 
+}
 
 // Kolla med Freddan om dessa kan exporteras från hans istället med property "cartItem" Gäller extraOrdeRender och extraOrder
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -171,7 +201,7 @@ const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) =
             return (
                 <div key={includeObj.include.name} style={{ ...spaceBetween, width: "100%" }}>
                     <h5 style={{ width: "33%", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})}}>{includeObj.include?.name}</h5>
-                    <p style={{ width: "33%", textAlign: "center", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})   }}>Antal: {includeObj.qty - 1}</p>
+                    <p style={{ width: "33%", textAlign: "center", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})   }}>{includeObj.qty - 1} st</p>
                     <p style={{ width: "33%", margin: "10px 0px", color: colors.secondary, textAlign: "end", ...fontSize({devices: devices})   }}>{includeObj.include?.price} kr/mån</p>
                 </div>
             )
@@ -179,7 +209,6 @@ const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) =
             return undefined
         }
     })
-
 }
 
 const extraOrder = (cartItem: CartProduct | undefined, devices: Device ) => {
@@ -202,14 +231,13 @@ const extraOrder = (cartItem: CartProduct | undefined, devices: Device ) => {
     } else {
         return undefined
     }
-   
 
 }
  /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const fontSize : (devices: DeviceContextData) => CSSProperties = (devices) => {
     return {
-        fontSize: devices.devices.isMobile ? "12px" : "16px"
+        fontSize: devices.devices.isMobile ? "12px" : "14px"
     }
     
 }
@@ -255,13 +283,6 @@ const btnContainer: CSSProperties = {
 const noMarginbottom: CSSProperties = {
     marginBottom: "0",
     color: colors.secondary
-}
-
-
-
-const labelCSS: CSSProperties = {
-    fontWeight: "100px"
-
 }
 
 

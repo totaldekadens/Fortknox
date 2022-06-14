@@ -67,12 +67,12 @@ const SummaryCard: FC<Props> = (props) => {
                     // Kollar om något error state är true (dvs är fel)
                     const found = result!.input!.find(e => e.errorState == true)
                     // Om inga fel hittade sätt knapp till enable annars disable
-                    !found ? /* props.nextFunc() */ setOpen(true) : undefined;
+                    !found ? setOpen(true) : undefined;
 
                 } else {
 
                     /* props.nextFunc(); */
-                    setOpen(true)
+                    setOpen(true)  // skall det vara true här ? 
                 }
             }
 
