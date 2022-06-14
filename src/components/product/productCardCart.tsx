@@ -31,10 +31,13 @@ const ProductCardCart: FC<Props> = (props) => {
         )          
     } else {
         return (
-            <SectionCartContainer>
-                <h1>Din varukorg är tom</h1>
-                <p>Gå tillbaka till <Link style={{color: colors.fourth}} to={"/"}>startsidan</Link></p>
-            </SectionCartContainer>
+            <>
+                <div style={{width: "100vw", height: "50vh", color: colors.primary}}>
+                    <h1>Din varukorg är tom</h1>
+                    <p >Gå tillbaka till <Link style={{color: colors.secondary}} to={"/"}>startsidan</Link></p>
+                </div>
+                
+            </>
         )
     }
 }
