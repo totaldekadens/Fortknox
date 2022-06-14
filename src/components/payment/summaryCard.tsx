@@ -1,21 +1,19 @@
 import { Info } from "@mui/icons-material"
 import Button from "@mui/material/Button"
-
 import { color, height } from "@mui/system"
 import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
-
-
 import { cartContext } from "../context/cartProvider"
-
 import { products } from "../../data/products"
 import { paymentContext } from "../context/checkOutProvider"
-
 import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
 import { validateFields } from "../interaction/paymentOptionsErrorHandler"
+import React from "react"
+import OrderConfirmWindow from "../interaction/confirmation"
 import { priceSummaryFunc } from "./priceLogic"
+
 
 
 
@@ -31,6 +29,7 @@ const SummaryCard: FC<Props> = (props) => {
     const { deliveryInput, setDeliveryInput } = useContext(deliveryContext)
     const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
     const { cartItem, setCartItem } = useContext(cartContext)
+    const [open, setOpen] = React.useState(false);
 
     const validateNextStep = () => {
 
@@ -68,12 +67,12 @@ const SummaryCard: FC<Props> = (props) => {
                     // Kollar om något error state är true (dvs är fel)
                     const found = result!.input!.find(e => e.errorState == true)
                     // Om inga fel hittade sätt knapp till enable annars disable
-                    !found ? props.nextFunc() : undefined;
+                    !found ? setOpen(true) : undefined;
 
                 } else {
 
-                    props.nextFunc();
-
+                    /* props.nextFunc(); */
+                    setOpen(true)  // skall det vara true här ? 
                 }
             }
 
@@ -194,6 +193,7 @@ const SummaryCard: FC<Props> = (props) => {
                     </div>
                 </div>
             </div>
+            < OrderConfirmWindow setOpen={setOpen} open={open} />
         </>
     )
 
