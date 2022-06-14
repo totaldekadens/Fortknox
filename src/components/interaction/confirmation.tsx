@@ -91,7 +91,7 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                                 <h2 style={{ ...noMarginbottom, color: colors.primary}}>Din order:</h2><hr />
                                 <div>
                                     <h4 style={{ ...noMarginbottom, color: colors.primary }}>Paket</h4>
-                                    {cartItem ? renderInfoWithCont(cartItem!.name, cartItem!.price3mth, devices, " kr/mån")
+                                    {cartItem ? renderInfoWithCont(cartItem!.name, cartItem!.price3mth, devices, true, " kr/mån")
                                     : <div>{"Finns inget paket"}</div>
                                     }
                                 </div>
@@ -106,10 +106,10 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                                 {deliveryInput ? 
                                 <>
                                     <div>
-                                        {renderInfoWithCont("Typ", deliveryInput?.title, devices)}
-                                        {renderInfoWithCont("Antal dagar", deliveryInput?.numberOfDays, devices, " dag(ar)")}
-                                        {renderInfoWithCont("Leverandsdag", date(deliveryInput!.numberOfDays), devices)}
-                                        {renderInfoWithCont("Pris", deliveryInput?.price, devices, " kr")}
+                                        {renderInfoWithCont("Typ", deliveryInput?.title, devices, false)}
+                                        {renderInfoWithCont("Antal dagar", deliveryInput?.numberOfDays, devices, false, " dag(ar)")}
+                                        {renderInfoWithCont("Leverandsdag", date(deliveryInput!.numberOfDays), devices, false)}
+                                        {renderInfoWithCont("Pris", deliveryInput?.price, devices, true, " kr")}
                                     </div>
                                     <hr />
                                 </>
@@ -117,8 +117,8 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                                 </div>
                             <div>
                                 <h4 style={{ ...noMarginbottom, color: colors.primary }}>Summering abonnemang</h4>
-                                {renderInfoWithCont("Avtalsperiod", "12 mån", devices)}
-                                {renderInfoWithCont("Summa", sumYear, devices, "kr/år", colors.secondary)}
+                                {renderInfoWithCont("Avtalsperiod", "12 mån", devices, false)}
+                                {renderInfoWithCont("Summa", sumYear, devices, true, "kr/år", colors.secondary)}
                                 <div style={{ display: "flex", justifyContent:"flex-end" }}>
                                     <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), justifyContent:"flex-end"  }}>{priceSummaryFunc("ex.month")} kr/mån</h5> 
                                 </div>
@@ -180,14 +180,18 @@ const renderInfo = (title: string, info: string | number, devices: Device, prefi
     ) 
 }
 
-const renderInfoWithCont = (title: string, info: string | number | JSX.Element | undefined, devices: Device, suffix?: string, color?: string ) => {
+const renderInfoWithCont = (title: string, info: string | number | JSX.Element | undefined, devices: Device, moms: boolean, suffix?: string, color?: string ) => {
 
     return (
         <>
-        <div style={{ ...spaceBetween, color: color }}>
-            <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} >{title}</h5> 
-            <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary}}>{info}{suffix}</p> 
-        </div>
+            <div style={{ ...spaceBetween, color: color }}>
+                <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} >{title}</h5> 
+                <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary}}>{info}{suffix}</p> 
+            </div>
+            {moms ? 
+            <div style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
+                <p style={{fontSize: "9px", margin: "0px" }}> (inkl. {Number(info)*0.25} kr Moms)</p>
+            </div> : undefined }
         </>
     ) 
 }
