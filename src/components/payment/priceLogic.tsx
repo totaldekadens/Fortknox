@@ -42,6 +42,12 @@ export function priceSummaryFunc(summary: string) {
     if (summary === "moms.delivery") {
         return deliveryPrice * 0.25 
     }
+    if (summary === "ex.delivery") {
+        return deliveryPrice 
+    }
+    if (summary === "inc.delivery") {
+        return deliveryPrice * 1.25 
+    }
 
 
     //price exlusive tax a year

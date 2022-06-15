@@ -121,7 +121,7 @@ const SummaryCard: FC<Props> = (props) => {
                     <div key={includeObj.include.name} style={{ ...spaceBetween }}>
                         <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.name}</h5>
                         <h5 style={{ width: "33%", textAlign: "center", margin: "10px 0px" }}>{includeObj.qty - 1} st</h5>
-                        <h5 style={{ width: "33%", margin: "10px 0px" }}>{includeObj.include?.price} kr/mån</h5>
+                        <h5 style={{ width: "33%", textAlign:"right", margin: "10px 0px" }}>{includeObj.include?.price} kr/mån</h5>
                     </div>
                 )
             } else {
@@ -158,13 +158,12 @@ const SummaryCard: FC<Props> = (props) => {
                         <div>
                             <h1 style={{ ...noMarginbottom, color: colors.fourth }}>Din Varukorg</h1>
                             <div>
-                                <h4 style={{ ...noMarginbottom }}>Paket</h4>
+                                <h4 style={{ ...noMarginbottom }}>Ditt Paket</h4>
                                 <div style={{ ...spaceBetween }}>
                                     <h5 >{cartItem?.name}</h5>
                                     <h5>{cartItem?.price12mth} kr/mån</h5>
                                 </div>
                             </div>
-                            <hr />
                         </div>
 
                         <div>
@@ -172,6 +171,7 @@ const SummaryCard: FC<Props> = (props) => {
                         </div>
 
                         <div>
+                            <h4 style={{margin:"0px"}}>Summering</h4>
                             <div style={{ ...spaceBetween }}>
                                 <h5 style={{ ...noMarginbottom }}>Avtalsperiod</h5>
                                 <h5 style={{ ...noMarginbottom }}>12/mån</h5>
@@ -237,7 +237,7 @@ const sumContainer: (devices: DeviceContextData) => CSSProperties = (devices) =>
 
 }
 
-const btnContainer: (devices: DeviceContextData) => CSSProperties = (devices) => {
+export const btnContainer: (devices: DeviceContextData) => CSSProperties = (devices) => {
 
     return {
         display: "flex",
