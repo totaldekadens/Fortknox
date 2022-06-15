@@ -141,7 +141,7 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                                             return (
                                             <div key={input.label} style={{ ...spaceBetween }}>
                                                 <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}) }}>{input.label}</h5>
-                                                <p  style={{ ...noMarginbottom, ...fontSize({devices: devices}) }}>{input.value}</p>
+                                                <p style={{ ...noMarginbottom, ...fontSize({devices: devices}) }}>{input.value}</p>
                                             </div>
                                         )
                                         }) : <div>Finns ingen inputdata att ta ifrån</div> }
@@ -207,7 +207,7 @@ const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) =
                         <p style={{ width: "33%", textAlign: "center", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})   }}>{includeObj.qty - 1} st</p>
                         <p style={{ width: "33%", margin: "10px 0px", color: colors.secondary, textAlign: "end", ...fontSize({devices: devices})   }}>{includeObj.include?.price} kr/mån</p>
                     </div>
-                    <div style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
+                    <div key={includeObj.include.id} style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
                         <p style={{fontSize: "9px", margin: "0px" }}> {includeObj.include?.price*1.25}  kr inkl. moms</p>
                     </div>
                 </>
@@ -224,13 +224,14 @@ const extraOrder = (cartItem: CartProduct | undefined, devices: Device ) => {
         const foundQtyChange = cartItem!.including.find((x) => 1 < x.qty)
 
         if (foundQtyChange) {
-            return (<div>
-                <div style={{ ...spaceBetween }}>
-                    <h4 style={{color: colors.primary}}>Extra licenser</h4>
+            return (
+                <div key={foundQtyChange.include.id}>
+                    <div style={{ ...spaceBetween }}>
+                        <h4 style={{color: colors.primary}}>Extra licenser</h4>
+                    </div>
+                    {extraOrderRender(cartItem, devices)}
+                    <hr />
                 </div>
-                {extraOrderRender(cartItem, devices)}
-                <hr />
-            </div>
             )
         } else {
             return undefined

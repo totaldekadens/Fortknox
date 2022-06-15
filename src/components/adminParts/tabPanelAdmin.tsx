@@ -12,9 +12,10 @@ import { TabPanel, a11yProps } from "./adminTemplatePart";
 import ModifyProduct from "./modifyProduct";
 import { DeviceContext } from "../context/mediaQueryProvider";
 
+// Layout tablet and desktop
 const TabPanelAdmin : FC = () => { 
 
-    // Gets product context
+    // gets context
     const { productList } = useContext(productContext)
     const { devices } = useContext(DeviceContext)
 
