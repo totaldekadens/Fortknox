@@ -41,6 +41,7 @@ const InputFieldsCart: FC<Props> = (props) => {
 
     return (
         <>
+        <h1 style={{color: colors.primary}}>Dina uppgifter</h1>
         <FormControl component="form" style= {{...container}}>
         {getInputData.map((input: InputData) => {
             return (
