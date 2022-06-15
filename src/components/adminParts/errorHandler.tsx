@@ -30,27 +30,9 @@ const errorLoop = (errorList: Error[], productList: Product[], action: string | 
         else if(itemCopy.name == "image") {
             
             // Checks if the url has the right ending 
-            const stringifiedItem = String(itemCopy.value)
-            const result = checkImage(stringifiedItem)
+            const result = checkImage(itemCopy.value as string)
             itemCopy.error = result
-
-            // Checks if the URL source is valid 
-            if(!result) {
-                const img = new Image();
-                const stringified = String(itemCopy.value)
-                img.src = stringified
-    
-                if(!img.complete) {
-                    itemCopy.error = true
-                    return itemCopy;
-                } else {
-                    itemCopy.error = false;
-                    return itemCopy;
-                }
-            }
-
             return itemCopy;
-
         } 
 
         else {
@@ -100,13 +82,6 @@ export const checkState: (product: Product, includeInput : string[], productList
     if(checkURL) {
         return { open: true, message: "Kolla din URL till bilden. Filformatet är inte godkänt", color: "red", title: "Fel på URL"}
     } 
-
-    const img = new Image();
-    img.src = product.thumbnail;
-
-    if (!img.complete) {
-        return { open: true, message: "Kolla din URL till bilden. Hittar inte källa", color: "red", title: "Fel på URL"}
-    }
 
     if(product.price3mth < 1 || product.price12mth < 1 ) {
         return {open: true, message: "Priset måste vara större än 0 kr", color:"red" , title: "Ajajaj!"}
