@@ -140,7 +140,7 @@ const OrderConfirmWindow: FC<Props> = (props) => {
                                     <h3 style={{textDecoration: "underline"}}> {deliveryInput ? deliveryInput?.price*1.25 : undefined } kr</h3>
                             </div>
                             <div>
-                                <h2 style={{ ...noMarginbottom, color: colors.primary }}>Faktureringsuppgifter:</h2>
+                                <h2 style={{ ...noMarginbottom, color: colors.primary }}>Dina uppgifter:</h2>
                                 <hr />
                             </div>
                             <div>

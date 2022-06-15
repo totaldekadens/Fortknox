@@ -21,7 +21,7 @@ import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider"
 import OrderConfirmWindow from "../interaction/confirmation";
 
 
-const steps = ['Varukorg', 'Leverans', 'Faktureringsuppgifter', "Slutför köp"];
+const steps = ['Varukorg', 'Leverans', 'Dina uppgifter', "Slutför köp"];
 
 
 
