@@ -9,7 +9,6 @@ import { colors } from "../../data/color";
 import InvoiceInfoProvider, { invoiceContext } from "../context/invoiceProvider";
 import { deliveryContext } from "../context/deliveryProvider";
 import { Link } from 'react-router-dom';
-import { inputData } from "../../data/invoice";
 import { Device, DeviceContext, DeviceContextData } from "../context/mediaQueryProvider";
 import { CartProduct } from "../../data/products";
 import { paymentContext } from "../context/checkOutProvider";
@@ -22,21 +21,16 @@ interface Props {
     setOpen?: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-// Kolla om denna kan exporteras istället
+// Fetches date to estimated delivery date
 const date = (time: number): string => {
-
     const today = new Date();
     const tomorrow = new Date();
-
     const options: Intl.DateTimeFormatOptions = { weekday: "short", year: "numeric", month: "long", day: "numeric" };
-
     tomorrow.setDate(today.getDate() + time);
-
     return tomorrow.toLocaleDateString("se-SE", options)
-
 }
 
-
+// Order confirmation window pops up after "Slutför köp"
 const OrderConfirmWindow: FC<Props> = (props) => {
     
     const { cartItem, setCartItem } = useContext(cartContext)
@@ -73,108 +67,104 @@ const OrderConfirmWindow: FC<Props> = (props) => {
         }}
         >
             <DialogContent>
-            <>
-        <div style={{...rootContainer}} >
-            <h1 style={{color: colors.primary, textAlign: "center", marginTop: devices.isDesktop ? "50px" : devices.isTablet ? "50px" : devices.isMobile ? "20px" : "50px" }}>Tack för din beställning!</h1>
-            <div style={{ display:"flex", justifyContent: "center", marginTop: "30px" }}>
-                <Link style={{ ...btnContainer, backgroundColor: colors.secondary, color: colors.textWhite, textDecoration: "none" }} onClick={clearHistory}  to={"/"}>
-                    Gå tillbaka till startsidan
-                </Link>
-            </div>
-            <div style={{display: "flex", gap: "30px", marginTop: "40px" , flexWrap: "wrap", justifyContent: "center", width:  devices.isDesktop ? "60%" : devices.isTablet ? "75%" : devices.isMobile ? "90%" : "90%"}}>
-                <div style={container}>
-                    <div style={summaryCardContainer}>
-                        <div style={{ ...sumContainer, padding: devices.isMobile ? "5px" : devices.isDesktop ? "30px" : devices.isTablet ? "30px" : "30px" }}>
-                            <div>
-                                <h2 style={{ ...noMarginbottom, color: colors.primary}}>Din order:</h2><hr />
-                                <div>
-                                    <h4 style={{ ...noMarginbottom, color: colors.primary }}>Paket</h4>
-                                    {cartItem ? renderInfoWithCont(cartItem!.name, cartItem!.price12mth , devices, true, " kr/mån")
-                                    : <div>{"Finns inget paket"}</div>
-                                    }
-                                </div>
-                                <hr />
-                            </div>
-                            <div>
-                                {cartItem ? extraOrder(cartItem, devices)
-                                : undefined}
-                            </div>
-                            <div>
-                                <h4 style={{ ...noMarginbottom, color: colors.primary }}>Leverans</h4>
-                                {deliveryInput ? 
-                                <>
+                <div style={{...rootContainer}} >
+                    <h1 style={{color: colors.primary, textAlign: "center", marginTop: devices.isDesktop ? "50px" : devices.isTablet ? "50px" : devices.isMobile ? "20px" : "50px" }}>Tack för din beställning!</h1>
+                    <div style={{ display:"flex", justifyContent: "center", marginTop: "30px" }}>
+                        <Link style={{ ...btnContainer, backgroundColor: colors.secondary, color: colors.textWhite, textDecoration: "none" }} onClick={clearHistory}  to={"/"}>
+                            Gå tillbaka till startsidan
+                        </Link>
+                    </div>
+                    <div style={{display: "flex", gap: "30px", marginTop: "40px" , flexWrap: "wrap", justifyContent: "center", width:  devices.isDesktop ? "60%" : devices.isTablet ? "75%" : devices.isMobile ? "90%" : "90%"}}>
+                        <div style={container}>
+                            <div style={summaryCardContainer}>
+                                <div style={{ ...sumContainer, padding: devices.isMobile ? "5px" : devices.isDesktop ? "30px" : devices.isTablet ? "30px" : "30px" }}>
                                     <div>
-                                        {renderInfoWithCont("Typ", deliveryInput?.title, devices, false)}
-                                        {renderInfoWithCont("Antal dagar", deliveryInput?.numberOfDays, devices, false, " dag(ar)")}
-                                        {renderInfoWithCont("Leverandsdag", date(deliveryInput!.numberOfDays), devices, false)}
-                                        {renderInfoWithCont("Pris", deliveryInput?.price, devices, true, " kr")}
+                                        <h2 style={{ ...noMarginbottom, color: colors.primary}}>Din order:</h2><hr />
+                                        <div>
+                                            <h4 style={{ ...noMarginbottom, color: colors.primary }}>Paket</h4>
+                                            {cartItem ? renderInfoWithCont(cartItem!.name, cartItem!.price12mth , devices, true, " kr/mån")
+                                            : <div>{"Finns inget paket"}</div>
+                                            }
+                                        </div>
+                                        <hr />
                                     </div>
-                                    <hr />
-                                </>
-                                : <div>{"Finns ingen leverans"}</div> }
-                                </div>
-                            <div>
-                                <h4 style={{ ...noMarginbottom, color: colors.primary }}>Summering abonnemang</h4>
-                                {renderInfoWithCont("Avtalsperiod", "12 mån", devices, false)}
-                                {renderInfoWithCont("Summa", priceSummaryFunc("ex.year"), devices, true, "kr/år", colors.secondary)}
-                                <div style={{ display: "flex", justifyContent:"flex-end" }}>
-                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), justifyContent:"flex-end"  }}>{priceSummaryFunc("ex.month")} kr/mån</h5> 
-                                </div>
-                                <div style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
-                                    <p style={{fontSize: "9px", margin: "0px" }}> ({priceSummaryFunc("inc.month")}  kr inkl. moms)</p>
-                                </div>
-
-                                <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: "black"  }}>När du betalat leveranskostnaden, startar vi integrationen av ditt paket. När integrationen är gjord påbörjas din abonnemangstid hos oss. Du kommer få en inbetalningsförfrågan via det betalsätt du valt.</p>
-                            </div>
-                            <h4 style={{ ...noMarginbottom, color: colors.primary }}>Betalning (Leverans)</h4>
-                            <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
-                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Totalt</h5>
-                                    <h3 > {deliveryInput?.price} kr</h3>
-                            </div>
-                            <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
-                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Moms</h5>
-                                    <h3>{priceSummaryFunc("moms.delivery")} kr</h3>
-                            </div>
-                            <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
-                                    <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Totalt inkl. moms</h5>
-                                    <h3 style={{textDecoration: "underline"}}> {deliveryInput ? deliveryInput?.price*1.25 : undefined } kr</h3>
-                            </div>
-                            <div>
-                                <h2 style={{ ...noMarginbottom, color: colors.primary }}>Dina uppgifter:</h2>
-                                <hr />
-                            </div>
-                            <div>
-                                {getInputData ?  getInputData.map((input) => {
-                                    return (
-                                    <div key={input.label} style={{ ...spaceBetween }}>
-                                        <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}) }}>{input.label}</h5>
-                                        <p  style={{ ...noMarginbottom, ...fontSize({devices: devices}) }}>{input.value}</p>
+                                    <div>
+                                        {cartItem ? extraOrder(cartItem, devices)
+                                        : undefined}
                                     </div>
-                                )
-                                }) : <div>Finns ingen inputdata att ta ifrån</div> }
-                            </div>
-                            <div>
-                                <h2 style={{ ...noMarginbottom, color: colors.primary}}>Betalsätt:</h2><hr />
-                                <div>
-                                    <h4 style={{ ...noMarginbottom, color: colors.primary }}>{paymentOptionState?.name}</h4> 
-                                    <div style={{ ...spaceBetween }}>
-                                        {paymentOptionState?.name == "Swish" ? 
-                                        renderInfo(paymentOptionState.input![0].label, paymentOptionState.input![0].value, devices)
+                                    <div>
+                                        <h4 style={{ ...noMarginbottom, color: colors.primary }}>Leverans</h4>
+                                        {deliveryInput ? 
+                                        <>
+                                            <div>
+                                                {renderInfoWithCont("Typ", deliveryInput?.title, devices, false)}
+                                                {renderInfoWithCont("Antal dagar", deliveryInput?.numberOfDays, devices, false, " dag(ar)")}
+                                                {renderInfoWithCont("Leverandsdag", date(deliveryInput!.numberOfDays), devices, false)}
+                                                {renderInfoWithCont("Pris", deliveryInput?.price, devices, true, " kr")}
+                                            </div>
+                                            <hr />
+                                        </>
+                                        : <div>{"Finns ingen leverans"}</div> }
+                                        </div>
+                                    <div>
+                                        <h4 style={{ ...noMarginbottom, color: colors.primary }}>Summering abonnemang</h4>
+                                        {renderInfoWithCont("Avtalsperiod", "12 mån", devices, false)}
+                                        {renderInfoWithCont("Summa", priceSummaryFunc("ex.year"), devices, true, "kr/år", colors.secondary)}
+                                        <div style={{ display: "flex", justifyContent:"flex-end" }}>
+                                            <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), justifyContent:"flex-end"  }}>{priceSummaryFunc("ex.month")} kr/mån</h5> 
+                                        </div>
+                                        <div style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
+                                            <p style={{fontSize: "9px", margin: "0px" }}> ({priceSummaryFunc("inc.month")}  kr inkl. moms)</p>
+                                        </div>
 
-                                        : paymentOptionState?.name == "Kortbetalning" ? 
-                                        renderInfo(paymentOptionState.input![0].label, String(paymentOptionState!.input![0].value).slice(-4), devices, "****")
-
-                                        :  <div></div>
-                                    }
+                                        <p style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: "black"  }}>När du betalat leveranskostnaden, startar vi integrationen av ditt paket. När integrationen är gjord påbörjas din abonnemangstid hos oss. Du kommer få en inbetalningsförfrågan via det betalsätt du valt.</p>
+                                    </div>
+                                    <h4 style={{ ...noMarginbottom, color: colors.primary }}>Betalning (Leverans)</h4>
+                                    <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
+                                            <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Totalt</h5>
+                                            <h3 > {deliveryInput?.price} kr</h3>
+                                    </div>
+                                    <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
+                                            <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Moms</h5>
+                                            <h3>{priceSummaryFunc("moms.delivery")} kr</h3>
+                                    </div>
+                                    <div style={{ ...spaceBetween, color: colors.secondary, ...fontSize({devices: devices})  }}>
+                                            <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices})  }}>Totalt inkl. moms</h5>
+                                            <h3 style={{textDecoration: "underline"}}> {deliveryInput ? deliveryInput?.price*1.25 : undefined } kr</h3>
+                                    </div>
+                                    <div>
+                                        <h2 style={{ ...noMarginbottom, color: colors.primary }}>Faktureringsuppgifter:</h2>
+                                        <hr />
+                                    </div>
+                                    <div>
+                                        {getInputData ?  getInputData.map((input) => {
+                                            return (
+                                            <div key={input.label} style={{ ...spaceBetween }}>
+                                                <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}) }}>{input.label}</h5>
+                                                <p style={{ ...noMarginbottom, ...fontSize({devices: devices}) }}>{input.value}</p>
+                                            </div>
+                                        )
+                                        }) : <div>Finns ingen inputdata att ta ifrån</div> }
+                                    </div>
+                                    <div>
+                                        <h2 style={{ ...noMarginbottom, color: colors.primary}}>Betalsätt:</h2><hr />
+                                        <div>
+                                            <h4 style={{ ...noMarginbottom, color: colors.primary }}>{paymentOptionState?.name}</h4> 
+                                            <div style={{ ...spaceBetween }}>
+                                                {paymentOptionState?.name == "Swish" ? 
+                                                    renderInfo(paymentOptionState.input![0].label, paymentOptionState.input![0].value, devices)
+                                                : paymentOptionState?.name == "Kortbetalning" ? 
+                                                    renderInfo(paymentOptionState.input![0].label, String(paymentOptionState!.input![0].value).slice(-4), devices, "****")
+                                                :  <div></div>
+                                            }
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        </>
             </DialogContent>
         </Dialog>
     )
@@ -182,7 +172,6 @@ const OrderConfirmWindow: FC<Props> = (props) => {
 
 
 const renderInfo = (title: string, info: string | number, devices: Device, prefix?: string ) => {
-
     return (
         <>
         <h5 style={{ ...noMarginbottom, ...fontSize({devices: devices}), color: colors.secondary }} >{title}</h5> 
@@ -192,7 +181,6 @@ const renderInfo = (title: string, info: string | number, devices: Device, prefi
 }
 
 const renderInfoWithCont = (title: string, info: string | number | JSX.Element | undefined, devices: Device, moms: boolean, suffix?: string, color?: string ) => {
-
     return (
         <>
             <div style={{ ...spaceBetween, color: color }}>
@@ -207,8 +195,7 @@ const renderInfoWithCont = (title: string, info: string | number | JSX.Element |
     ) 
 }
 
-// Kolla med Freddan om dessa kan exporteras från hans istället med property "cartItem" Gäller extraOrdeRender och extraOrder
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// This function with similar features is used on another component. With more time we could have done this more dynamic to minimize recurrence
 const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) => {
     return cartItem?.including.map(includeObj => {
         if (includeObj.qty > 1) {
@@ -220,7 +207,7 @@ const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) =
                         <p style={{ width: "33%", textAlign: "center", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})   }}>{includeObj.qty - 1} st</p>
                         <p style={{ width: "33%", margin: "10px 0px", color: colors.secondary, textAlign: "end", ...fontSize({devices: devices})   }}>{includeObj.include?.price} kr/mån</p>
                     </div>
-                    <div style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
+                    <div key={includeObj.include.id} style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
                         <p style={{fontSize: "9px", margin: "0px" }}> {includeObj.include?.price*1.25}  kr inkl. moms</p>
                     </div>
                 </>
@@ -230,20 +217,21 @@ const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) =
         }
     })
 }
-
+// This function with similar features is used on another component. With more time we could have done this more dynamic to minimize recurrence
 const extraOrder = (cartItem: CartProduct | undefined, devices: Device ) => {
 
     if(cartItem) {
         const foundQtyChange = cartItem!.including.find((x) => 1 < x.qty)
 
         if (foundQtyChange) {
-            return (<div>
-                <div style={{ ...spaceBetween }}>
-                    <h4 style={{color: colors.primary}}>Extra licenser</h4>
+            return (
+                <div key={foundQtyChange.include.id}>
+                    <div style={{ ...spaceBetween }}>
+                        <h4 style={{color: colors.primary}}>Extra licenser</h4>
+                    </div>
+                    {extraOrderRender(cartItem, devices)}
+                    <hr />
                 </div>
-                {extraOrderRender(cartItem, devices)}
-                <hr />
-            </div>
             )
         } else {
             return undefined
@@ -251,15 +239,12 @@ const extraOrder = (cartItem: CartProduct | undefined, devices: Device ) => {
     } else {
         return undefined
     }
-
 }
- /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const fontSize : (devices: DeviceContextData) => CSSProperties = (devices) => {
     return {
         fontSize: devices.devices.isMobile ? "12px" : "14px"
     }
-    
 }
 
 const rootContainer: CSSProperties = {
@@ -297,14 +282,12 @@ const btnContainer: CSSProperties = {
     borderRadius: "10px",
     cursor: "pointer",
     padding: "0px 20px 0px 20px"
-
 }
 
 const noMarginbottom: CSSProperties = {
     marginBottom: "0",
     color: colors.secondary
 }
-
 
 function componentWillUnmount(InvoiceInfoProvider: FC<React.PropsWithChildren<Props>>) {
     throw new Error("Function not implemented.");

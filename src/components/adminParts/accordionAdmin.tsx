@@ -10,6 +10,7 @@ import ProductDetailsAdmin from '../product/productDetailsAdmin';
 import { CSSProperties, useContext } from 'react';
 import { productContext } from '../context/productListProvider';
 
+// Layout mobile device
 export default function SimpleAccordion() {
 
     const { productList } = useContext(productContext)

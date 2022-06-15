@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
+// When called it scrolls to top at current page
 export default function ScrollToTop() {
     const { pathname } = useLocation();
 
@@ -10,7 +11,3 @@ export default function ScrollToTop() {
 
 return null;
 } 
-
-
-
-/* Skall denna ligga i någon annan mapp kanske då det är en vanlig funktion?  */
