@@ -65,7 +65,7 @@ const OrderConfirmWindow: FC<Props> = (props) => {
             "& .MuiDialog-container": {
                 "& .MuiPaper-root": {
                     width: "100%",
-                    minHeight: "90vh",
+                    minHeight: devices.isDesktop ? "90vh" : devices.isTablet ? "90vh" : devices.isMobile ? "100vh" : "90vh",
                     maxWidth: devices.isDesktop ? "70vw" : devices.isTablet ? "80vw" : devices.isMobile ? "100vw" : "100vw",
                     margin: devices.isDesktop ? "32p" : devices.isTablet ? "32px" : devices.isMobile ? "0px" : "0px"
                 },
