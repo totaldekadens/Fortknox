@@ -201,16 +201,18 @@ const extraOrderRender = (cartItem: CartProduct | undefined, devices: Device ) =
         if (includeObj.qty > 1) {
 
             return (
-                <>
-                    <div key={includeObj.include.name} style={{ ...spaceBetween, width: "100%" }}>
+                <div key={includeObj.include.name}>
+
+                    <div style={{ ...spaceBetween, width: "100%" }}>
                         <h5 style={{ width: "33%", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})}}>{includeObj.include?.name}</h5>
                         <p style={{ width: "33%", textAlign: "center", margin: "10px 0px", color: colors.secondary, ...fontSize({devices: devices})   }}>{includeObj.qty - 1} st</p>
                         <p style={{ width: "33%", margin: "10px 0px", color: colors.secondary, textAlign: "end", ...fontSize({devices: devices})   }}>{includeObj.include?.price} kr/mån</p>
                     </div>
-                    <div key={includeObj.include.id} style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
+                    <div  style={{display: "flex", width: "100%", justifyContent: "flex-end"}}>
                         <p style={{fontSize: "9px", margin: "0px" }}> {includeObj.include?.price*1.25}  kr inkl. moms</p>
                     </div>
-                </>
+                </div>
+                
             )
         } else {
             return undefined
@@ -225,7 +227,7 @@ const extraOrder = (cartItem: CartProduct | undefined, devices: Device ) => {
 
         if (foundQtyChange) {
             return (
-                <div key={foundQtyChange.include.id}>
+                <div key={foundQtyChange.include.id }>
                     <div style={{ ...spaceBetween }}>
                         <h4 style={{color: colors.primary}}>Extra licenser</h4>
                     </div>

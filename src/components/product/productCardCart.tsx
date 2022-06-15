@@ -22,7 +22,7 @@ const ProductCardCart: FC<Props> = (props) => {
         return (
             <>
                 <div style={{width: "100vw", height: "50vh", color: colors.primary}}>
-                    <h1>Din varukorg är tom</h1>
+                    <h1 style={{fontSize:"1.8em"}}>Din varukorg är tom</h1>
                     <p >Gå tillbaka till <Link style={{color: colors.secondary}} to={"/"}>startsidan</Link></p>
                 </div>
                 

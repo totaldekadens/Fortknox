@@ -131,7 +131,7 @@ const CheckOut: FC<Props> = (props) => {
                         {activeStep == 0 ? (<><SectionCartContainer><ProductCardCart /></SectionCartContainer> {cartItem ?  <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> : undefined }</>) : ""}
                         {activeStep == 1 ? (<><DeliveryPage />  <SummaryCard nextFunc={handleNext}  activeStep={activeStep} steps={steps}/></>) : ""}
                         {activeStep == 2 ? (<><SectionCartContainer><InputFieldsCart /></SectionCartContainer> <SummaryCard nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
-                        {activeStep == 3 ? (<><CartSummary /> <SummaryCard  nextFunc={handleNext} activeStep={activeStep} steps={steps} /> </>) : ""}
+                        {activeStep == 3 ? (<><CartSummary nextFunc={handleNext} activeStep={activeStep} steps={steps} /></>) : ""}
                     </div>
                 </React.Fragment>
             )}

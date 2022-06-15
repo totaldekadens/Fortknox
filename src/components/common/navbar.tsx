@@ -5,7 +5,6 @@ import Badge, { BadgeProps } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import MenuIcon from '@mui/icons-material/Menu';
 import { cartContext } from '../context/cartProvider';
 
 interface Props {}
@@ -31,9 +30,7 @@ const Navbar: FC<Props> = (props) => {
                     </StyledBadge>
                 </IconButton>
                 </Link>
-                <IconButton style={{color: "white"}}>
-                        <MenuIcon />
-                </IconButton>
+ 
             </div>
         </div>
     )
