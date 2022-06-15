@@ -1,11 +1,7 @@
-import { CSSProperties, FC, useContext } from "react"
-import CheckIcon from '@mui/icons-material/Check';
+import { FC, useContext } from "react"
 import { colors } from "../../data/color";
-import { flexColumn } from "../../style/common";
 import { productContext } from "../context/productListProvider";
 import ProductCard from "./productCard";
-
-
 
 
 interface Props {
@@ -13,7 +9,7 @@ interface Props {
 }
 
 const CartOption: FC<Props> = (props) => {
- 
+
     const { productList } = useContext(productContext)
     let items = productList
     if(items){
@@ -45,65 +41,6 @@ const CartOption: FC<Props> = (props) => {
         return <h1>CartSelectedItem row 78</h1>
     }
 
-}
-
-
-
-
-
-
-
-
-
-
-const cartContainer: CSSProperties = {
-    width: "100%",
-    alignItems: "center",
-    gap: "20px",
-
-}
-
-const cartProductContainer: CSSProperties = {
-    width: "100%",
-    color: "white",
-    display: "flex",
-    justifyContent: "space-between",
-
-}
-
-const cartItemInfo: CSSProperties = {
-    width: "100%",
-    padding: "20px",
-    borderRadius: "10px"
-}
-
-const cartItemInfoContainer: CSSProperties = {
-    width: "150px",
-    display: "flex",
-    alignItems: "center"
-}
-
-const cartItemPropertiesHeader: CSSProperties = {
-    margin: "0 0 10px",
-}
-
-const cartItemPropertiesContainer: CSSProperties = {
-    display: "flex",
-    marginBottom: "5px",
-    paddingBottom: "1px",
-    justifyContent: "space-between",
-    borderBottom: "3px solid white",
-
-}
-
-const cartItemProperties: CSSProperties = {
-    margin: "0",
-}
-
-const priceQuantityContainer: CSSProperties = {
-    display: "flex",
-    gap: "3px",
-    alignItems: "center",
 }
 
 export default CartOption

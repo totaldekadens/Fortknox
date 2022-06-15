@@ -1,18 +1,12 @@
-import { Info } from "@mui/icons-material"
-import Button from "@mui/material/Button"
-import { color, height } from "@mui/system"
 import { CSSProperties, FC, useContext } from "react"
 import { colors } from "../../data/color"
 import { cartContext } from "../context/cartProvider"
-import { products } from "../../data/products"
 import { paymentContext } from "../context/checkOutProvider"
 import { deliveryContext } from "../context/deliveryProvider"
 import { invoiceContext } from "../context/invoiceProvider"
 import errorLoop from "../interaction/inputFieldsCartErrorHandler"
 import { validateFields } from "../interaction/paymentOptionsErrorHandler"
-
 import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider"
-
 import React from "react"
 import OrderConfirmWindow from "../interaction/confirmation"
 import { priceSummaryFunc } from "./priceLogic"

@@ -73,7 +73,6 @@ export const validateFields = (paymentOptionState: PaymentOptions) => {
 
                     inputDataCopy.input.map((input) => {
 
-                        // Copy of the input object from the state.
                         // Checks for empty input value.
                         if( input.value === "" || input.value == " ") {
 

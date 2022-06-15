@@ -4,9 +4,7 @@ import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider"
 
 
 
-interface Props {
-   
-}
+interface Props {}
 
 
 export const SectionCartContainer: FC<PropsWithChildren<Props>> = (props) => {

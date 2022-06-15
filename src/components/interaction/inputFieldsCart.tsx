@@ -5,9 +5,7 @@ import { colors } from "../../data/color";
 import { InputData } from "../../data/invoice";
 import { invoiceContext } from "../context/invoiceProvider";
 
-interface Props {
-
-}
+interface Props {}
 
 const InputFieldsCart: FC<Props> = (props) => {
 

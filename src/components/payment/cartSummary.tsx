@@ -2,10 +2,9 @@ import TextField from "@mui/material/TextField";
 import { FC, useContext } from "react";
 import { colors } from "../../data/color";
 import SectionCartContainer from "../common/sectionCartContainer";
-import ProductCardCart from "../product/productCardCart";
 import RenderPaymentOptions from "./paymentOptions";
 import { invoiceContext } from "../context/invoiceProvider";
-import CartSelectedItem from "../product/cartSelectedItem";
+
 import { btnContainer, spaceBetween } from "./summaryCard";
 import { priceSummaryFunc } from "./priceLogic";
 import { deliveryContext } from "../context/deliveryProvider";
@@ -16,6 +15,7 @@ import errorLoop from "../interaction/inputFieldsCartErrorHandler"
 import { validateFields } from "../interaction/paymentOptionsErrorHandler"
 import React from "react";
 import OrderConfirmWindow from "../interaction/confirmation";
+
 
 
 interface Props {
@@ -142,7 +142,7 @@ const CartSummary: FC<Props> = (props) => {
         <>
         <SectionCartContainer>
             <div style={{ display: "flex", flexDirection: "column", color: colors.primary }}>
-                <h1>Ditt köp</h1>
+                <h1>Slutför köp</h1>
                 <div  style={{ width: "100%" }}>
 
                     <h2>Ditt Paket</h2>
@@ -160,12 +160,12 @@ const CartSummary: FC<Props> = (props) => {
                         <h5 style={{ margin: "0" }}>12/mån</h5>
                     </div>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        <h5 style={{ margin: "0" }}>Moms</h5>
-                        <h5 style={{ margin: "0" }}>{priceSummaryFunc("moms.month")} kr</h5>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
                         <h5 style={{ margin: "0" }}>Ditt Paket</h5>
                         <h5 style={{ margin: "0" }}>{priceSummaryFunc("ex.month")} kr</h5>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <h5 style={{ margin: "0" }}>Moms</h5>
+                        <h5 style={{ margin: "0" }}>{priceSummaryFunc("moms.month")} kr</h5>
                     </div>
 
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -173,17 +173,17 @@ const CartSummary: FC<Props> = (props) => {
                         <h3>{priceSummaryFunc("inc.month")} kr/mån</h3>
                     </div>
 
-                    <h5 style={{ marginTop: "0px" }}>* När paketet är klar för leverans så börjar Abonnemangskostnaden.</h5>
+                    <h5 style={{ marginTop: "0px" }}>* När paketet är klart för leverans så börjar abonnemangskostnaden.</h5>
 
                     <div style={{ display: "flex", flexDirection: "column", backgroundColor: "white", padding: "0 20px", borderRadius: "10px" }}>
 
-                        <div style={{ ...spaceBetween, }}>
-                            <h5 style={{ marginBottom: "0px" }}>Moms</h5>
-                            <h5 style={{ marginBottom: "0px" }}>{priceSummaryFunc("moms.delivery")} kr</h5>
-                        </div>
                         <div style={{ ...spaceBetween }}>
-                            <h5 style={{ margin: "0px" }}>{deliveryInput!.title}</h5>
-                            <h5 style={{ margin: "0px" }}>{priceSummaryFunc("ex.delivery")} kr</h5>
+                            <h5 style={{ marginBottom: "0px"}}>{deliveryInput!.title}</h5>
+                            <h5 style={{ marginBottom: "0px"}}>{priceSummaryFunc("ex.delivery")} kr</h5>
+                        </div>
+                        <div style={{ ...spaceBetween, }}>
+                            <h5 style={{ margin: "0px" }}>Moms</h5>
+                            <h5 style={{ margin: "0px" }}>{priceSummaryFunc("moms.delivery")} kr</h5>
                         </div>
                         <div style={{ ...spaceBetween, }}>
                             <h2>Att betala</h2>
@@ -223,9 +223,9 @@ const CartSummary: FC<Props> = (props) => {
 
             </div>
 
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ display: "flex", justifyContent: "center", marginTop:"10px"}}>
 
-                <div style={{ ...btnContainer({ devices: devices }), backgroundColor: colors.secondary, }} onClick={validateNextStep}    >
+                <div style={{ ...btnContainer({ devices: devices }), backgroundColor: colors.secondary, color:"white"}} onClick={validateNextStep}    >
                     {props.activeStep === props.steps.length - 1 ? 'Slutför köp' : props.activeStep == 0 ? 'Beställ' : 'Nästa'}
                 </div>
             </div>

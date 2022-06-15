@@ -1,15 +1,10 @@
-
 import { CSSProperties, FC, useContext } from "react"
-import { useParams, Navigate, Link } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import { colors } from "../../data/color";
-import {  products } from "../../data/products";
 import ContentTitle from "../common/contentTitle";
 import { productContext } from "../context/productListProvider";
 
-
-interface Props {
-
-}
+interface Props {}
 
 const ProductIncludeCard: FC<Props> = (props) => {
 
@@ -20,18 +15,15 @@ const ProductIncludeCard: FC<Props> = (props) => {
 
     const foundProduct = productList.find((product) => Number(productId) == product.id)
 
-
     if (!foundProduct) {
         return <Navigate to="/" />
     }
-
 
     return (
         
             <div style={{ ...container, flexDirection: "column" }}>
 
-                <ContentTitle title="Vad som ingår" textAlign="center" alignItems="center" firstColor={colors.third} secondColor={colors.secondary} />
-
+                <ContentTitle title="Vad som ingår" centerText={true} alignItems="center" firstColor={colors.third} secondColor={colors.secondary} />
 
                 <div style={includesInfoCard} >
                     {foundProduct.including.map((include) => {
@@ -49,8 +41,6 @@ const ProductIncludeCard: FC<Props> = (props) => {
     )
 }
 
-
-
 const container: CSSProperties = {
     display: "flex",
     width: "100%",
@@ -64,10 +54,6 @@ const includesInfoCard: CSSProperties = {
     display: "flex",
     justifyContent: "space-evenly",
     flexWrap: "wrap"
-
 }
-
-
-
 
 export default ProductIncludeCard

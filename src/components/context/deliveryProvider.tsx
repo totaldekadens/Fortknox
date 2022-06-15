@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { FC, PropsWithChildren, useState } from "react"
 import { Delivery } from "../../data/delivery"
 
@@ -19,12 +19,6 @@ export const deliveryContext = React.createContext<DeliveryContextData>({
 const DeliveryProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
     const [deliveryInput, setDeliveryInput] = useState<Delivery | undefined> ()
-
-    // useEffect(() => {
-
-    //     console.log(deliveryInput)
-
-    // }, [deliveryInput])
 
     return (
         <deliveryContext.Provider value={{deliveryInput, setDeliveryInput}}>

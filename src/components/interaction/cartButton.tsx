@@ -43,7 +43,6 @@ const CartButton: FC<Props> = (props) => {
                 }
                 cartList.including.push(newIncludeObj)
                 })
-                /* cartList.push(foundProduct) */
                 setCartItem(cartList)
                 localStorage.setItem("cartItem", JSON.stringify(cartList))
 
