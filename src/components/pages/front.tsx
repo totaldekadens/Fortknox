@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useContext, useRef } from "react"
+import { CSSProperties, FC, useContext, useRef } from "react"
 import ProductCard from "../product/productCard"
 import { colors } from "../../data/color"
 import Button from '@mui/material/Button';
@@ -6,6 +6,7 @@ import Lines from "../common/lines";
 import ContentTitle from "../common/contentTitle";
 import { productContext } from "../context/productListProvider";
 import { DeviceContext, DeviceContextData} from "../context/mediaQueryProvider";
+
 
 interface Props {}
 
@@ -35,7 +36,7 @@ const FrontPage: FC<Props> = (props) => {
       </div>
 
       <div ref={myRef}  style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-        <ContentTitle title="Våra paket" textAlign= "center" alignItems="center" firstColor= {colors.third} secondColor= {colors.secondary}/>
+        <ContentTitle title="Våra paket" centerText={true} alignItems="center" firstColor= {colors.third} secondColor= {colors.secondary}/>
         <div style={container2({devices: devices})}>
           {productList.map((product) => <ProductCard key={product.id} product={product} />)}
         </div>

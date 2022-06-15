@@ -31,7 +31,7 @@ export function priceSummaryFunc(summary: string) {
     // use the argument to display what price you want  
 
      // tax a year
-     if (summary === "moms.year") {
+    if (summary === "moms.year") {
         return totalPriceForIncludes * 0.25 * 12
     }
     // tax a month

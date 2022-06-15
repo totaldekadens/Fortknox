@@ -1,5 +1,5 @@
 
-import { CSSProperties, FC, useContext, useEffect } from "react"
+import { CSSProperties, FC, useContext } from "react"
 import ProductCardCart from "../product/productCardCart"
 import * as React from 'react';
 import Box from '@mui/material/Box';
@@ -14,19 +14,13 @@ import DeliveryPage from "../payment/delivery";
 import CartSummary from "../payment/cartSummary";
 import { cartContext } from "../context/cartProvider";
 import SectionCartContainer from "../common/sectionCartContainer";
-
 import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider";
-
-
 import OrderConfirmWindow from "../interaction/confirmation";
 
 
 const steps = ['Varukorg', 'Leverans', 'Dina uppgifter', "Slutför köp"];
 
-
-
 interface Props { }
-
 
 const CheckOut: FC<Props> = (props) => {
 
@@ -148,10 +142,6 @@ const CheckOut: FC<Props> = (props) => {
 
 
 
-}
-
-const labelCSS: CSSProperties = {
-    fontWeight: "100px"
 }
 
 export const stepperContentContainer: (devices: DeviceContextData) => CSSProperties = (devices) => {

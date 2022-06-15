@@ -2,11 +2,8 @@ import { CSSProperties, FC, useContext, useEffect, useState } from "react"
 import { cartContext } from "../context/cartProvider"
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
-import CheckIcon from '@mui/icons-material/Check';
-import React from "react";
 import { colors } from "../../data/color";
 import { flexColumn } from "../../style/common";
-import { DepartureBoardSharp } from "@mui/icons-material";
 import { CartProduct } from "../../data/products";
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
@@ -49,7 +46,7 @@ const CartSelectedItem: FC<Props> = (props) => {
 
             <div key={item.id} style={{ ...cartProductContainer }}>
 
-                <div style={{ ...cartItemInfo, ...flexColumn, /* backgroundColor: colors.primary */}}>
+                <div style={{ ...cartItemInfo, ...flexColumn }}>
                         <h1 style={{ }}>Valt paket</h1>
                     <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                         <div style={{ display:"flex", alignItems:"center", gap: "5px"}}>
@@ -126,23 +123,11 @@ const CartSelectedItem: FC<Props> = (props) => {
 
 export default CartSelectedItem
 
-
-
-const cartContainer: CSSProperties = {
-    width: "100%",
-    alignItems: "center",
-    gap: "20px",
-
-}
-
 const cartProductContainer: CSSProperties = {
     width: "100%",
     color: colors.primary,
-    /* color: "white", */
     display: "flex",
     justifyContent: "space-between",
-    
-
 }
 
 const cartItemInfo: CSSProperties = {
@@ -166,8 +151,6 @@ const cartItemPropertiesContainer: CSSProperties = {
     display: "flex",
     height: "60px",
     justifyContent: "space-between",
-    
-
 }
 
 const cartItemProperties: CSSProperties = {

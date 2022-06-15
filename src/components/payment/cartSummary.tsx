@@ -2,10 +2,8 @@ import TextField from "@mui/material/TextField";
 import { FC, useContext } from "react";
 import { colors } from "../../data/color";
 import SectionCartContainer from "../common/sectionCartContainer";
-import ProductCardCart from "../product/productCardCart";
 import RenderPaymentOptions from "./paymentOptions";
 import { invoiceContext } from "../context/invoiceProvider";
-import CartSelectedItem from "../product/cartSelectedItem";
 
 
 interface Props {}

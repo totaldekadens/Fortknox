@@ -41,7 +41,6 @@ const ProductCard: FC<Props> = (props) => {
     )
 }
 
-
 const container:(devices: DeviceContextData) => CSSProperties = (devices) =>  {
 
     return {
@@ -67,7 +66,5 @@ const cardCont: CSSProperties = {
 const includeStyle: CSSProperties = {
     padding: "5px",
 }
-
-
 
 export default ProductCard

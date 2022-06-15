@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useContext } from "react"
+import { FC, useContext } from "react"
 import { colors } from "../../data/color";
 import { DeviceContext } from "../context/mediaQueryProvider";
 import Lines from "./lines";
@@ -6,7 +6,7 @@ import Lines from "./lines";
 
 interface Props {
     title: string
-    textAlign: string
+    centerText: boolean // boolean true för att vara center, döp om till center text
     alignItems?: string
     firstColor: string
     secondColor: string
@@ -19,7 +19,7 @@ const ContentTitle: FC<Props> = (props) => {
     const { devices } = useContext(DeviceContext)
 
     return (
-    <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: props.alignItems, textAlign: props.textAlign  }} > {/* Funkar även om det är rött. Men Varför?? Kolla med Victor  */}
+    <div style={{display: "flex", flexDirection: "column", width: "100%", alignItems: props.alignItems, textAlign: props.centerText ? "center" : undefined  }} > {/* Funkar även om det är rött. Men Varför?? Kolla med Victor  */}
         <Lines firstColor= {props.firstColor} secondColor={props.secondColor} margin= {devices.isDesktop ? "60px 0px 0px 0px" : devices.isTablet ? "60px 0px 0px 0px" : devices.isMobile ? "50px 0px 0px 0px" : "100px 0px 0px 0px"}/>
         <h1 style={{fontSize: devices.isDesktop ? "60px" : devices.isTablet ? "60px" : devices.isMobile ? "50px" : "60px", padding: "0% 10% 0% 10%" , color: colors.primary }}>{props.title}</h1>
     </div>

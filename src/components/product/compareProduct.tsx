@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,9 +13,7 @@ import CartButton from '../interaction/cartButton';
 import ProductButton from '../interaction/toProductButton';
 import { products } from '../../data/products';
 
-interface Props {
-
-}
+interface Props {}
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -48,38 +45,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-/* products.map((product) => {
-  
-  product.including.map((x) => {
-    
-    {(x.fri_support.name)? console.log(x.fri_support.name):console.log("x.fri_support.name")}
-  })
-  if(!product.including[2] && !product.including[3]){
-    
-  }if(!product.including[3]){
-
-  }
-}) */
-
-/* products.forEach(product => {
-  if(product.id === 1){
-    product.including.forEach(include => {
-      if(include!.id === 2){
-       console.log("include",include)
-      if(!include?.fri_support ){
-        return "x"
-        
-      } 
-      }
-    })
-  }if(product.id === 2){
-
-  }if(product.id === 3){
-
-  }
-
-}) */
-
 function createData(
   name: string,
   productBas: string,
@@ -90,6 +55,7 @@ function createData(
   return { name, productBas, productStandard, productPlus };
 }
 
+// The functionality to compare different products is currently hard coded, we didn't have time to make this dynamic due to the limited time for project.
 const rows = [
 
   createData("Bokföring", "", "", ""),
@@ -97,7 +63,6 @@ const rows = [
   createData("Leverantörsfakturor", "Obegränsat", "Obegränsat", "Obegränsat"),
   createData("Olika Rapporter", "✅", "✅", "✅"),
   createData("Tolkning av dokument", "från 4,90 kr/st", "från 4,90 kr/st", "från 4,90 kr/st"),
-
 
   createData("Intregration", "", "", ""),
   createData("Fri support", "Obegränsat", "Obegränsat", "Obegränsat"),
@@ -122,12 +87,8 @@ const rows = [
 
 ];
 
-/* const includes = products.including.map((include) => {
-  include
-})  */
 
 const headerTableCell = productDetailList.map((product) => {
- 
   return <StyledTableCell key={product.name} align="center" >{product.name}</StyledTableCell>
 })
 

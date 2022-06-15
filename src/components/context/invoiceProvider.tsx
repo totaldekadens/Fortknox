@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { FC, PropsWithChildren, useState } from "react"
 import { inputData } from "../../data/invoice"
 import { InputData } from "../../data/invoice"
@@ -18,14 +18,6 @@ export const invoiceContext = React.createContext<InvoiceContextData>({
 const InvoiceInfoProvider:  FC<PropsWithChildren<Props>> = (props) => {
 
     const [getInputData, setInputData] = useState(inputData);
-
-    /* console.log(getInputData) */
-
-    /* useEffect(() => {
-        
-        console.log("inputdata ändras")
-
-    }, [getInputData]) */
 
     return (
         <invoiceContext.Provider value={{getInputData, setInputData}}>

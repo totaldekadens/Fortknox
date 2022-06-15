@@ -1,4 +1,4 @@
-import  { FC, useContext, useState } from "react"
+import  { FC, useContext } from "react"
 import * as React from 'react';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -10,14 +10,12 @@ import AddAndModifyProduct from "./addAndModifyProduct";
 import { productContext } from "../context/productListProvider";
 import { TabPanel, a11yProps } from "./adminTemplatePart";
 import ModifyProduct from "./modifyProduct";
-import { DeviceContext } from "../context/mediaQueryProvider";
 
 // Layout tablet and desktop
 const TabPanelAdmin : FC = () => { 
 
     // gets context
     const { productList } = useContext(productContext)
-    const { devices } = useContext(DeviceContext)
 
     // State of what panel to be seen
     const [value, setValue] = React.useState(0);
