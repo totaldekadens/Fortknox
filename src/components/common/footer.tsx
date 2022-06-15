@@ -1,11 +1,10 @@
 import { colors } from "../../data/color"
 import { flexColumn } from '../../style/common'
 import { CSSProperties, FC } from "react"
-
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import PhoneIcon from '@mui/icons-material/Phone';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-import { alignProperty } from "@mui/material/styles/cssUtils";
+
 
 interface Props {}
 

@@ -1,7 +1,7 @@
 import { CSSProperties, FC, useContext } from "react"
 import { Navigate, useParams } from "react-router-dom"
 import { colors } from "../../data/color"
-import { Product, products } from "../../data/products"
+import { Product } from "../../data/products"
 import Lines from "../common/lines"
 import { productContext } from "../context/productListProvider"
 import { DeviceContext, DeviceContextData } from "../context/mediaQueryProvider"
@@ -108,10 +108,10 @@ const bannerStyle: (devices: DeviceContextData) => CSSProperties = (devices) => 
 const textContainer : (devices: DeviceContextData) => CSSProperties = (devices) =>  {
 
     return {
-      width: devices.devices.isDesktop ? "50%" : devices.devices.isTablet ? "60%" : devices.devices.isMobile ? "80%" : "60%",
-      fontSize: devices.devices.isDesktop ? "22px" : devices.devices.isTablet ? "18px" : devices.devices.isMobile ? "15px" : "22px"
+        width: devices.devices.isDesktop ? "50%" : devices.devices.isTablet ? "60%" : devices.devices.isMobile ? "80%" : "60%",
+        fontSize: devices.devices.isDesktop ? "22px" : devices.devices.isTablet ? "18px" : devices.devices.isMobile ? "15px" : "22px"
     }
-  }
+}
 
 const container: (devices: DeviceContextData) => CSSProperties = (devices) =>  {
     

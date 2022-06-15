@@ -1,10 +1,9 @@
 import { CSSProperties, FC, useContext, useEffect, useState } from "react"
-import { Delivery, delivery } from "../../data/delivery"
+import { delivery } from "../../data/delivery"
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
 import { colors } from "../../data/color";
 import SectionCartContainer from "../common/sectionCartContainer";
 import { deliveryContext } from "../context/deliveryProvider";

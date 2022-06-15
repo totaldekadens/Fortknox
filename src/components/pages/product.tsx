@@ -1,7 +1,6 @@
 import { CSSProperties, FC, useContext } from "react"
-import { useParams, Navigate, Link } from "react-router-dom";
+import { useParams, Navigate } from "react-router-dom";
 import { colors } from "../../data/color";
-import { products } from "../../data/products";
 import ContentTitle from "../common/contentTitle";
 import { productContext } from "../context/productListProvider";
 import { DeviceContext } from "../context/mediaQueryProvider";
@@ -35,7 +34,7 @@ const ProductPage: FC<Props> = (props) => {
             <ProductBanner />
             <ProductIncludeCard/>
             {/*  change to a own component */}
-            {devices.isMobile ? undefined : <ContentTitle title="Jämför funktioner" textAlign="center" alignItems="center" firstColor={colors.third} secondColor={colors.secondary} /> } 
+            {devices.isMobile ? undefined : <ContentTitle title="Jämför funktioner" centerText={true} alignItems="center" firstColor={colors.third} secondColor={colors.secondary} /> } 
             <div style={{ ...container, flexDirection: "column", justifyContent: "center", color: "black" }}>
                 {devices.isMobile ? undefined : <ProductsCompare/> }                
             </div>

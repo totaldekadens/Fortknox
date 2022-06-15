@@ -10,7 +10,3 @@ export default function ScrollToTop() {
 
 return null;
 } 
-
-
-
-/* Skall denna ligga i någon annan mapp kanske då det är en vanlig funktion?  */

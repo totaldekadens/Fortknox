@@ -1,14 +1,11 @@
 import { Link } from 'react-router-dom';
 import { FC, useContext } from 'react';
 import { colors } from '../../data/color'
-
 import Badge, { BadgeProps } from '@mui/material/Badge';
 import { styled } from '@mui/material/styles';
 import IconButton from '@mui/material/IconButton';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
-import { deliveryContext } from '../context/deliveryProvider';
-import { paymentContext } from '../context/checkOutProvider';
 import { cartContext } from '../context/cartProvider';
 
 interface Props {}
@@ -16,7 +13,6 @@ interface Props {}
 
 const Navbar: FC<Props> = (props) => {
 
-    const { paymentOptionState, setPaymentOptionState } = useContext(paymentContext);
     const { cartItem } = useContext(cartContext)
 
     return (
@@ -30,7 +26,7 @@ const Navbar: FC<Props> = (props) => {
                 </Link>
                 <Link to={"/checkout"}>
                 <IconButton aria-label="cart">
-                    <StyledBadge badgeContent={cartItem ? "1" : undefined} style={{color: "white"}} > {/* Denna blir dynamisk sedan */}
+                    <StyledBadge badgeContent={cartItem ? "1" : undefined} style={{color: "white"}} >
                         <ShoppingCartIcon />
                     </StyledBadge>
                 </IconButton>
