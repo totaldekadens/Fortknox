@@ -35,8 +35,8 @@ const DeliveryPage: FC<Props> = (props) => {
 
     return (
         <SectionCartContainer>
+            <h1 style={{color: colors.primary}}>Välj leverans</h1>
             <FormControl style={{display:"flex", justifyContent:"center", alignItems:"center"}}>
-                <FormLabel sx={{color: colors.primary}} id="demo-radio-buttons-group-label">Val av leverans</FormLabel>
                 <RadioGroup
                     aria-labelledby="demo-radio-buttons-group-label"
                     name="radio-buttons-group"

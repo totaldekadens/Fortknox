@@ -8,6 +8,7 @@ import { colors } from "../../data/color";
 import { flexColumn } from "../../style/common";
 import { DepartureBoardSharp } from "@mui/icons-material";
 import { CartProduct } from "../../data/products";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 
 interface Props { }
 
@@ -39,13 +40,27 @@ const CartSelectedItem: FC<Props> = (props) => {
 
         }
 
+        const removeCart = () => {
+            setCartItem(undefined)
+            localStorage.removeItem("cartItem")
+        }
+
         return (
 
             <div key={item.id} style={{ ...cartProductContainer }}>
 
                 <div style={{ ...cartItemInfo, ...flexColumn, /* backgroundColor: colors.primary */}}>
-                    <h1 style={{ }}>Valt paket</h1>
-                    <h2 style={{ }}>{item.name}</h2>
+                        <h1 style={{ }}>Valt paket</h1>
+                    <div style={{display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                        <div style={{ display:"flex", alignItems:"center", gap: "5px"}}>
+                            <h2 style={{ }}>{item.name}</h2>
+                            <img style={{height: "2em"}} src={item.icon}/>
+                        </div>
+
+                        <div style={{cursor: "pointer"}} onClick={() => { removeCart() }}>
+                            <DeleteForeverIcon />
+                        </div>
+                    </div>
                     <h4 style={cartItemPropertiesHeader}>Hur många användare ska ha åtkomst till respektive program?</h4>
 
                     <div>
