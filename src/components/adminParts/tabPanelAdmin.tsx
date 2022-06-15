@@ -11,9 +11,10 @@ import { productContext } from "../context/productListProvider";
 import { TabPanel, a11yProps } from "./adminTemplatePart";
 import ModifyProduct from "./modifyProduct";
 
+// Layout tablet and desktop
 const TabPanelAdmin : FC = () => { 
 
-    // Gets product context
+    // gets context
     const { productList } = useContext(productContext)
 
     // State of what panel to be seen
