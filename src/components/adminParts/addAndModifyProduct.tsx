@@ -21,6 +21,7 @@ export interface Error {
     error: boolean
 }
 
+// Combined component that works for both adding a product and changing a product. Comment: Could have been planned better with lists to minimize code. 
 const AddAndModifyProduct: FC<Props> = (props) => {
 
     // States product
@@ -107,7 +108,7 @@ const AddAndModifyProduct: FC<Props> = (props) => {
                     if(newIncludeCopy == undefined || newIncludeCopy[0] == null || newIncludeCopy.length < 1) {
                         emptyArray.push(includeObject)
                         newIncludeCopy = emptyArray  
-                        newInclude = newIncludeCopy  // Cant set the state with function. Have to set the state it self.
+                        newInclude = newIncludeCopy  // Cant set the state with function. Have to set the state it self. Check
                         setNewInclude(newIncludeCopy)
                     }   
                     else {
@@ -168,8 +169,8 @@ const AddAndModifyProduct: FC<Props> = (props) => {
         }
         else {
             ascendProductList.push(newProduct)
-            setProductList(ascendProductList)
-            localStorage.setItem('productList', JSON.stringify(productList)); // vill inte skickas till Provider och sätta det nya statet när denna sätts. Kör localstorage här sålänge.
+            setProductList(ascendProductList) // Won't update? sets localstorage here meanwhile so it works. Shouldnt be needed. 
+            localStorage.setItem('productList', JSON.stringify(productList)); 
         }
 
         // Sets the correct success message to window dialog

@@ -15,17 +15,19 @@ const errorLoop = (errorList: Error[], productList: Product[], action: string | 
 
             itemCopy.error = true;
             return itemCopy;
-
+        }  
+        // Checks if package name already exists
+        else if(productName && !action) {
+            itemCopy.error = true;
+            return itemCopy;
+        }
         // Checks if number is less than 1
-        }  else if(productName && !action) {
+        else if(typeof(itemCopy.value) == "number" && itemCopy.value < 1 ) {
             itemCopy.error = true;
             return itemCopy;
-
-        }else if(typeof(itemCopy.value) == "number" && itemCopy.value < 1 ) {
-            itemCopy.error = true;
-            return itemCopy;
-
-        } else if(itemCopy.name == "image") {
+        } 
+        // Checks image
+        else if(itemCopy.name == "image") {
             
             // Checks if the url has the right ending 
             const stringifiedItem = String(itemCopy.value)
@@ -50,6 +52,7 @@ const errorLoop = (errorList: Error[], productList: Product[], action: string | 
             return itemCopy;
 
         } 
+
         else {
             itemCopy.error = false;
             return itemCopy;
